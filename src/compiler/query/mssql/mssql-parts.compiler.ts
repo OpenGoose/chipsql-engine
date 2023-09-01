@@ -11,6 +11,7 @@ import { format, isDate } from "date-fns";
 import { IQueryPartsCompiler } from "../query-parts-compiler.interface";
 import { Functions } from "../../../chips-lq/types/functions/functions.enum";
 import { MssqlFunctionsCompiler } from "../../functions/mssql/mssql-functions.compiler";
+import { mssqlFunctions } from "../../functions/mssql/mssql-functions";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
@@ -77,14 +78,6 @@ export class MssqlPartsCompiler<T extends Object>
 
   // Functions
   func = (funcValue: FunctionValue<T>) => {
-    const funcCompiler: MssqlFunctionsCompiler<T> =
-      new MssqlFunctionsCompiler<T>(this);
-    switch (funcValue.function) {
-      case Functions.COUNT:
-        return funcCompiler.count(funcValue);
-      case Functions.CUSTOM:
-        return funcCompiler.custom(funcValue);
-    }
-    throw new UnavailableFeatureError(funcValue.function);
+    return mssqlFunctions(funcValue, this);
   };
 }
