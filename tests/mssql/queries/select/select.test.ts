@@ -77,7 +77,7 @@ service.expectQuery(
       },
     ],
   },
-  "SELECT [c].[customer_id], [o].[order_id] FROM [customers] c, [sales].[orders] o;"
+  "SELECT [c].[customer_id], [o].[order_id] FROM [customers] [c], [sales].[orders] [o];"
 );
 
 service.expectQuery(
@@ -104,7 +104,7 @@ service.expectQuery(
       },
     ],
   },
-  "SELECT COUNT([s].[store_id]) AS 'stores_count' FROM [sales].[stores] s;"
+  "SELECT COUNT([s].[store_id]) AS 'stores_count' FROM [sales].[stores] [s];"
 );
 
 service.expectQuery(
@@ -134,5 +134,50 @@ service.expectQuery(
       },
     ],
   },
-  "SELECT COUNT([s].[store_id]) AS 'stores_count' FROM [sales].[stores] s;"
+  "SELECT COUNT([s].[store_id]) AS 'stores_count' FROM [sales].[stores] [s];"
+);
+
+service.expectQuery(
+  "Query using subselect",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.COLUMN,
+        field: "first_name",
+        alias: "name",
+        tableAlias: "c",
+      },
+      {
+        valueType: ValueTypes.SUBSELECT,
+        fields: [
+          {
+            valueType: ValueTypes.FUNCTION,
+            function: Functions.COUNT,
+            value: {
+              valueType: ValueTypes.COLUMN,
+              field: "order_id",
+              tableAlias: "o",
+            },
+          },
+        ],
+        from: [
+          {
+            name: "orders",
+            alias: "o",
+            schema: "sales",
+          },
+        ],
+        alias: "count",
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        alias: "c",
+        schema: "sales",
+      },
+    ],
+  },
+  "SELECT [c].[first_name] AS 'name', (SELECT COUNT([o].[order_id]) FROM [sales].[orders] [o]) AS 'count' FROM [sales].[customers] [c];"
 );

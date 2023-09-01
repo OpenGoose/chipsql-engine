@@ -7,16 +7,19 @@ import { IQueryCompiler } from "../query-compiler.interface";
 import { IQueryPartsCompiler } from "../query-parts-compiler.interface";
 import { MssqlPartsCompiler } from "./mssql-parts.compiler";
 
-type CompileSelectOptions = {
+type CompileOptions = {
   semicolon?: boolean;
-}
+};
 
 export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   protected readonly language: SqlLanguages;
   readonly query: Query<T>;
   readonly partsCompiler: IQueryPartsCompiler<T>;
 
-  constructor(query: Query<T>) {
+  constructor(
+    query: Query<T>,
+    private readonly options: CompileOptions = { semicolon: true }
+  ) {
     this.language = SqlLanguages.MSSQL;
     this.query = query;
     this.partsCompiler = new MssqlPartsCompiler<T>();
@@ -32,17 +35,14 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
 
   // Static
 
-  compileSelect = (
-    { fields, from, ...select }: Select<T>,
-    { semicolon }: CompileSelectOptions = { semicolon: true }
-  ) => {
+  compileSelect = ({ fields, from, ...select }: Select<T>) => {
     return (
       joinParts([
         "SELECT",
         this.partsCompiler.fields(fields),
         "FROM",
         this.partsCompiler.from(from),
-      ]) + (semicolon ? ';' : '')
+      ]) + (this.options?.semicolon ? ";" : "")
     );
   };
 }

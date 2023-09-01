@@ -9,9 +9,9 @@ import { UnavailableFeatureError } from "../../features/unavailable-feature.erro
 import { joinParts } from "../../utils/query-generation/join-parts.util";
 import { format, isDate } from "date-fns";
 import { IQueryPartsCompiler } from "../query-parts-compiler.interface";
-import { Functions } from "../../../chips-lq/types/functions/functions.enum";
-import { MssqlFunctionsCompiler } from "../../functions/mssql/mssql-functions.compiler";
 import { mssqlFunctions } from "../../functions/mssql/mssql-functions";
+import { MssqlCompiler } from "./mssql.compiler";
+import { Query, QueryTypes } from "../../../chips-lq/types/queries/query.type";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
@@ -32,13 +32,26 @@ export class MssqlPartsCompiler<T extends Object>
         case ValueTypes.COLUMN:
           return joinParts(
             [
-              value.tableAlias ? `[${value.tableAlias}]` : null,
-              `[${value.field}]`,
+              value.tableAlias ? this.generateField(value.tableAlias) : null,
+              this.generateField(value.field),
             ],
             "."
           );
         case ValueTypes.FUNCTION:
           return this.func(value);
+        case ValueTypes.VARIABLE:
+          return `@${value.name}`;
+        case ValueTypes.SUBSELECT:
+          const { alias, distinct, ...query } = value;
+          return `(${new MssqlCompiler(
+            {
+              ...query,
+              queryType: QueryTypes.SELECT,
+            },
+            {
+              semicolon: false,
+            }
+          ).compile()})`;
       }
       throw new UnavailableFeatureError(value.valueType);
     };
@@ -53,10 +66,13 @@ export class MssqlPartsCompiler<T extends Object>
   table = (table: Table<T>) => {
     return joinParts([
       joinParts(
-        [table.schema ? `[${table.schema}]` : null, `[${table.name}]`],
+        [
+          table.schema ? this.generateField(table.schema) : null,
+          this.generateField(table.name),
+        ],
         "."
       ),
-      table.alias ? table.alias : null,
+      table.alias ? this.generateField(table.alias) : null,
     ]);
   };
 
@@ -75,6 +91,7 @@ export class MssqlPartsCompiler<T extends Object>
     }
     throw new UnavailableFeatureError(`Conversion to ${typeof value}`);
   };
+  generateField = (field: string) => `[${field}]`;
 
   // Functions
   func = (funcValue: FunctionValue<T>) => {
