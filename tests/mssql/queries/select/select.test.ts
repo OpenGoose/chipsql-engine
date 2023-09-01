@@ -254,5 +254,5 @@ service.expectQuery(
       ],
     },
   },
-  "SELECT [c].* FROM [sales].[customers] [c] WHERE (([c].[email] LIKE '%test@tmw.cat%') OR (([c].[city] = 'ol'' Baetulo') AND ([c].[phone] != '555 xx xx xx')));"
+  "SELECT [c].* FROM [sales].[customers] [c] WHERE ([c].[email] LIKE '%test@tmw.cat%' OR ([c].[city] = 'ol'' Baetulo' AND [c].[phone] != '555 xx xx xx'));"
 );

@@ -118,11 +118,11 @@ export class MssqlPartsCompiler<T extends Object>
       whereValue.conditionOperand
     );
 
-    return `(${joinParts([
+    return `${joinParts([
       this.value(whereValue.sourceValue),
       operand,
       this.value(whereValue.targetValue),
-    ])})`;
+    ])}`;
   };
 
   join = (joinValue: Join<T>) => {
