@@ -81,7 +81,7 @@ service.expectQuery(
 );
 
 service.expectQuery(
-  "Select using functions",
+  "Select using COUNT function",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -93,6 +93,36 @@ service.expectQuery(
           field: "store_id",
           tableAlias: "s",
         },
+        alias: "stores_count",
+      },
+    ],
+    from: [
+      {
+        name: "stores",
+        schema: "sales",
+        alias: "s",
+      },
+    ],
+  },
+  "SELECT COUNT([s].[store_id]) AS 'stores_count' FROM [sales].[stores] s;"
+);
+
+service.expectQuery(
+  "Select using custom function",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.FUNCTION,
+        function: Functions.CUSTOM,
+        name: "COUNT",
+        parameters: [
+          {
+            valueType: ValueTypes.COLUMN,
+            field: "store_id",
+            tableAlias: "s",
+          },
+        ],
         alias: "stores_count",
       },
     ],

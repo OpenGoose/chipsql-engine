@@ -82,6 +82,8 @@ export class MssqlPartsCompiler<T extends Object>
     switch (funcValue.function) {
       case Functions.COUNT:
         return funcCompiler.count(funcValue);
+      case Functions.CUSTOM:
+        return funcCompiler.custom(funcValue);
     }
     throw new UnavailableFeatureError(funcValue.function);
   };
