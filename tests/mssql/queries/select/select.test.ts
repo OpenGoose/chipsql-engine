@@ -2,6 +2,8 @@ import { ConditionType } from "../../../../src/chips-lq/types/conditions/conditi
 import { ConditionOperands } from "../../../../src/chips-lq/types/conditions/operands/condition-operands.enum";
 import { JoinerOperands } from "../../../../src/chips-lq/types/conditions/operands/joiner-operands.enum";
 import { Functions } from "../../../../src/chips-lq/types/functions/functions.enum";
+import { JoinIncludes } from "../../../../src/chips-lq/types/joins/join-includes.enum";
+import { JoinTypes } from "../../../../src/chips-lq/types/joins/join-types.enum";
 import { QueryTypes } from "../../../../src/chips-lq/types/queries/query.type";
 import { ValueTypes } from "../../../../src/chips-lq/types/values/value.type";
 import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
@@ -255,4 +257,71 @@ service.expectQuery(
     },
   },
   "SELECT [c].* FROM [sales].[customers] [c] WHERE ([c].[email] LIKE '%test@tmw.cat%' OR ([c].[city] = 'ol'' Baetulo' AND [c].[phone] != '555 xx xx xx'));"
+);
+
+service.expectQuery(
+  "Select with INNER JOIN and IN statement",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.ALL_COLUMNS,
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        schema: "sales",
+        alias: "c",
+      },
+    ],
+    joins: [
+      {
+        joinType: JoinTypes.TABLE,
+        include: JoinIncludes.INNER,
+        table: {
+          name: "orders",
+          schema: "sales",
+          alias: "o",
+        },
+        on: {
+          conditionType: ConditionType.CONDITION,
+          conditionOperand: ConditionOperands.EQUALS,
+          sourceValue: {
+            valueType: ValueTypes.COLUMN,
+            field: "customer_id",
+            tableAlias: "o",
+          },
+          targetValue: {
+            valueType: ValueTypes.COLUMN,
+            field: "customer_id",
+            tableAlias: "c",
+          },
+        },
+      },
+    ],
+    where: {
+      conditionType: ConditionType.CONDITION,
+      conditionOperand: ConditionOperands.IN,
+      sourceValue: {
+        valueType: ValueTypes.COLUMN,
+        field: "store_id",
+        tableAlias: "o",
+      },
+      targetValue: {
+        valueType: ValueTypes.SET,
+        values: [
+          {
+            valueType: ValueTypes.RAW_VALUE,
+            value: 17,
+          },
+          {
+            valueType: ValueTypes.RAW_VALUE,
+            value: 14,
+          },
+        ],
+      },
+    },
+  },
+  "SELECT * FROM [sales].[customers] [c] INNER JOIN [sales].[orders] [o] ON [o].[customer_id] = [c].[customer_id] WHERE [o].[store_id] IN (17, 14);"
 );

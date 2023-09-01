@@ -61,6 +61,8 @@ export class MssqlPartsCompiler<T extends Object>
         case ValueTypes.SUBSELECT:
           const { alias, distinct, ...query } = value;
           return this.subselect(query);
+        case ValueTypes.SET:
+          return `(${joinParts(value.values.map(this.value), ", ")})`;
       }
       throw new UnavailableFeatureError(value.valueType);
     };
@@ -151,6 +153,7 @@ export class MssqlPartsCompiler<T extends Object>
     return joinParts([
       direction,
       include,
+      "JOIN",
       joins,
       joinValue.on ? joinParts(["ON", this.where(joinValue.on)]) : null,
     ]);

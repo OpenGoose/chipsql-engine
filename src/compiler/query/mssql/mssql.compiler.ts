@@ -42,8 +42,8 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
         this.partsCompiler.fields(fields),
         "FROM",
         this.partsCompiler.from(from),
-        where ? joinParts(["WHERE", this.partsCompiler.where(where)]) : null,
         joins ? this.partsCompiler.joins(joins) : null,
+        where ? joinParts(["WHERE", this.partsCompiler.where(where)]) : null,
       ]) + (this.options?.semicolon ? ";" : "")
     );
   };
