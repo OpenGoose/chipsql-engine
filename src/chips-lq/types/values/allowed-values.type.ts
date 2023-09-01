@@ -1,0 +1,1 @@
+export type AllowedValues = string | number | boolean | Date;

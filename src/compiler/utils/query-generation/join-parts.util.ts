@@ -1,0 +1,1 @@
+export const joinParts = (parts: (string | undefined | null)[], joinWith: string = ' ') => parts.filter((p) => p !== undefined && p !== null).join(joinWith);

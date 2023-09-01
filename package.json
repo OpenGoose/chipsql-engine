@@ -1,0 +1,23 @@
+{
+  "name": "chipsql-engine",
+  "version": "0.0.1",
+  "description": "ChipsQL language compiler.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
+  },
+  "author": "TheMineWay",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/preset-env": "^7.22.14",
+    "@babel/preset-typescript": "^7.22.11",
+    "@types/jest": "^29.5.4",
+    "jest": "^29.6.4",
+    "ts-jest": "^29.1.1"
+  },
+  "dependencies": {
+    "date-fns": "^2.30.0"
+  }
+}
