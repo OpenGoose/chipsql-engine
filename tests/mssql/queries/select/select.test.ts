@@ -1,6 +1,5 @@
-import {
-  QueryTypes,
-} from "../../../../src/chips-lq/types/queries/query.type";
+import { Functions } from "../../../../src/chips-lq/types/functions/functions.enum";
+import { QueryTypes } from "../../../../src/chips-lq/types/queries/query.type";
 import { ValueTypes } from "../../../../src/chips-lq/types/values/value.type";
 import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
 import { TestService } from "../../../test.service";
@@ -25,26 +24,29 @@ service.expectQuery(
   "SELECT * FROM [users];"
 );
 
-service.expectQuery('Select muliple fields',
-{
+service.expectQuery(
+  "Select muliple fields",
+  {
     queryType: QueryTypes.SELECT,
     fields: [
-        {
-            valueType: ValueTypes.COLUMN,
-            field: 'name',
-        },
-        {
-            valueType: ValueTypes.RAW_VALUE,
-            value: 'TheMineWay',
-            alias: 'admin',
-        }
+      {
+        valueType: ValueTypes.COLUMN,
+        field: "name",
+      },
+      {
+        valueType: ValueTypes.RAW_VALUE,
+        value: "TheMineWay",
+        alias: "admin",
+      },
     ],
     from: [
-        {
-            name: 'employees',
-        }
-    ]
-}, "SELECT [name], 'TheMineWay' AS 'admin' FROM [employees];");
+      {
+        name: "employees",
+      },
+    ],
+  },
+  "SELECT [name], 'TheMineWay' AS 'admin' FROM [employees];"
+);
 
 service.expectQuery(
   "Select multiple fields with aliases",
@@ -70,9 +72,36 @@ service.expectQuery(
       {
         name: "users",
         alias: "u",
-        schema: 'auth',
+        schema: "auth",
       },
     ],
   },
   "SELECT [a].[iban], [u].[name] FROM [accounts] a, [auth].[users] u;"
+);
+
+service.expectQuery(
+  "Select using functions",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.FUNCTION,
+        function: Functions.COUNT,
+        value: {
+          valueType: ValueTypes.COLUMN,
+          field: "store_id",
+          tableAlias: "s",
+        },
+        alias: "stores_count",
+      },
+    ],
+    from: [
+      {
+        name: "stores",
+        schema: "sales",
+        alias: "s",
+      },
+    ],
+  },
+  "SELECT COUNT([s].[store_id]) AS 'stores_count' FROM [sales].[stores] s;"
 );
