@@ -11,13 +11,20 @@ import { format, isDate } from "date-fns";
 import { IQueryPartsCompiler } from "../query-parts-compiler.interface";
 import { mssqlFunctions } from "../../functions/mssql/mssql-functions";
 import { MssqlCompiler } from "./mssql.compiler";
-import { Query, QueryTypes } from "../../../chips-lq/types/queries/query.type";
+import { QueryTypes } from "../../../chips-lq/types/queries/query.type";
+import { Join } from "../../../chips-lq/types/joins/join.type";
+import { valueSelector } from "../../utils/selectors/value-selector.util";
+import { JoinDirections } from "../../../chips-lq/types/joins/join-directions.enum";
+import { JoinIncludes } from "../../../chips-lq/types/joins/join-includes.enum";
+import { JoinTypes } from "../../../chips-lq/types/joins/join-types.enum";
+import { Select } from "../../../chips-lq/types/queries/select.type";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
 {
   fields = (values: Value<T>[]) => values.map(this.value).join(", ");
   from = (tables: Table<T>[]) => tables.map(this.table).join(", ");
+  joins = (joinValues: Join<T>[]) => joinValues.map(this.join).join(" ");
 
   // Specific
   value = (value: Value<T>) => {
@@ -43,15 +50,7 @@ export class MssqlPartsCompiler<T extends Object>
           return `@${value.name}`;
         case ValueTypes.SUBSELECT:
           const { alias, distinct, ...query } = value;
-          return `(${new MssqlCompiler(
-            {
-              ...query,
-              queryType: QueryTypes.SELECT,
-            },
-            {
-              semicolon: false,
-            }
-          ).compile()})`;
+          return this.subselect(query);
       }
       throw new UnavailableFeatureError(value.valueType);
     };
@@ -74,6 +73,44 @@ export class MssqlPartsCompiler<T extends Object>
       ),
       table.alias ? this.generateField(table.alias) : null,
     ]);
+  };
+
+  join = (joinValue: Join<T>) => {
+    const direction = valueSelector(
+      {
+        [JoinDirections.FULL]: "FULL",
+        [JoinDirections.RIGHT]: "RIGHT",
+        [JoinDirections.LEFT]: "LEFT",
+      },
+      joinValue.direction
+    );
+
+    const include = valueSelector(
+      {
+        [JoinIncludes.INNER]: "INNER",
+        [JoinIncludes.OUTER]: "OUTER",
+      },
+      joinValue.include
+    );
+
+    const joins =
+      joinValue.joinType === JoinTypes.TABLE
+        ? this.table(joinValue.table)
+        : this.subselect(joinValue.select);
+
+    return joinParts([direction, include, joins, "ON"]);
+  };
+
+  subselect = (select: Omit<Select<Object>, "queryType">) => {
+    return `(${new MssqlCompiler(
+      {
+        ...select,
+        queryType: QueryTypes.SELECT,
+      },
+      {
+        semicolon: false,
+      }
+    ).compile()})`;
   };
 
   // Utils
