@@ -17,11 +17,11 @@ service.expectQuery(
     ],
     from: [
       {
-        name: "users",
+        name: "customers",
       },
     ],
   },
-  "SELECT * FROM [users];"
+  "SELECT * FROM [customers];"
 );
 
 service.expectQuery(
@@ -31,7 +31,8 @@ service.expectQuery(
     fields: [
       {
         valueType: ValueTypes.COLUMN,
-        field: "name",
+        field: "first_name",
+        alias: "name",
       },
       {
         valueType: ValueTypes.RAW_VALUE,
@@ -41,11 +42,11 @@ service.expectQuery(
     ],
     from: [
       {
-        name: "employees",
+        name: "customers",
       },
     ],
   },
-  "SELECT [name], 'TheMineWay' AS 'admin' FROM [employees];"
+  "SELECT [first_name] AS 'name', 'TheMineWay' AS 'admin' FROM [customers];"
 );
 
 service.expectQuery(
@@ -55,28 +56,28 @@ service.expectQuery(
     fields: [
       {
         valueType: ValueTypes.COLUMN,
-        field: "iban",
-        tableAlias: "a",
+        field: "customer_id",
+        tableAlias: "c",
       },
       {
         valueType: ValueTypes.COLUMN,
-        field: "name",
-        tableAlias: "u",
+        field: "order_id",
+        tableAlias: "o",
       },
     ],
     from: [
       {
-        name: "accounts",
-        alias: "a",
+        name: "customers",
+        alias: "c",
       },
       {
-        name: "users",
-        alias: "u",
-        schema: "auth",
+        name: "orders",
+        alias: "o",
+        schema: "sales",
       },
     ],
   },
-  "SELECT [a].[iban], [u].[name] FROM [accounts] a, [auth].[users] u;"
+  "SELECT [c].[customer_id], [o].[order_id] FROM [customers] c, [sales].[orders] o;"
 );
 
 service.expectQuery(
