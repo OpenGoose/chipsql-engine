@@ -35,13 +35,15 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
 
   // Static
 
-  compileSelect = ({ fields, from, ...select }: Select<T>) => {
+  compileSelect = ({ fields, from, where, joins, ...select }: Select<T>) => {
     return (
       joinParts([
         "SELECT",
         this.partsCompiler.fields(fields),
         "FROM",
         this.partsCompiler.from(from),
+        where ? joinParts(["WHERE", this.partsCompiler.where(where)]) : null,
+        joins ? this.partsCompiler.joins(joins) : null,
       ]) + (this.options?.semicolon ? ";" : "")
     );
   };

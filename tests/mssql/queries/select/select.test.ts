@@ -1,3 +1,6 @@
+import { ConditionType } from "../../../../src/chips-lq/types/conditions/condition-type.enum";
+import { ConditionOperands } from "../../../../src/chips-lq/types/conditions/operands/condition-operands.enum";
+import { JoinerOperands } from "../../../../src/chips-lq/types/conditions/operands/joiner-operands.enum";
 import { Functions } from "../../../../src/chips-lq/types/functions/functions.enum";
 import { QueryTypes } from "../../../../src/chips-lq/types/queries/query.type";
 import { ValueTypes } from "../../../../src/chips-lq/types/values/value.type";
@@ -180,4 +183,76 @@ service.expectQuery(
     ],
   },
   "SELECT [c].[first_name] AS 'name', (SELECT COUNT([o].[order_id]) FROM [sales].[orders] [o]) AS 'count' FROM [sales].[customers] [c];"
+);
+
+service.expectQuery(
+  "Select with simple WHERE with escaping character",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.ALL_COLUMNS,
+        tableAlias: "c",
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        alias: "c",
+        schema: "sales",
+      },
+    ],
+    where: {
+      conditionType: ConditionType.JOINER,
+      joinerOperand: JoinerOperands.OR,
+      conditions: [
+        {
+          conditionType: ConditionType.CONDITION,
+          conditionOperand: ConditionOperands.LIKE,
+          sourceValue: {
+            valueType: ValueTypes.COLUMN,
+            tableAlias: "c",
+            field: "email",
+          },
+          targetValue: {
+            valueType: ValueTypes.RAW_VALUE,
+            value: "%test@tmw.cat%",
+          },
+        },
+        {
+          conditionType: ConditionType.JOINER,
+          joinerOperand: JoinerOperands.AND,
+          conditions: [
+            {
+              conditionType: ConditionType.CONDITION,
+              conditionOperand: ConditionOperands.EQUALS,
+              sourceValue: {
+                valueType: ValueTypes.COLUMN,
+                field: "city",
+                tableAlias: "c",
+              },
+              targetValue: {
+                valueType: ValueTypes.RAW_VALUE,
+                value: "ol' Baetulo",
+              },
+            },
+            {
+              conditionType: ConditionType.CONDITION,
+              conditionOperand: ConditionOperands.NOT_EQUALS,
+              sourceValue: {
+                valueType: ValueTypes.COLUMN,
+                tableAlias: "c",
+                field: "phone",
+              },
+              targetValue: {
+                valueType: ValueTypes.RAW_VALUE,
+                value: "555 xx xx xx",
+              },
+            },
+          ],
+        },
+      ],
+    },
+  },
+  "SELECT [c].* FROM [sales].[customers] [c] WHERE (([c].[email] LIKE '%test@tmw.cat%') OR (([c].[city] = 'ol'' Baetulo') AND ([c].[phone] != '555 xx xx xx')));"
 );

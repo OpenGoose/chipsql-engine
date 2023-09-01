@@ -18,6 +18,10 @@ import { JoinDirections } from "../../../chips-lq/types/joins/join-directions.en
 import { JoinIncludes } from "../../../chips-lq/types/joins/join-includes.enum";
 import { JoinTypes } from "../../../chips-lq/types/joins/join-types.enum";
 import { Select } from "../../../chips-lq/types/queries/select.type";
+import { Where } from "../../../chips-lq/types/conditions/where.type";
+import { ConditionType } from "../../../chips-lq/types/conditions/condition-type.enum";
+import { JoinerOperands } from "../../../chips-lq/types/conditions/operands/joiner-operands.enum";
+import { ConditionOperands } from "../../../chips-lq/types/conditions/operands/condition-operands.enum";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
@@ -35,7 +39,13 @@ export class MssqlPartsCompiler<T extends Object>
         case ValueTypes.RAW_VALUE:
           return this.escape(value.value);
         case ValueTypes.ALL_COLUMNS:
-          return "*";
+          return joinParts(
+            [
+              value.tableAlias ? this.generateField(value.tableAlias) : null,
+              "*",
+            ],
+            "."
+          );
         case ValueTypes.COLUMN:
           return joinParts(
             [
@@ -75,6 +85,46 @@ export class MssqlPartsCompiler<T extends Object>
     ]);
   };
 
+  where = (whereValue: Where<T>): string => {
+    if (whereValue.conditionType === ConditionType.JOINER) {
+      const joiner = valueSelector(
+        {
+          [JoinerOperands.AND]: "AND",
+          [JoinerOperands.OR]: "OR",
+        },
+        whereValue.joinerOperand
+      );
+      return `(${joinParts(
+        whereValue.conditions.map(this.where),
+        ` ${joiner} `
+      )})`;
+    }
+
+    // Logical condition
+
+    const operand = valueSelector(
+      {
+        [ConditionOperands.EQUALS]: "=",
+        [ConditionOperands.EQUALS_OR_GREATER_THAN]: ">=",
+        [ConditionOperands.EQUALS_OR_LESS_THAN]: "<=",
+        [ConditionOperands.GHREATER_THAN]: ">",
+        [ConditionOperands.IN]: "IN",
+        [ConditionOperands.LESS_THAN]: "<",
+        [ConditionOperands.LIKE]: "LIKE",
+        [ConditionOperands.NOT_LIKE]: "NOT LIKE",
+        [ConditionOperands.NOT_EQUALS]: "!=",
+        [ConditionOperands.NOT_IN]: "NOT IN",
+      },
+      whereValue.conditionOperand
+    );
+
+    return `(${joinParts([
+      this.value(whereValue.sourceValue),
+      operand,
+      this.value(whereValue.targetValue),
+    ])})`;
+  };
+
   join = (joinValue: Join<T>) => {
     const direction = valueSelector(
       {
@@ -98,7 +148,12 @@ export class MssqlPartsCompiler<T extends Object>
         ? this.table(joinValue.table)
         : this.subselect(joinValue.select);
 
-    return joinParts([direction, include, joins, "ON"]);
+    return joinParts([
+      direction,
+      include,
+      joins,
+      joinValue.on ? joinParts(["ON", this.where(joinValue.on)]) : null,
+    ]);
   };
 
   subselect = (select: Omit<Select<Object>, "queryType">) => {
