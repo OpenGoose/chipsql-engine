@@ -22,6 +22,8 @@ import { Where } from "../../../chips-lq/types/conditions/where.type";
 import { ConditionType } from "../../../chips-lq/types/conditions/condition-type.enum";
 import { JoinerOperands } from "../../../chips-lq/types/conditions/operands/joiner-operands.enum";
 import { ConditionOperands } from "../../../chips-lq/types/conditions/operands/condition-operands.enum";
+import { OrderBy } from "../../../chips-lq/types/order/order-by.type";
+import { OrderDirection } from "../../../chips-lq/types/order/order-direction.enum";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
@@ -29,6 +31,8 @@ export class MssqlPartsCompiler<T extends Object>
   fields = (values: Value<T>[]) => values.map(this.value).join(", ");
   from = (tables: Table<T>[]) => tables.map(this.table).join(", ");
   joins = (joinValues: Join<T>[]) => joinValues.map(this.join).join(" ");
+  orders = (orderValues: OrderBy<T>[]) =>
+    orderValues.map(this.orderBy).join(", ");
 
   // Specific
   value = (value: Value<T>): string => {
@@ -169,6 +173,23 @@ export class MssqlPartsCompiler<T extends Object>
         semicolon: false,
       }
     ).compile()})`;
+  };
+
+  orderBy = (orderByValue: OrderBy<T>) => {
+    const value =
+      typeof orderByValue.field === "number"
+        ? orderByValue.field.toString()
+        : this.value(orderByValue.field);
+
+    const direction = valueSelector(
+      {
+        [OrderDirection.ASC]: "ASC",
+        [OrderDirection.DESC]: "DESC",
+      },
+      orderByValue.direction
+    );
+
+    return joinParts([value, direction]);
   };
 
   limit = (limitValue: Value<T>) => this.value(limitValue);

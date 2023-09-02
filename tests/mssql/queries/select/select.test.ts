@@ -4,6 +4,7 @@ import { JoinerOperands } from "../../../../src/chips-lq/types/conditions/operan
 import { Functions } from "../../../../src/chips-lq/types/functions/functions.enum";
 import { JoinIncludes } from "../../../../src/chips-lq/types/joins/join-includes.enum";
 import { JoinTypes } from "../../../../src/chips-lq/types/joins/join-types.enum";
+import { OrderDirection } from "../../../../src/chips-lq/types/order/order-direction.enum";
 import { QueryTypes } from "../../../../src/chips-lq/types/queries/query.type";
 import { ValueTypes } from "../../../../src/chips-lq/types/values/value.type";
 import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
@@ -399,7 +400,7 @@ service.expectQuery(
 );
 
 service.expectQuery(
-  "SELECT using LIMIT and OFFSET",
+  "SELECT using ORDER BY, LIMIT and OFFSET",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -413,6 +414,15 @@ service.expectQuery(
         schema: "sales",
       },
     ],
+    orderBy: [
+      {
+        direction: OrderDirection.DESC,
+        field: {
+          valueType: ValueTypes.COLUMN,
+          field: "zip_code",
+        },
+      },
+    ],
     limit: {
       valueType: ValueTypes.RAW_VALUE,
       value: 25,
@@ -422,5 +432,5 @@ service.expectQuery(
       value: 10,
     },
   },
-  "SELECT * FROM [sales].[customers] OFFSET 10 ROWS FETCH FIRST 25 ROWS ONLY;"
+  "SELECT * FROM [sales].[customers] ORDER BY [zip_code] DESC OFFSET 10 ROWS FETCH FIRST 25 ROWS ONLY;"
 );

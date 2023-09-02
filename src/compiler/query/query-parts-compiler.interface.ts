@@ -1,5 +1,6 @@
 import { Where } from "../../chips-lq/types/conditions/where.type";
 import { Join } from "../../chips-lq/types/joins/join.type";
+import { OrderBy } from "../../chips-lq/types/order/order-by.type";
 import { Table } from "../../chips-lq/types/tables/table.type";
 import { AllowedValues } from "../../chips-lq/types/values/allowed-values.type";
 import { Value } from "../../chips-lq/types/values/value.type";
@@ -10,11 +11,13 @@ export interface IQueryPartsCompiler<T extends Object> {
   from: (tables: Table<T>[]) => string;
   where: (whereValue: Where<T>) => string;
   joins: (joinValues: Join<T>[]) => string;
+  orders: (orderByValue: OrderBy<T>[]) => string;
 
   // Specific
   value: (value: Value<T>) => string;
   table: (table: Table<T>) => string;
   join: (joinValue: Join<T>) => string;
+  orderBy: (orderByValue: OrderBy<T>) => string;
   limit: (limitValue: Value<T>) => string;
   offset: (offsetValue: Value<T>) => string;
 
