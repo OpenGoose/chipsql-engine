@@ -23,7 +23,7 @@ export class QueryWarn<T extends Object> {
       }:\n${this.warnings
         .map(
           (w) =>
-            `[${this.levelIcons(w.level)}]: ${w.message}.${this.levelPrefix(
+            `${this.levelIcons(w.level)}: ${w.message}.${this.levelPrefix(
               w.level
             )}`
         )
