@@ -47,12 +47,16 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
     return (
       joinParts([
         "SELECT",
-        limit ? `TOP ${this.partsCompiler.limit(limit)}` : null,
+        limit && !offset ? `TOP ${this.partsCompiler.limit(limit)}` : null,
         this.partsCompiler.fields(fields),
         "FROM",
         this.partsCompiler.from(from),
         joins ? this.partsCompiler.joins(joins) : null,
         where ? joinParts(["WHERE", this.partsCompiler.where(where)]) : null,
+        offset ? `OFFSET ${this.partsCompiler.offset(offset)} ROWS` : null,
+        limit && offset
+          ? `FETCH FIRST ${this.partsCompiler.limit(limit)} ROWS ONLY`
+          : null,
       ]) + (this.options?.semicolon ? ";" : "")
     );
   };

@@ -397,3 +397,30 @@ service.expectQuery(
   },
   "SELECT * FROM [sales].[customers] [c] WHERE [c].[zip_code] IN ('xxxxx', (SELECT TOP 1 [c2].[zip_code] FROM [sales].[customers] [c2] WHERE [c2].[email] = 'x@themineway.cat'));"
 );
+
+service.expectQuery(
+  "SELECT using LIMIT and OFFSET",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.ALL_COLUMNS,
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        schema: "sales",
+      },
+    ],
+    limit: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: 25,
+    },
+    offset: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: 10,
+    },
+  },
+  "SELECT * FROM [sales].[customers] OFFSET 10 ROWS FETCH FIRST 25 ROWS ONLY;"
+);
