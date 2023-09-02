@@ -31,7 +31,7 @@ export class MssqlPartsCompiler<T extends Object>
   joins = (joinValues: Join<T>[]) => joinValues.map(this.join).join(" ");
 
   // Specific
-  value = (value: Value<T>) => {
+  value = (value: Value<T>): string => {
     const processValue = () => {
       switch (value.valueType) {
         case ValueTypes.RAW_SQL:
@@ -170,6 +170,9 @@ export class MssqlPartsCompiler<T extends Object>
       }
     ).compile()})`;
   };
+
+  limit = (limitValue: Value<T>) => this.value(limitValue);
+  offset = (offsetValue: Value<T>) => this.value(offsetValue);
 
   // Utils
   escape = (value: AllowedValues) => {

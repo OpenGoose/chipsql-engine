@@ -15,6 +15,8 @@ export interface IQueryPartsCompiler<T extends Object> {
   value: (value: Value<T>) => string;
   table: (table: Table<T>) => string;
   join: (joinValue: Join<T>) => string;
+  limit: (limitValue: Value<T>) => string;
+  offset: (offsetValue: Value<T>) => string;
 
   // Utils
   escape: (value: AllowedValues) => string;

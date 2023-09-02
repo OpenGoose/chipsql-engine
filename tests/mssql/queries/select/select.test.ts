@@ -12,7 +12,7 @@ import { TestService } from "../../../test.service";
 const service = new TestService(SqlLanguages.MSSQL);
 
 service.expectQuery(
-  "Generate select all",
+  "Generate SELECT ALL",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -30,7 +30,7 @@ service.expectQuery(
 );
 
 service.expectQuery(
-  "Select muliple fields",
+  "SELECT muliple fields",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -55,7 +55,7 @@ service.expectQuery(
 );
 
 service.expectQuery(
-  "Select multiple fields with aliases",
+  "SELECT multiple fields with aliases",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -86,7 +86,7 @@ service.expectQuery(
 );
 
 service.expectQuery(
-  "Select using COUNT function",
+  "SELECT using COUNT function",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -113,7 +113,7 @@ service.expectQuery(
 );
 
 service.expectQuery(
-  "Select using custom function",
+  "SELECT using custom function",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -143,7 +143,7 @@ service.expectQuery(
 );
 
 service.expectQuery(
-  "Query using subselect",
+  "SELECT using subselect",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -188,7 +188,7 @@ service.expectQuery(
 );
 
 service.expectQuery(
-  "Select with simple WHERE with escaping character",
+  "SELECT with simple WHERE with escaping character",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -218,7 +218,7 @@ service.expectQuery(
           },
           targetValue: {
             valueType: ValueTypes.RAW_VALUE,
-            value: "%test@tmw.cat%",
+            value: "%test@themineway.cat%",
           },
         },
         {
@@ -256,11 +256,11 @@ service.expectQuery(
       ],
     },
   },
-  "SELECT [c].* FROM [sales].[customers] [c] WHERE ([c].[email] LIKE '%test@tmw.cat%' OR ([c].[city] = 'ol'' Baetulo' AND [c].[phone] != '555 xx xx xx'));"
+  "SELECT [c].* FROM [sales].[customers] [c] WHERE ([c].[email] LIKE '%test@themineway.cat%' OR ([c].[city] = 'ol'' Baetulo' AND [c].[phone] != '555 xx xx xx'));"
 );
 
 service.expectQuery(
-  "Select with INNER JOIN and IN statement",
+  "SELECT with INNER JOIN and IN statement",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -324,4 +324,76 @@ service.expectQuery(
     },
   },
   "SELECT * FROM [sales].[customers] [c] INNER JOIN [sales].[orders] [o] ON [o].[customer_id] = [c].[customer_id] WHERE [o].[store_id] IN (17, 14);"
+);
+
+service.expectQuery(
+  "SELECT using a WHERE statement and a SUBSELECT inside a SET using a TOP clause",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.ALL_COLUMNS,
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        schema: "sales",
+        alias: "c",
+      },
+    ],
+    where: {
+      conditionType: ConditionType.CONDITION,
+      conditionOperand: ConditionOperands.IN,
+      sourceValue: {
+        valueType: ValueTypes.COLUMN,
+        field: "zip_code",
+        tableAlias: "c",
+      },
+      targetValue: {
+        valueType: ValueTypes.SET,
+        values: [
+          {
+            valueType: ValueTypes.RAW_VALUE,
+            value: "xxxxx",
+          },
+          {
+            valueType: ValueTypes.SUBSELECT,
+            fields: [
+              {
+                valueType: ValueTypes.COLUMN,
+                field: "zip_code",
+                tableAlias: "c2",
+              },
+            ],
+            from: [
+              {
+                name: "customers",
+                schema: "sales",
+                alias: "c2",
+              },
+            ],
+            where: {
+              conditionType: ConditionType.CONDITION,
+              conditionOperand: ConditionOperands.EQUALS,
+              sourceValue: {
+                valueType: ValueTypes.COLUMN,
+                field: "email",
+                tableAlias: "c2",
+              },
+              targetValue: {
+                valueType: ValueTypes.RAW_VALUE,
+                value: "x@themineway.cat",
+              },
+            },
+            limit: {
+              valueType: ValueTypes.RAW_VALUE,
+              value: 1,
+            },
+          },
+        ],
+      },
+    },
+  },
+  "SELECT * FROM [sales].[customers] [c] WHERE [c].[zip_code] IN ('xxxxx', (SELECT TOP 1 [c2].[zip_code] FROM [sales].[customers] [c2] WHERE [c2].[email] = 'x@themineway.cat'));"
 );
