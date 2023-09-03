@@ -864,3 +864,39 @@ service.expectQuery(
   },
   "SELECT * FROM [sales].[customers] WHERE [first_name] = 'Ol'' L''Àvia';"
 );
+
+service.expectQuery(
+  "Generate SELECT with ALL datatypes",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.RAW_VALUE,
+        value: "HI",
+        alias: "name",
+      },
+      {
+        valueType: ValueTypes.RAW_VALUE,
+        value: true,
+        alias: "'SQL' injection free?",
+      },
+      {
+        valueType: ValueTypes.RAW_VALUE,
+        value: false,
+        alias: "Does ChipsQL require payment?",
+      },
+      {
+        valueType: ValueTypes.RAW_VALUE,
+        value: new Date("2023-09-03 22:06:00"),
+        alias: "Commit date",
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        schema: "sales",
+      },
+    ],
+  },
+  "SELECT 'HI' AS 'name', 1 AS '''SQL'' injection free?', 0 AS 'Does ChipsQL require payment?', '2023-09-03 22:06:00' AS 'Commit date' FROM [sales].[customers];"
+);

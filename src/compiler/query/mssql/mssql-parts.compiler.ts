@@ -87,7 +87,7 @@ export class MssqlPartsCompiler<T extends Object>
     return joinParts([
       value.distinct ? "DISTINCT" : null,
       processValue(),
-      value.alias ? `AS '${value.alias}'` : null,
+      value.alias ? `AS ${this.escape(value.alias)}` : null,
     ]);
   };
 
@@ -232,8 +232,9 @@ export class MssqlPartsCompiler<T extends Object>
 
   // Utils
   escape = (value: AllowedValues) => {
-    if (isDate(value))
-      return format(value as Date, "YYYY-MM-DD hh:mm:ss[.nnnnnnn]");
+    if (isDate(value)) {
+      return `'${format(value as Date, "yyyy-MM-dd HH:mm:ss")}'`;
+    }
     switch (typeof value) {
       case "string":
         return `'${value.replace(/'/g, "''")}'`;
