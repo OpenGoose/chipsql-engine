@@ -24,6 +24,7 @@ import { JoinerOperands } from "../../../chips-lq/types/conditions/operands/join
 import { ConditionOperands } from "../../../chips-lq/types/conditions/operands/condition-operands.enum";
 import { OrderBy } from "../../../chips-lq/types/order/order-by.type";
 import { OrderDirection } from "../../../chips-lq/types/order/order-direction.enum";
+import { GroupBy } from "../../../chips-lq/types/grouping/group-by.type";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
@@ -175,6 +176,11 @@ export class MssqlPartsCompiler<T extends Object>
     ).compile()})`;
   };
 
+  grouping = (groupingValues: GroupBy<T>[]) =>
+    joinParts(groupingValues.map(this.groupBy));
+
+  having = (havingValue: Where<T>) => this.where(havingValue);
+
   orderBy = (orderByValue: OrderBy<T>) => {
     const value =
       typeof orderByValue.field === "number"
@@ -194,6 +200,11 @@ export class MssqlPartsCompiler<T extends Object>
 
   limit = (limitValue: Value<T>) => this.value(limitValue);
   offset = (offsetValue: Value<T>) => this.value(offsetValue);
+
+  groupBy = (groupByValue: GroupBy<T>) => {
+    if (typeof groupByValue === "number") return groupByValue.toString();
+    return this.value(groupByValue);
+  };
 
   // Utils
   escape = (value: AllowedValues) => {

@@ -46,6 +46,8 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
     limit,
     offset,
     orderBy,
+    having,
+    groupBy,
     ...select
   }: Select<T>) => {
     return (
@@ -57,6 +59,12 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
         this.partsCompiler.from(from),
         joins ? this.partsCompiler.joins(joins) : null,
         where ? joinParts(["WHERE", this.partsCompiler.where(where)]) : null,
+        groupBy
+          ? joinParts(["GROUP BY", this.partsCompiler.grouping(groupBy)])
+          : null,
+        having
+          ? joinParts(["HAVING", this.partsCompiler.having(having)])
+          : having,
         orderBy ? `ORDER BY ${this.partsCompiler.orders(orderBy)}` : null,
         offset ? `OFFSET ${this.partsCompiler.offset(offset)} ROWS` : null,
         limit && offset

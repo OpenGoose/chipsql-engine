@@ -434,3 +434,42 @@ service.expectQuery(
   },
   "SELECT * FROM [sales].[customers] ORDER BY [zip_code] DESC OFFSET 10 ROWS FETCH FIRST 25 ROWS ONLY;"
 );
+
+service.expectQuery(
+  "SELECT with GROUP BY and COUNT",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.COLUMN,
+        field: "city",
+        tableAlias: "c",
+      },
+      {
+        valueType: ValueTypes.FUNCTION,
+        function: Functions.COUNT,
+        value: {
+          valueType: ValueTypes.COLUMN,
+          field: "customer_id",
+          tableAlias: "c",
+        },
+        alias: "count",
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        schema: "sales",
+        alias: "c",
+      },
+    ],
+    groupBy: [
+      {
+        valueType: ValueTypes.COLUMN,
+        field: "city",
+        tableAlias: "c",
+      },
+    ],
+  },
+  "SELECT [c].[city], COUNT([c].[customer_id]) AS 'count' FROM [sales].[customers] [c] GROUP BY [c].[city];"
+);

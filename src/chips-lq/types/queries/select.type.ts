@@ -7,17 +7,17 @@ import { Value } from "../values/value.type";
 import { QueryTypes } from "./query.type";
 
 export interface Select<T extends Object> {
-    queryType: QueryTypes.SELECT;
-    where?: Where<T>;
-    fields: Value<T>[];
-    from: Table<T>[];
-    joins?: Join<T>[];
+  queryType: QueryTypes.SELECT;
+  where?: Where<T>;
+  fields: Value<T>[];
+  from: Table<T>[];
+  joins?: Join<T>[];
 
-    groupBy?: GroupBy<T>;
-    having?: Where<T>;
+  groupBy?: GroupBy<T>[];
+  having?: Where<T>;
 
-    orderBy?: OrderBy<T>[];
+  orderBy?: OrderBy<T>[];
 
-    limit?: Value<T>;
-    offset?: Value<T>;
+  limit?: Value<T>;
+  offset?: Value<T>;
 }
