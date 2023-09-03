@@ -20,4 +20,6 @@ export interface Select<T extends Object> {
 
   limit?: Value<T>;
   offset?: Value<T>;
+
+  into?: Table<Object>;
 }
