@@ -2,6 +2,7 @@ import { ConditionType } from "../../../../src/chips-lq/types/conditions/conditi
 import { ConditionOperands } from "../../../../src/chips-lq/types/conditions/operands/condition-operands.enum";
 import { JoinerOperands } from "../../../../src/chips-lq/types/conditions/operands/joiner-operands.enum";
 import { Functions } from "../../../../src/chips-lq/types/functions/functions.enum";
+import { JoinDirections } from "../../../../src/chips-lq/types/joins/join-directions.enum";
 import { JoinIncludes } from "../../../../src/chips-lq/types/joins/join-includes.enum";
 import { JoinTypes } from "../../../../src/chips-lq/types/joins/join-types.enum";
 import { OrderDirection } from "../../../../src/chips-lq/types/order/order-direction.enum";
@@ -472,4 +473,50 @@ service.expectQuery(
     ],
   },
   "SELECT [c].[city], COUNT([c].[customer_id]) AS 'count' FROM [sales].[customers] [c] GROUP BY [c].[city];"
+);
+
+service.expectQuery(
+  "SELECT with FULL OUTER JOIN",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.ALL_COLUMNS,
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        schema: "sales",
+        alias: "c",
+      },
+    ],
+    joins: [
+      {
+        joinType: JoinTypes.TABLE,
+        table: {
+          name: "orders",
+          schema: "sales",
+          alias: "o",
+        },
+        direction: JoinDirections.FULL,
+        include: JoinIncludes.OUTER,
+        on: {
+          conditionType: ConditionType.CONDITION,
+          conditionOperand: ConditionOperands.EQUALS,
+          sourceValue: {
+            valueType: ValueTypes.COLUMN,
+            field: "customer_id",
+            tableAlias: "o",
+          },
+          targetValue: {
+            valueType: ValueTypes.COLUMN,
+            field: "customer_id",
+            tableAlias: "c",
+          },
+        },
+      },
+    ],
+  },
+  "SELECT * FROM [sales].[customers] [c] FULL OUTER JOIN [sales].[orders] [o] ON [o].[customer_id] = [c].[customer_id];"
 );
