@@ -81,12 +81,18 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
         SELECT WARNINGS
       */
       case QueryTypes.SELECT:
-        const { offset, orderBy } = query;
+        const { offset, orderBy, groupBy, having } = query;
         if (offset && (!orderBy || orderBy.length <= 0))
           queryWarn.appendWarning(
             "ORDER BY is required when using OFFSET",
             WarningLevels.EXECUTION_WILL_FAIL
           );
+        if (having && (!groupBy || groupBy.length <= 0)) {
+          queryWarn.appendWarning(
+            "GROUP BY is required when using HAVING",
+            WarningLevels.EXECUTION_WILL_FAIL
+          );
+        }
         break;
     }
     return queryWarn;

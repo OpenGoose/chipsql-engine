@@ -2,13 +2,18 @@ import { Query } from "../chips-lq/types/queries/query.type";
 import { SqlLanguages } from "../sql/sql-languages.enum";
 import { WarningLevels } from "./warning-levels.enum";
 
+export interface Warning {
+  message: string;
+  level: WarningLevels;
+}
+
 export class QueryWarn<T extends Object> {
   constructor(
     private readonly query: Query<T>,
     private readonly language: SqlLanguages
   ) {}
 
-  public readonly warnings: { message: string; level: WarningLevels }[] = [];
+  public readonly warnings: Warning[] = [];
 
   appendWarning = (
     message: string,

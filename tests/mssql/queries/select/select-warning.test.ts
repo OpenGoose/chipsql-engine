@@ -1,10 +1,14 @@
 import { QueryTypes } from "../../../../src/chips-lq/types/queries/query.type";
 import { ValueTypes } from "../../../../src/chips-lq/types/values/value.type";
-import { MssqlCompiler } from "../../../../src/compiler/query/mssql/mssql.compiler";
+import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
 import { WarningLevels } from "../../../../src/warnings/warning-levels.enum";
+import { TestService } from "../../../test.service";
 
-test("ORDER BY is required when using OFFSET", () => {
-  const warnings = MssqlCompiler.processQueryWarnings({
+const service = new TestService(SqlLanguages.MSSQL);
+
+service.expectWarning(
+  "ORDER BY is required when using OFFSET",
+  {
     queryType: QueryTypes.SELECT,
     fields: [
       {
@@ -20,14 +24,9 @@ test("ORDER BY is required when using OFFSET", () => {
       valueType: ValueTypes.RAW_VALUE,
       value: 10,
     },
-  });
-
-  expect(warnings.warnings.length).toBe(1);
-  expect(
-    warnings.warnings.find(
-      (w) =>
-        w.level === WarningLevels.EXECUTION_WILL_FAIL &&
-        w.message === "ORDER BY is required when using OFFSET"
-    )
-  ).toBeTruthy();
-});
+  },
+  {
+    level: WarningLevels.EXECUTION_WILL_FAIL,
+    message: "ORDER BY is required when using OFFSET",
+  }
+);
