@@ -69,7 +69,6 @@ export class MssqlPartsCompiler<T extends Object>
         case ValueTypes.SET:
           return `(${joinParts(value.values.map(this.value), ", ")})`;
       }
-      throw new UnavailableFeatureError(value.valueType);
     };
 
     return joinParts([
