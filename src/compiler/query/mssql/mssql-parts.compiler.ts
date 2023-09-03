@@ -220,6 +220,8 @@ export class MssqlPartsCompiler<T extends Object>
   limit = (limitValue: Value<T>) => this.value(limitValue);
   offset = (offsetValue: Value<T>) => this.value(offsetValue);
 
+  into = (table: Table<Object>) => this.table(table);
+
   groupBy = (groupByValue: GroupBy<T>) => {
     if (typeof groupByValue === "number") return groupByValue.toString();
     return this.value(groupByValue);

@@ -29,6 +29,7 @@ export interface IQueryPartsCompiler<T extends Object> {
   orderBy: (orderByValue: OrderBy<T>) => string;
   limit: (limitValue: Value<T>) => string;
   offset: (offsetValue: Value<T>) => string;
+  into: (table: Table<Object>) => string;
   subselect: (select: Omit<Select<Object>, "queryType">) => string;
 
   // Utils

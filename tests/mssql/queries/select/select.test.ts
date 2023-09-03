@@ -754,3 +754,25 @@ service.expectQuery(
     endWithSemicolon: false,
   }
 );
+
+service.expectQuery(
+  "Generate SELECT ALL into another table",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.ALL_COLUMNS,
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+      },
+    ],
+    into: {
+      name: "new_customers",
+      schema: "sales",
+    },
+  },
+  "SELECT * INTO [sales].[new_customers] FROM [customers];"
+);
