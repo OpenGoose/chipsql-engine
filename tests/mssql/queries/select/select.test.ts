@@ -520,3 +520,60 @@ service.expectQuery(
   },
   "SELECT * FROM [sales].[customers] [c] FULL OUTER JOIN [sales].[orders] [o] ON [o].[customer_id] = [c].[customer_id];"
 );
+
+service.expectQuery(
+  "SELECT with GROUP BY and HAVING",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.COLUMN,
+        field: "age",
+        tableAlias: "c",
+      },
+      {
+        valueType: ValueTypes.FUNCTION,
+        function: Functions.COUNT,
+        value: {
+          valueType: ValueTypes.COLUMN,
+          field: "customer_id",
+          tableAlias: "c",
+        },
+        alias: "count",
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        schema: "sales",
+        alias: "c",
+      },
+    ],
+    groupBy: [
+      {
+        valueType: ValueTypes.COLUMN,
+        field: "age",
+        tableAlias: "c",
+      },
+    ],
+    having: {
+      conditionType: ConditionType.CONDITION,
+      conditionOperand: ConditionOperands.EQUALS,
+      sourceValue: {
+        valueType: ValueTypes.COLUMN,
+        field: "age",
+        tableAlias: "c",
+      },
+      targetValue: {
+        valueType: ValueTypes.FUNCTION,
+        function: Functions.MAX,
+        value: {
+          valueType: ValueTypes.COLUMN,
+          field: "age",
+          tableAlias: "c",
+        },
+      },
+    },
+  },
+  "SELECT [c].[age], COUNT([c].[customer_id]) AS 'count' FROM [sales].[customers] [c] GROUP BY [c].[age] HAVING [c].[age] = MAX([c].[age]);"
+);

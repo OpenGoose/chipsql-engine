@@ -16,6 +16,10 @@ export const mssqlFunctions = <T extends Object>(
       return funcCompiler.count(funcValue);
     case Functions.CUSTOM:
       return funcCompiler.custom(funcValue);
+    case Functions.MAX:
+      return funcCompiler.max(funcValue);
+    case Functions.MIN:
+      return funcCompiler.min(funcValue);
   }
   throw new UnavailableFeatureError(funcValue.function);
 };
