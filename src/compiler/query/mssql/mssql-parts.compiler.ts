@@ -176,7 +176,7 @@ export class MssqlPartsCompiler<T extends Object>
   };
 
   grouping = (groupingValues: GroupBy<T>[]) =>
-    joinParts(groupingValues.map(this.groupBy));
+    joinParts(groupingValues.map(this.groupBy), ", ");
 
   having = (havingValue: Where<T>) => this.where(havingValue);
 

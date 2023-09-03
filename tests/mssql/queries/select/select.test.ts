@@ -577,3 +577,52 @@ service.expectQuery(
   },
   "SELECT [c].[age], COUNT([c].[customer_id]) AS 'count' FROM [sales].[customers] [c] GROUP BY [c].[age] HAVING [c].[age] = MAX([c].[age]);"
 );
+
+service.expectQuery(
+  "SELECT with multiple GROUP BY",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.COLUMN,
+        field: "age",
+        tableAlias: "c",
+      },
+      {
+        valueType: ValueTypes.COLUMN,
+        field: "state",
+        tableAlias: "c",
+      },
+      {
+        valueType: ValueTypes.FUNCTION,
+        function: Functions.COUNT,
+        value: {
+          valueType: ValueTypes.COLUMN,
+          field: "customer_id",
+          tableAlias: "c",
+        },
+        alias: "count",
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        schema: "sales",
+        alias: "c",
+      },
+    ],
+    groupBy: [
+      {
+        valueType: ValueTypes.COLUMN,
+        field: "age",
+        tableAlias: "c",
+      },
+      {
+        valueType: ValueTypes.COLUMN,
+        field: "state",
+        tableAlias: "c",
+      },
+    ],
+  },
+  "SELECT [c].[age], [c].[state], COUNT([c].[customer_id]) AS 'count' FROM [sales].[customers] [c] GROUP BY [c].[age], [c].[state];"
+);
