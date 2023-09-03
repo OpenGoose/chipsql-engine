@@ -7,7 +7,13 @@ import { Table } from "../../chips-lq/types/tables/table.type";
 import { AllowedValues } from "../../chips-lq/types/values/allowed-values.type";
 import { Value } from "../../chips-lq/types/values/value.type";
 
+export type QueryPartsCompilerOptions = {
+  omitAvoidableSpaces?: boolean;
+};
+
 export interface IQueryPartsCompiler<T extends Object> {
+  avoidableSpace: string;
+
   // Globals
   fields: (values: Value<T>[]) => string;
   from: (tables: Table<T>[]) => string;

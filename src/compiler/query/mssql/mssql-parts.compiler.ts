@@ -8,7 +8,10 @@ import {
 import { UnavailableFeatureError } from "../../features/unavailable-feature.error";
 import { joinParts } from "../../utils/query-generation/join-parts.util";
 import { format, isDate } from "date-fns";
-import { IQueryPartsCompiler } from "../query-parts-compiler.interface";
+import {
+  IQueryPartsCompiler,
+  QueryPartsCompilerOptions,
+} from "../query-parts-compiler.interface";
 import { mssqlFunctions } from "../../functions/mssql/mssql-functions";
 import { MssqlCompiler } from "./mssql.compiler";
 import { QueryTypes } from "../../../chips-lq/types/queries/query.type";
@@ -29,11 +32,19 @@ import { GroupBy } from "../../../chips-lq/types/grouping/group-by.type";
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
 {
-  fields = (values: Value<T>[]) => values.map(this.value).join(", ");
-  from = (tables: Table<T>[]) => tables.map(this.table).join(", ");
-  joins = (joinValues: Join<T>[]) => joinValues.map(this.join).join(" ");
+  avoidableSpace: string;
+  constructor(options?: QueryPartsCompilerOptions) {
+    this.avoidableSpace = options?.omitAvoidableSpaces ? "" : " ";
+  }
+
+  fields = (values: Value<T>[]) =>
+    values.map(this.value).join("," + this.avoidableSpace);
+  from = (tables: Table<T>[]) =>
+    tables.map(this.table).join("," + this.avoidableSpace);
+  joins = (joinValues: Join<T>[]) =>
+    joinValues.map(this.join).join(this.avoidableSpace);
   orders = (orderValues: OrderBy<T>[]) =>
-    orderValues.map(this.orderBy).join(", ");
+    orderValues.map(this.orderBy).join("," + this.avoidableSpace);
 
   // Specific
   value = (value: Value<T>): string => {
@@ -176,7 +187,7 @@ export class MssqlPartsCompiler<T extends Object>
   };
 
   grouping = (groupingValues: GroupBy<T>[]) =>
-    joinParts(groupingValues.map(this.groupBy), ", ");
+    joinParts(groupingValues.map(this.groupBy), "," + this.avoidableSpace);
 
   having = (havingValue: Where<T>) => this.where(havingValue);
 
