@@ -1,6 +1,7 @@
 import { ConditionType } from "../../../../src/chips-lq/types/conditions/condition-type.enum";
 import { ConditionOperands } from "../../../../src/chips-lq/types/conditions/operands/condition-operands.enum";
 import { JoinerOperands } from "../../../../src/chips-lq/types/conditions/operands/joiner-operands.enum";
+import { DataTypes } from "../../../../src/chips-lq/types/datatypes/datatypes.enum";
 import { Functions } from "../../../../src/chips-lq/types/functions/functions.enum";
 import { JoinDirections } from "../../../../src/chips-lq/types/joins/join-directions.enum";
 import { JoinIncludes } from "../../../../src/chips-lq/types/joins/join-includes.enum";
@@ -887,7 +888,18 @@ service.expectQuery(
       },
       {
         valueType: ValueTypes.RAW_VALUE,
-        value: new Date("2023-09-03 22:06:00"),
+        value: {
+          dataType: DataTypes.DATETIME,
+          date: new Date("2023-09-03 22:06:00"),
+        },
+        alias: "Commit datetime",
+      },
+      {
+        valueType: ValueTypes.RAW_VALUE,
+        value: {
+          dataType: DataTypes.DATE,
+          date: new Date("2023-09-03"),
+        },
         alias: "Commit date",
       },
     ],
@@ -898,5 +910,5 @@ service.expectQuery(
       },
     ],
   },
-  "SELECT 'HI' AS 'name', 1 AS '''SQL'' injection free?', 0 AS 'Does ChipsQL require payment?', '2023-09-03 22:06:00' AS 'Commit date' FROM [sales].[customers];"
+  "SELECT 'HI' AS 'name', 1 AS '''SQL'' injection free?', 0 AS 'Does ChipsQL require payment?', '2023-09-03 22:06:00' AS 'Commit datetime', '2023-09-03' AS 'Commit date' FROM [sales].[customers];"
 );

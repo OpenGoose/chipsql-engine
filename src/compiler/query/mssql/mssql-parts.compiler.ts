@@ -26,6 +26,7 @@ import { OrderBy } from "../../../chips-lq/types/order/order-by.type";
 import { OrderDirection } from "../../../chips-lq/types/order/order-direction.enum";
 import { GroupBy } from "../../../chips-lq/types/grouping/group-by.type";
 import { QueryCompilerOptions } from "../query-compiler-options.type";
+import { DataTypes } from "../../../chips-lq/types/datatypes/datatypes.enum";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
@@ -232,9 +233,6 @@ export class MssqlPartsCompiler<T extends Object>
 
   // Utils
   escape = (value: AllowedValues) => {
-    if (isDate(value)) {
-      return `'${format(value as Date, "yyyy-MM-dd HH:mm:ss")}'`;
-    }
     switch (typeof value) {
       case "string":
         return `'${value.replace(/'/g, "''")}'`;
@@ -244,6 +242,14 @@ export class MssqlPartsCompiler<T extends Object>
       case "bigint":
         return value.toString();
     }
+
+    switch (value.dataType) {
+      case DataTypes.DATE:
+        return `'${format(value.date, "yyyy-MM-dd")}'`;
+      case DataTypes.DATETIME:
+        return `'${format(value.date, "yyyy-MM-dd HH:mm:ss")}'`;
+    }
+
     throw new UnavailableFeatureError(`Conversion to ${typeof value}`);
   };
   generateField = (field: string) => `[${field}]`;
