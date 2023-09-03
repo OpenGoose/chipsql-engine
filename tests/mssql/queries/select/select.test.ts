@@ -776,3 +776,34 @@ service.expectQuery(
   },
   "SELECT * INTO [sales].[new_customers] FROM [customers];"
 );
+
+service.expectQuery(
+  "Generate SELECT ALL with multiple escaping",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.ALL_COLUMNS,
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        schema: "sales",
+      },
+    ],
+    where: {
+      conditionType: ConditionType.CONDITION,
+      conditionOperand: ConditionOperands.EQUALS,
+      sourceValue: {
+        valueType: ValueTypes.COLUMN,
+        field: "first_name",
+      },
+      targetValue: {
+        valueType: ValueTypes.RAW_VALUE,
+        value: "Ol' L'Àvia",
+      },
+    },
+  },
+  "SELECT * FROM [sales].[customers] WHERE [first_name] = 'Ol'' L''Àvia';"
+);

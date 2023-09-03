@@ -233,7 +233,7 @@ export class MssqlPartsCompiler<T extends Object>
       return format(value as Date, "YYYY-MM-DD hh:mm:ss[.nnnnnnn]");
     switch (typeof value) {
       case "string":
-        return `'${value.replace("'", "''")}'`;
+        return `'${value.replace(/'/g, "''")}'`;
       case "boolean":
         return value ? "1" : "0";
       case "number":
