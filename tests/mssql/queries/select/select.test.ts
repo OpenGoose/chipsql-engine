@@ -597,6 +597,63 @@ service.expectQuery(
 );
 
 service.expectQuery(
+  "Generate SELECT ALL with SUBSELECT LEFT JOIN",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.ALL_COLUMNS,
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+        alias: "c",
+        schema: "sales",
+      },
+    ],
+    joins: [
+      {
+        joinType: JoinTypes.SELECT,
+        direction: JoinDirections.LEFT,
+        select: {
+          fields: [
+            {
+              valueType: ValueTypes.COLUMN,
+              field: "customer_id",
+              tableAlias: "o",
+            },
+          ],
+          from: [
+            {
+              name: "orders",
+              schema: "sales",
+              alias: "o",
+            },
+          ],
+        },
+        on: {
+          conditionType: ConditionType.CONDITION,
+          conditionOperand: ConditionOperands.EQUALS,
+          sourceValue: {
+            valueType: ValueTypes.COLUMN,
+            field: "customer_id",
+            tableAlias: "o",
+          },
+          targetValue: {
+            valueType: ValueTypes.COLUMN,
+            field: "customer_id",
+            tableAlias: "c",
+          },
+        },
+        alias: "o",
+      },
+    ],
+  },
+  "SELECT * FROM [sales].[customers] [c] LEFT JOIN (SELECT [o].[customer_id] FROM [sales].[orders] [o]) [o] ON [o].[customer_id] = [c].[customer_id];"
+);
+
+service.expectQuery(
   "SELECT with GROUP BY and HAVING",
   {
     queryType: QueryTypes.SELECT,

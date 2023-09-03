@@ -171,7 +171,10 @@ export class MssqlPartsCompiler<T extends Object>
     const joins =
       joinValue.joinType === JoinTypes.TABLE
         ? this.table(joinValue.table)
-        : this.subselect(joinValue.select);
+        : joinParts([
+            this.subselect(joinValue.select),
+            this.generateField(joinValue.alias),
+          ]);
 
     return joinParts([
       direction,
