@@ -8,10 +8,7 @@ import {
 import { UnavailableFeatureError } from "../../features/unavailable-feature.error";
 import { joinParts } from "../../utils/query-generation/join-parts.util";
 import { format, isDate } from "date-fns";
-import {
-  IQueryPartsCompiler,
-  QueryPartsCompilerOptions,
-} from "../query-parts-compiler.interface";
+import { IQueryPartsCompiler } from "../query-parts-compiler.interface";
 import { mssqlFunctions } from "../../functions/mssql/mssql-functions";
 import { MssqlCompiler } from "./mssql.compiler";
 import { QueryTypes } from "../../../chips-lq/types/queries/query.type";
@@ -28,13 +25,15 @@ import { ConditionOperands } from "../../../chips-lq/types/conditions/operands/c
 import { OrderBy } from "../../../chips-lq/types/order/order-by.type";
 import { OrderDirection } from "../../../chips-lq/types/order/order-direction.enum";
 import { GroupBy } from "../../../chips-lq/types/grouping/group-by.type";
+import { QueryCompilerOptions } from "../query-compiler-options.type";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
 {
   avoidableSpace: string;
-  constructor(options?: QueryPartsCompilerOptions) {
-    this.avoidableSpace = options?.omitAvoidableSpaces ? "" : " ";
+
+  constructor(options?: QueryCompilerOptions) {
+    this.avoidableSpace = options?.compactQuery ? "" : " ";
   }
 
   fields = (values: Value<T>[]) =>
@@ -181,7 +180,7 @@ export class MssqlPartsCompiler<T extends Object>
         queryType: QueryTypes.SELECT,
       },
       {
-        semicolon: false,
+        endWithSemicolon: false,
       }
     ).compile()})`;
   };
