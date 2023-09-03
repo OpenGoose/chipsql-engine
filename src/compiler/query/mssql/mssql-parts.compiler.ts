@@ -30,9 +30,9 @@ import { QueryCompilerOptions } from "../query-compiler-options.type";
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
 {
-  avoidableSpace: string;
+  readonly avoidableSpace: string;
 
-  constructor(options?: QueryCompilerOptions) {
+  constructor(public readonly options?: QueryCompilerOptions) {
     this.avoidableSpace = options?.compactQuery ? "" : " ";
   }
 
@@ -77,7 +77,10 @@ export class MssqlPartsCompiler<T extends Object>
           const { alias, distinct, ...query } = value;
           return this.subselect(query);
         case ValueTypes.SET:
-          return `(${joinParts(value.values.map(this.value), ", ")})`;
+          return `(${joinParts(
+            value.values.map(this.value),
+            "," + this.avoidableSpace
+          )})`;
       }
     };
 
@@ -89,16 +92,19 @@ export class MssqlPartsCompiler<T extends Object>
   };
 
   table = (table: Table<T>) => {
-    return joinParts([
-      joinParts(
-        [
-          table.schema ? this.generateField(table.schema) : null,
-          this.generateField(table.name),
-        ],
-        "."
-      ),
-      table.alias ? this.generateField(table.alias) : null,
-    ]);
+    return joinParts(
+      [
+        joinParts(
+          [
+            table.schema ? this.generateField(table.schema) : null,
+            this.generateField(table.name),
+          ],
+          "."
+        ),
+        table.alias ? this.generateField(table.alias) : null,
+      ],
+      this.avoidableSpace
+    );
   };
 
   where = (whereValue: Where<T>): string => {
@@ -112,7 +118,7 @@ export class MssqlPartsCompiler<T extends Object>
       );
       return `(${joinParts(
         whereValue.conditions.map(this.where),
-        ` ${joiner} `
+        this.avoidableSpace + joiner + this.avoidableSpace
       )})`;
     }
 
@@ -134,11 +140,14 @@ export class MssqlPartsCompiler<T extends Object>
       whereValue.conditionOperand
     );
 
-    return `${joinParts([
-      this.value(whereValue.sourceValue),
-      operand,
-      this.value(whereValue.targetValue),
-    ])}`;
+    return `${joinParts(
+      [
+        this.value(whereValue.sourceValue),
+        operand,
+        this.value(whereValue.targetValue),
+      ],
+      this.avoidableSpace
+    )}`;
   };
 
   join = (joinValue: Join<T>) => {
@@ -181,6 +190,7 @@ export class MssqlPartsCompiler<T extends Object>
       },
       {
         endWithSemicolon: false,
+        ...this.options,
       }
     ).compile()})`;
   };

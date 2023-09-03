@@ -6,9 +6,11 @@ import { Select } from "../../chips-lq/types/queries/select.type";
 import { Table } from "../../chips-lq/types/tables/table.type";
 import { AllowedValues } from "../../chips-lq/types/values/allowed-values.type";
 import { Value } from "../../chips-lq/types/values/value.type";
+import { QueryCompilerOptions } from "./query-compiler-options.type";
 
 export interface IQueryPartsCompiler<T extends Object> {
-  avoidableSpace: string;
+  readonly avoidableSpace: string;
+  readonly options?: QueryCompilerOptions;
 
   // Globals
   fields: (values: Value<T>[]) => string;
