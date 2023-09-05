@@ -5,6 +5,7 @@ import { JoinIncludes } from "../../../../src/chips-lq/types/joins/join-includes
 import { JoinTypes } from "../../../../src/chips-lq/types/joins/join-types.enum";
 import { QueryTypes } from "../../../../src/chips-lq/types/queries/query.type";
 import { ValueTypes } from "../../../../src/chips-lq/types/values/value.type";
+import { ExecutionWillFailException } from "../../../../src/errors/warnings/execution-will-fail.exception";
 import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
 import { mssqlWarningMessages } from "../../../../src/warnings/mssql/mssql-warning-messages.constant";
 import { WarningLevels } from "../../../../src/warnings/warning-levels.enum";
@@ -103,6 +104,25 @@ service.expectWarning(
   {
     level: WarningLevels.EXECUTION_WILL_FAIL,
     message: mssqlWarningMessages.EMPTY_FROM,
+  }
+);
+
+service.expectException(
+  "A select from statement requires at least one datasource (throw error on ExecutionWillFail)",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.ALL_COLUMNS,
+      },
+    ],
+    from: [],
+  },
+  ExecutionWillFailException,
+  {
+    warningOptions: {
+      throwExceptionOnExecutionWillFail: true,
+    }
   }
 );
 

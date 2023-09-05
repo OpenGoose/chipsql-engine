@@ -1,5 +1,5 @@
 import { Query } from "../src/chips-lq/types/queries/query.type";
-import { UnavailableFeatureError } from "../src/compiler/features/unavailable-feature.error";
+import { UnavailableFeatureError } from "../src/errors/compiler/unavailable-feature.error";
 import { MssqlCompiler } from "../src/compiler/query/mssql/mssql.compiler";
 import { QueryCompilerOptions } from "../src/compiler/query/query-compiler-options.type";
 import { QueryCompiler } from "../src/compiler/query/query.compiler";
@@ -27,9 +27,13 @@ export class TestService {
   expectWarning = <T extends Object = Object>(
     name: string,
     query: Query<T>,
-    warning: Warning
+    warning: Warning,
+    compilerOptions?: QueryCompilerOptions
   ) => {
-    let warner: (query: Query<T>) => QueryWarningsService<T>;
+    let warner: (
+      query: Query<T>,
+      compilerOptions?: QueryCompilerOptions
+    ) => QueryWarningsService<T>;
 
     switch (this.language) {
       case SqlLanguages.MSSQL:
@@ -40,7 +44,31 @@ export class TestService {
       throw new UnavailableFeatureError("Warning for " + this.language);
 
     test(name, () => {
-      expect(warner(query).warnings).toContainEqual(warning);
+      expect(warner(query, compilerOptions).warnings).toContainEqual(warning);
+    });
+  };
+
+  expectException = <T extends Object = Object>(
+    name: string,
+    query: Query<T>,
+    error: string | RegExp | jest.Constructable | Error | undefined,
+    compilerOptions?: QueryCompilerOptions
+  ) => {
+    let warner: (
+      query: Query<T>,
+      compilerOptions?: QueryCompilerOptions
+    ) => QueryWarningsService<T>;
+
+    switch (this.language) {
+      case SqlLanguages.MSSQL:
+        warner = MssqlCompiler.processQueryWarnings;
+    }
+
+    if (!warner)
+      throw new UnavailableFeatureError("Warning for " + this.language);
+
+    test(name, () => {
+      expect(() => warner(query, compilerOptions)).toThrow(error);
     });
   };
 }

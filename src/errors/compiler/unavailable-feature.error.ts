@@ -1,4 +1,4 @@
-import { QueryError } from "../../errors/query-error";
+import { QueryError } from "../query-error";
 
 export class UnavailableFeatureError extends QueryError {
     constructor(feature?: string) {

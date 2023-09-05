@@ -5,7 +5,7 @@ import {
   Value,
   ValueTypes,
 } from "../../../chips-lq/types/values/value.type";
-import { UnavailableFeatureError } from "../../features/unavailable-feature.error";
+import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { joinParts } from "../../utils/query-generation/join-parts.util";
 import { format, isDate } from "date-fns";
 import { IQueryPartsCompiler } from "../query-parts-compiler.interface";

@@ -1,6 +1,6 @@
 import { Query } from "../../chips-lq/types/queries/query.type";
 import { SqlLanguages } from "../../sql/sql-languages.enum";
-import { UnavailableFeatureError } from "../features/unavailable-feature.error";
+import { UnavailableFeatureError } from "../../errors/compiler/unavailable-feature.error";
 import { MssqlCompiler } from "./mssql/mssql.compiler";
 import { QueryCompilerOptions } from "./query-compiler-options.type";
 

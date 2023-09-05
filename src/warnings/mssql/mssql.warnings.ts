@@ -6,7 +6,7 @@ import { Select } from "../../chips-lq/types/queries/select.type";
 import { SqlLanguages } from "../../sql/sql-languages.enum";
 import { QueryWarningsService } from "../query-warnings.service";
 import { WarningLevels } from "../warning-levels.enum";
-import { UnavailableFeatureError } from "../../compiler/features/unavailable-feature.error";
+import { UnavailableFeatureError } from "../../errors/compiler/unavailable-feature.error";
 import { QueryCompilerOptions } from "../../compiler/query/query-compiler-options.type";
 import { QueryWarnings } from "../query-warnings.abstract";
 import { mssqlWarningMessages } from "./mssql-warning-messages.constant";
