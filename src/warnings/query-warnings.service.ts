@@ -7,13 +7,17 @@ export interface Warning {
   level: WarningLevels;
 }
 
-export class QueryWarn<T extends Object> {
+export class QueryWarningsService<T extends Object> {
   constructor(
     private readonly query: Query<T>,
     private readonly language: SqlLanguages
   ) {}
 
   public readonly warnings: Warning[] = [];
+
+  public clearWarnings = () => {
+    this.warnings.splice(0, this.warnings.length);
+  }
 
   appendWarning = (
     message: string,

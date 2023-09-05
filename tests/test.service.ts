@@ -5,7 +5,7 @@ import { MssqlCompiler } from "../src/compiler/query/mssql/mssql.compiler";
 import { QueryCompilerOptions } from "../src/compiler/query/query-compiler-options.type";
 import { QueryCompiler } from "../src/compiler/query/query.compiler";
 import { SqlLanguages } from "../src/sql/sql-languages.enum";
-import { QueryWarn, Warning } from "../src/warnings/query-warn.service";
+import { QueryWarningsService, Warning } from "../src/warnings/query-warnings.service";
 
 export class TestService {
   constructor(private readonly language: SqlLanguages) {}
@@ -30,7 +30,7 @@ export class TestService {
     query: Query<T>,
     warning: Warning
   ) => {
-    let warner: (query: Query<T>) => QueryWarn<T>;
+    let warner: (query: Query<T>) => QueryWarningsService<T>;
 
     switch (this.language) {
       case SqlLanguages.MSSQL:

@@ -1,14 +1,18 @@
+import { JoinDirections } from "../../../chips-lq/types/joins/join-directions.enum";
+import { JoinIncludes } from "../../../chips-lq/types/joins/join-includes.enum";
 import { Query, QueryTypes } from "../../../chips-lq/types/queries/query.type";
 import { Select } from "../../../chips-lq/types/queries/select.type";
 import { SqlLanguages } from "../../../sql/sql-languages.enum";
-import { QueryWarn } from "../../../warnings/query-warn.service";
+import { QueryWarningsService } from "../../../warnings/query-warnings.service";
 import { WarningLevels } from "../../../warnings/warning-levels.enum";
 import { UnavailableFeatureError } from "../../features/unavailable-feature.error";
 import { joinParts } from "../../utils/query-generation/join-parts.util";
 import { QueryCompilerOptions } from "../query-compiler-options.type";
 import { IQueryCompiler } from "../query-compiler.interface";
 import { IQueryPartsCompiler } from "../query-parts-compiler.interface";
+import { QueryWarnings } from "../query-warnings.abstract";
 import { MssqlPartsCompiler } from "./mssql-parts.compiler";
+import { MssqlWarnings } from "./mssql.warnings";
 
 export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   protected readonly language: SqlLanguages;
@@ -72,27 +76,7 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
     );
   };
 
-  static processQueryWarnings = <T extends Object>(query: Query<T>) => {
-    const queryWarn = new QueryWarn(query, SqlLanguages.MSSQL);
-    switch (query.queryType) {
-      /*
-        SELECT WARNINGS
-      */
-      case QueryTypes.SELECT:
-        const { offset, orderBy, groupBy, having } = query;
-        if (offset && (!orderBy || orderBy.length <= 0))
-          queryWarn.appendWarning(
-            "ORDER BY is required when using OFFSET",
-            WarningLevels.EXECUTION_WILL_FAIL
-          );
-        if (having && (!groupBy || groupBy.length <= 0)) {
-          queryWarn.appendWarning(
-            "GROUP BY is required when using HAVING",
-            WarningLevels.EXECUTION_WILL_FAIL
-          );
-        }
-        break;
-    }
-    return queryWarn;
+  static processQueryWarnings = <T extends Object>(query: Query<T>, queryCompilerOptions?: QueryCompilerOptions) => {
+    return (new MssqlWarnings<T>(query, queryCompilerOptions)).processWarnings();
   };
 }
