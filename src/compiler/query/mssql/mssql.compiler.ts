@@ -10,9 +10,9 @@ import { joinParts } from "../../utils/query-generation/join-parts.util";
 import { QueryCompilerOptions } from "../query-compiler-options.type";
 import { IQueryCompiler } from "../query-compiler.interface";
 import { IQueryPartsCompiler } from "../query-parts-compiler.interface";
-import { QueryWarnings } from "../query-warnings.abstract";
+import { QueryWarnings } from "../../../warnings/query-warnings.abstract";
 import { MssqlPartsCompiler } from "./mssql-parts.compiler";
-import { MssqlWarnings } from "./mssql.warnings";
+import { MssqlWarnings } from "../../../warnings/mssql/mssql.warnings";
 
 export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   protected readonly language: SqlLanguages;

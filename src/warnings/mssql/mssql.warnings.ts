@@ -1,14 +1,15 @@
-import { JoinDirections } from "../../../chips-lq/types/joins/join-directions.enum";
-import { JoinIncludes } from "../../../chips-lq/types/joins/join-includes.enum";
-import { Join } from "../../../chips-lq/types/joins/join.type";
-import { Query, QueryTypes } from "../../../chips-lq/types/queries/query.type";
-import { Select } from "../../../chips-lq/types/queries/select.type";
-import { SqlLanguages } from "../../../sql/sql-languages.enum";
-import { QueryWarningsService } from "../../../warnings/query-warnings.service";
-import { WarningLevels } from "../../../warnings/warning-levels.enum";
-import { UnavailableFeatureError } from "../../features/unavailable-feature.error";
-import { QueryCompilerOptions } from "../query-compiler-options.type";
+import { JoinDirections } from "../../chips-lq/types/joins/join-directions.enum";
+import { JoinIncludes } from "../../chips-lq/types/joins/join-includes.enum";
+import { Join } from "../../chips-lq/types/joins/join.type";
+import { Query, QueryTypes } from "../../chips-lq/types/queries/query.type";
+import { Select } from "../../chips-lq/types/queries/select.type";
+import { SqlLanguages } from "../../sql/sql-languages.enum";
+import { QueryWarningsService } from "../query-warnings.service";
+import { WarningLevels } from "../warning-levels.enum";
+import { UnavailableFeatureError } from "../../compiler/features/unavailable-feature.error";
+import { QueryCompilerOptions } from "../../compiler/query/query-compiler-options.type";
 import { QueryWarnings } from "../query-warnings.abstract";
+import { mssqlWarningMessages } from "./mssql-warning-messages.constant";
 
 export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
   constructor(query: Query<T>, queryCompilerOptions?: QueryCompilerOptions) {
@@ -33,12 +34,12 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
 
     if (offset && (!orderBy || orderBy.length <= 0))
       queryWarnings.appendWarning(
-        "ORDER BY is required when using OFFSET",
+        mssqlWarningMessages.OFFSET_WITHOUT_GROUP_BY,
         WarningLevels.EXECUTION_WILL_FAIL
       );
     if (having && (!groupBy || groupBy.length <= 0)) {
       queryWarnings.appendWarning(
-        "GROUP BY is required when using HAVING",
+        mssqlWarningMessages.HAVING_WITHOUT_GROUP_BY,
         WarningLevels.EXECUTION_WILL_FAIL
       );
     }
@@ -60,7 +61,7 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
       )
     ) {
       queryWarnings.appendWarning(
-        "Cannot use FULL when performing an INNER JOIN",
+        mssqlWarningMessages.NO_FULL_INNER_JOIN,
         WarningLevels.EXECUTION_WILL_FAIL
       );
     }
