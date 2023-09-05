@@ -57,21 +57,15 @@ export class TestService {
     error: string | RegExp | jest.Constructable | Error | undefined,
     compilerOptions?: QueryCompilerOptions
   ) => {
-    let warner: (
-      query: Query<T>,
-      compilerOptions?: QueryCompilerOptions
-    ) => QueryWarningsService<T>;
-
-    switch (this.language) {
-      case SqlLanguages.MSSQL:
-        warner = MssqlCompiler.processQueryWarnings;
-    }
-
-    if (!warner)
-      throw new UnavailableFeatureError("Warning for " + this.language);
-
+    const compiler = new QueryCompiler<Object>(this.language, {
+      ...compilerOptions,
+      warningOptions: {
+        logger: null,
+        ...compilerOptions?.warningOptions,
+      },
+    });
     test(name, () => {
-      expect(() => warner(query, compilerOptions)).toThrow(error);
+      expect(() => compiler.compile(query)).toThrow(error);
     });
   };
 }

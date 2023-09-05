@@ -18,7 +18,11 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
   }
 
   processWarnings = () => {
-    const queryWarnings = new QueryWarningsService(this.query, this.language);
+    const queryWarnings = new QueryWarningsService(
+      this.query,
+      this.language,
+      this.queryCompilerOptions?.warningOptions
+    );
 
     switch (this.query.queryType) {
       case QueryTypes.SELECT:

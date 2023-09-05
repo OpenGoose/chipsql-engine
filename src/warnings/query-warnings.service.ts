@@ -1,6 +1,7 @@
 import { Query } from "../chips-lq/types/queries/query.type";
 import { SqlLanguages } from "../sql/sql-languages.enum";
 import { WarningLevels } from "./warning-levels.enum";
+import { WarningOptions } from "./warning-options.type";
 
 export interface Warning {
   message: string;
@@ -10,14 +11,15 @@ export interface Warning {
 export class QueryWarningsService<T extends Object> {
   constructor(
     private readonly query: Query<T>,
-    private readonly language: SqlLanguages
+    private readonly language: SqlLanguages,
+    private readonly warningOptions?: WarningOptions
   ) {}
 
   public readonly warnings: Warning[] = [];
 
   public clearWarnings = () => {
     this.warnings.splice(0, this.warnings.length);
-  }
+  };
 
   appendWarning = (
     message: string,
@@ -26,18 +28,19 @@ export class QueryWarningsService<T extends Object> {
 
   warn = () => {
     if (this.warnings.length <= 0) return;
-    console.warn(
-      `⚠️ COMPILER WARNING${
-        this.warnings.length > 1 ? "S" : ""
-      }:\n${this.warnings
-        .map(
-          (w) =>
-            `${this.levelIcons(w.level)}: ${w.message}.${this.levelPrefix(
-              w.level
-            )}`
-        )
-        .join("\n")}\n\n(SQL language: ${this.language})`
-    );
+    const message = `⚠️  COMPILER WARNING${
+      this.warnings.length > 1 ? "S" : ""
+    }:\n${this.warnings
+      .map(
+        (w) =>
+          `${this.levelIcons(w.level)}: ${w.message}.${this.levelPrefix(
+            w.level
+          )}`
+      )
+      .join("\n")}\n\n(SQL language: ${this.language})`;
+
+    if (this.warningOptions?.logger) this.warningOptions.logger(message, this);
+    else if (this.warningOptions?.logger !== null) console.warn(message);
   };
 
   private levelIcons = (level: WarningLevels) => {

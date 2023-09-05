@@ -26,7 +26,10 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   }
 
   public compile = () => {
-    const warnings = MssqlCompiler.processQueryWarnings(this.query);
+    const warnings = MssqlCompiler.processQueryWarnings(
+      this.query,
+      this.options
+    );
     warnings.warn();
 
     if (
