@@ -1,16 +1,16 @@
-import { JoinDirections } from "../../chips-lq/types/joins/join-directions.enum";
-import { JoinIncludes } from "../../chips-lq/types/joins/join-includes.enum";
-import { Join } from "../../chips-lq/types/joins/join.type";
-import { Query, QueryTypes } from "../../chips-lq/types/queries/query.type";
-import { Select } from "../../chips-lq/types/queries/select.type";
-import { SqlLanguages } from "../../sql/sql-languages.enum";
-import { QueryWarningsService } from "../query-warnings.service";
-import { WarningLevels } from "../warning-levels.enum";
-import { UnavailableFeatureError } from "../../errors/compiler/unavailable-feature.error";
-import { QueryCompilerOptions } from "../../compiler/query/query-compiler-options.type";
-import { QueryWarnings } from "../query-warnings.abstract";
+import { JoinDirections } from "../../../chips-lq/types/joins/join-directions.enum";
+import { JoinIncludes } from "../../../chips-lq/types/joins/join-includes.enum";
+import { Join } from "../../../chips-lq/types/joins/join.type";
+import { Query, QueryTypes } from "../../../chips-lq/types/queries/query.type";
+import { Select } from "../../../chips-lq/types/queries/select.type";
+import { From } from "../../../chips-lq/types/tables/from.type";
+import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
+import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
+import { SqlLanguages } from "../../../sql/sql-languages.enum";
+import { QueryWarnings } from "../../../warnings/query-warnings.abstract";
+import { QueryWarningsService } from "../../../warnings/query-warnings.service";
+import { WarningLevels } from "../../../warnings/warning-levels.enum";
 import { mssqlWarningMessages } from "./mssql-warning-messages.constant";
-import { From } from "../../chips-lq/types/tables/from.type";
 
 export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
   constructor(query: Query<T>, queryCompilerOptions?: QueryCompilerOptions) {
@@ -44,19 +44,31 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
         WarningLevels.EXECUTION_WILL_FAIL
       );
     }
-    
-    if (fields.length <= 0) queryWarnings.appendWarning(mssqlWarningMessages.EMPTY_SELECT, WarningLevels.EXECUTION_WILL_FAIL);
+
+    if (fields.length <= 0)
+      queryWarnings.appendWarning(
+        mssqlWarningMessages.EMPTY_SELECT,
+        WarningLevels.EXECUTION_WILL_FAIL
+      );
 
     this.processFromWarnings(from, queryWarnings);
 
-    if (joins && joins.length > 0) this.processJoinWarnings(joins, queryWarnings);
+    if (joins && joins.length > 0)
+      this.processJoinWarnings(joins, queryWarnings);
 
     return queryWarnings;
   };
 
-  private processFromWarnings = (from: From<T>, queryWarnings: QueryWarningsService<T>) => {
-    if (from.length <= 0) queryWarnings.appendWarning(mssqlWarningMessages.EMPTY_FROM, WarningLevels.EXECUTION_WILL_FAIL);
-  }
+  private processFromWarnings = (
+    from: From<T>,
+    queryWarnings: QueryWarningsService<T>
+  ) => {
+    if (from.length <= 0)
+      queryWarnings.appendWarning(
+        mssqlWarningMessages.EMPTY_FROM,
+        WarningLevels.EXECUTION_WILL_FAIL
+      );
+  };
 
   private processJoinWarnings = (
     joins: Join<T>[],

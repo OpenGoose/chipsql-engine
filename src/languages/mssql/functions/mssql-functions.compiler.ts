@@ -2,9 +2,9 @@ import { CountFunction } from "../../../chips-lq/types/functions/aggregate/count
 import { MaxFunction } from "../../../chips-lq/types/functions/aggregate/max.function.type";
 import { MinFunction } from "../../../chips-lq/types/functions/aggregate/min.function.type";
 import { CustomFunction } from "../../../chips-lq/types/functions/custom/custom.function";
-import { IQueryPartsCompiler } from "../../query/query-parts-compiler.interface";
-import { joinParts } from "../../utils/query-generation/join-parts.util";
-import { FunctionsCompiler } from "../functions-compiler.service";
+import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
+import { joinParts } from "../../../compiler/utils/query-generation/join-parts.util";
+import { FunctionsCompiler } from "../../../compiler/functions/functions-compiler.service";
 
 export class MssqlFunctionsCompiler<
   T extends Object

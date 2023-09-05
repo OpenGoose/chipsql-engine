@@ -1,19 +1,15 @@
-import { JoinDirections } from "../../../chips-lq/types/joins/join-directions.enum";
-import { JoinIncludes } from "../../../chips-lq/types/joins/join-includes.enum";
 import { Query, QueryTypes } from "../../../chips-lq/types/queries/query.type";
 import { Select } from "../../../chips-lq/types/queries/select.type";
 import { SqlLanguages } from "../../../sql/sql-languages.enum";
-import { QueryWarningsService } from "../../../warnings/query-warnings.service";
 import { WarningLevels } from "../../../warnings/warning-levels.enum";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
-import { joinParts } from "../../utils/query-generation/join-parts.util";
-import { QueryCompilerOptions } from "../query-compiler-options.type";
-import { IQueryCompiler } from "../query-compiler.interface";
-import { IQueryPartsCompiler } from "../query-parts-compiler.interface";
-import { QueryWarnings } from "../../../warnings/query-warnings.abstract";
 import { MssqlPartsCompiler } from "./mssql-parts.compiler";
-import { MssqlWarnings } from "../../../warnings/mssql/mssql.warnings";
 import { ExecutionWillFailException } from "../../../errors/warnings/execution-will-fail.exception";
+import { IQueryCompiler } from "../../../compiler/query/query-compiler.interface";
+import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
+import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
+import { joinParts } from "../../../compiler/utils/query-generation/join-parts.util";
+import { MssqlWarnings } from "../warnings/mssql.warnings";
 
 export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   protected readonly language: SqlLanguages;
@@ -33,7 +29,13 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
     const warnings = MssqlCompiler.processQueryWarnings(this.query);
     warnings.warn();
 
-    if (this.options?.warningOptions?.throwExceptionOnExecutionWillFail && warnings.warnings.some((w) => w.level === WarningLevels.EXECUTION_WILL_FAIL)) throw new ExecutionWillFailException(); 
+    if (
+      this.options?.warningOptions?.throwExceptionOnExecutionWillFail &&
+      warnings.warnings.some(
+        (w) => w.level === WarningLevels.EXECUTION_WILL_FAIL
+      )
+    )
+      throw new ExecutionWillFailException();
 
     switch (this.query.queryType) {
       case QueryTypes.SELECT:
@@ -79,7 +81,10 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
     );
   };
 
-  static processQueryWarnings = <T extends Object>(query: Query<T>, queryCompilerOptions?: QueryCompilerOptions) => {
-    return (new MssqlWarnings<T>(query, queryCompilerOptions)).processWarnings();
+  static processQueryWarnings = <T extends Object>(
+    query: Query<T>,
+    queryCompilerOptions?: QueryCompilerOptions
+  ) => {
+    return new MssqlWarnings<T>(query, queryCompilerOptions).processWarnings();
   };
 }

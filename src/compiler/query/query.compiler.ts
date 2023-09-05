@@ -1,8 +1,8 @@
 import { Query } from "../../chips-lq/types/queries/query.type";
 import { SqlLanguages } from "../../sql/sql-languages.enum";
 import { UnavailableFeatureError } from "../../errors/compiler/unavailable-feature.error";
-import { MssqlCompiler } from "./mssql/mssql.compiler";
 import { QueryCompilerOptions } from "./query-compiler-options.type";
+import { MssqlCompiler } from "../../languages/mssql/query-parts-compiler/mssql.compiler";
 
 export class QueryCompiler<T extends Object> {
   constructor(

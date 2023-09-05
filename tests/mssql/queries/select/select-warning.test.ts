@@ -7,7 +7,7 @@ import { QueryTypes } from "../../../../src/chips-lq/types/queries/query.type";
 import { ValueTypes } from "../../../../src/chips-lq/types/values/value.type";
 import { ExecutionWillFailException } from "../../../../src/errors/warnings/execution-will-fail.exception";
 import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
-import { mssqlWarningMessages } from "../../../../src/warnings/mssql/mssql-warning-messages.constant";
+import { mssqlWarningMessages } from "../../../../src/languages/mssql/warnings/mssql-warning-messages.constant";
 import { WarningLevels } from "../../../../src/warnings/warning-levels.enum";
 import { TestService } from "../../../test.service";
 
@@ -74,14 +74,14 @@ service.expectWarning(
 );
 
 service.expectWarning(
-  'A select statement requires at least one selected value',
+  "A select statement requires at least one selected value",
   {
     queryType: QueryTypes.SELECT,
     fields: [],
     from: [
       {
-        name: 'customers'
-      }
+        name: "customers",
+      },
     ],
   },
   {
@@ -97,7 +97,7 @@ service.expectWarning(
     fields: [
       {
         valueType: ValueTypes.ALL_COLUMNS,
-      }
+      },
     ],
     from: [],
   },
@@ -122,7 +122,7 @@ service.expectException(
   {
     warningOptions: {
       throwExceptionOnExecutionWillFail: true,
-    }
+    },
   }
 );
 
@@ -146,12 +146,12 @@ service.expectWarning(
       {
         joinType: JoinTypes.TABLE,
         table: {
-          name: 'customers'
+          name: "customers",
         },
         direction: JoinDirections.FULL,
         include: JoinIncludes.INNER,
-      }
-    ]
+      },
+    ],
   },
   {
     level: WarningLevels.EXECUTION_WILL_FAIL,

@@ -1,10 +1,13 @@
 import { Query } from "../src/chips-lq/types/queries/query.type";
 import { UnavailableFeatureError } from "../src/errors/compiler/unavailable-feature.error";
-import { MssqlCompiler } from "../src/compiler/query/mssql/mssql.compiler";
 import { QueryCompilerOptions } from "../src/compiler/query/query-compiler-options.type";
 import { QueryCompiler } from "../src/compiler/query/query.compiler";
 import { SqlLanguages } from "../src/sql/sql-languages.enum";
-import { QueryWarningsService, Warning } from "../src/warnings/query-warnings.service";
+import {
+  QueryWarningsService,
+  Warning,
+} from "../src/warnings/query-warnings.service";
+import { MssqlCompiler } from "../src/languages/mssql/query-parts-compiler/mssql.compiler";
 
 export class TestService {
   constructor(private readonly language: SqlLanguages) {}
