@@ -1,10 +1,8 @@
 import { Query, QueryTypes } from "../../../chips-lq/types/queries/query.type";
 import { Select } from "../../../chips-lq/types/queries/select.type";
 import { SqlLanguages } from "../../../sql/sql-languages.enum";
-import { WarningLevels } from "../../../warnings/warning-levels.enum";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { MssqlPartsCompiler } from "./mssql-parts.compiler";
-import { ExecutionWillFailException } from "../../../errors/warnings/execution-will-fail.exception";
 import { IQueryCompiler } from "../../../compiler/query/query-compiler.interface";
 import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
@@ -26,20 +24,6 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   }
 
   public compile = () => {
-    const warnings = MssqlCompiler.processQueryWarnings(
-      this.query,
-      this.options
-    );
-    warnings.warn();
-
-    if (
-      this.options?.warningOptions?.throwExceptionOnExecutionWillFail &&
-      warnings.warnings.some(
-        (w) => w.level === WarningLevels.EXECUTION_WILL_FAIL
-      )
-    )
-      throw new ExecutionWillFailException();
-
     switch (this.query.queryType) {
       case QueryTypes.SELECT:
         return this.compileSelect(this.query);
