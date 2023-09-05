@@ -12,6 +12,8 @@ import { TestService } from "../../../test.service";
 
 const service = new TestService(SqlLanguages.MSSQL);
 
+// Select
+
 service.expectWarning(
   "ORDER BY is required when using OFFSET",
   {
@@ -69,6 +71,42 @@ service.expectWarning(
     message: mssqlWarningMessages.HAVING_WITHOUT_GROUP_BY,
   }
 );
+
+service.expectWarning(
+  'A select statement requires at least one selected value',
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [],
+    from: [
+      {
+        name: 'customers'
+      }
+    ],
+  },
+  {
+    level: WarningLevels.EXECUTION_WILL_FAIL,
+    message: mssqlWarningMessages.EMPTY_SELECT,
+  }
+);
+
+service.expectWarning(
+  "A select from statement requires at least one datasource",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.ALL_COLUMNS,
+      }
+    ],
+    from: [],
+  },
+  {
+    level: WarningLevels.EXECUTION_WILL_FAIL,
+    message: mssqlWarningMessages.EMPTY_FROM,
+  }
+);
+
+// Joins
 
 service.expectWarning(
   "Cannot perform an FULL INNER JOIN",

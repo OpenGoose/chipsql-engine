@@ -10,6 +10,7 @@ import { UnavailableFeatureError } from "../../compiler/features/unavailable-fea
 import { QueryCompilerOptions } from "../../compiler/query/query-compiler-options.type";
 import { QueryWarnings } from "../query-warnings.abstract";
 import { mssqlWarningMessages } from "./mssql-warning-messages.constant";
+import { From } from "../../chips-lq/types/tables/from.type";
 
 export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
   constructor(query: Query<T>, queryCompilerOptions?: QueryCompilerOptions) {
@@ -30,7 +31,7 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
     query: Select<T>,
     queryWarnings: QueryWarningsService<T>
   ) => {
-    const { offset, orderBy, groupBy, having, joins } = query;
+    const { offset, orderBy, groupBy, having, joins, from, fields } = query;
 
     if (offset && (!orderBy || orderBy.length <= 0))
       queryWarnings.appendWarning(
@@ -43,11 +44,19 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
         WarningLevels.EXECUTION_WILL_FAIL
       );
     }
+    
+    if (fields.length <= 0) queryWarnings.appendWarning(mssqlWarningMessages.EMPTY_SELECT, WarningLevels.EXECUTION_WILL_FAIL);
+
+    this.processFromWarnings(from, queryWarnings);
 
     if (joins && joins.length > 0) this.processJoinWarnings(joins, queryWarnings);
 
     return queryWarnings;
   };
+
+  private processFromWarnings = (from: From<T>, queryWarnings: QueryWarningsService<T>) => {
+    if (from.length <= 0) queryWarnings.appendWarning(mssqlWarningMessages.EMPTY_FROM, WarningLevels.EXECUTION_WILL_FAIL);
+  }
 
   private processJoinWarnings = (
     joins: Join<T>[],
