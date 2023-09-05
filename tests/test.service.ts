@@ -1,4 +1,3 @@
-import { compile } from "../src";
 import { Query } from "../src/chips-lq/types/queries/query.type";
 import { UnavailableFeatureError } from "../src/compiler/features/unavailable-feature.error";
 import { MssqlCompiler } from "../src/compiler/query/mssql/mssql.compiler";
