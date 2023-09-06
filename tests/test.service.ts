@@ -8,6 +8,10 @@ import {
   Warning,
 } from "../src/warnings/query-warnings.service";
 import { MssqlCompiler } from "../src/languages/mssql/query-parts-compiler/mssql.compiler";
+import { MssqlPartsCompiler } from "../src/languages/mssql/query-parts-compiler/mssql-parts.compiler";
+import { IQueryPartsCompiler } from "../src/compiler/query/query-parts-compiler.interface";
+import { Function } from "../src/chips-lq/types/functions/function.type";
+import { ValueTypes } from "../src/chips-lq/types/values/value.type";
 
 export class TestService {
   constructor(private readonly language: SqlLanguages) {}
@@ -66,6 +70,32 @@ export class TestService {
     });
     test(name, () => {
       expect(() => compiler.compile(query)).toThrow(error);
+    });
+  };
+
+  testFunction = <T extends Object = Object>(
+    name: string,
+    func: Function<T>,
+    result: string,
+    compilerOptions?: QueryCompilerOptions
+  ) => {
+    let partsCompiler: IQueryPartsCompiler<T>;
+
+    switch (this.language) {
+      case SqlLanguages.MSSQL:
+        partsCompiler = new MssqlPartsCompiler(compilerOptions);
+        break;
+      default:
+        throw new UnavailableFeatureError(this.language);
+    }
+
+    test(name, () => {
+      expect(
+        partsCompiler.func({
+          valueType: ValueTypes.FUNCTION,
+          ...func,
+        })
+      ).toBe(result);
     });
   };
 }

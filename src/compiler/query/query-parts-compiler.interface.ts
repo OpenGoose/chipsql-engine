@@ -5,7 +5,7 @@ import { OrderBy } from "../../chips-lq/types/order/order-by.type";
 import { Select } from "../../chips-lq/types/queries/select.type";
 import { Table } from "../../chips-lq/types/tables/table.type";
 import { AllowedValues } from "../../chips-lq/types/values/allowed-values.type";
-import { Value } from "../../chips-lq/types/values/value.type";
+import { FunctionValue, Value } from "../../chips-lq/types/values/value.type";
 import { QueryCompilerOptions } from "./query-compiler-options.type";
 
 export interface IQueryPartsCompiler<T extends Object> {
@@ -31,6 +31,7 @@ export interface IQueryPartsCompiler<T extends Object> {
   offset: (offsetValue: Value<T>) => string;
   into: (table: Table<Object>) => string;
   subselect: (select: Omit<Select<Object>, "queryType">) => string;
+  func: (funcValue: FunctionValue<T>) => string;
 
   // Utils
   escape: (value: AllowedValues) => string;
