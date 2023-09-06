@@ -137,18 +137,17 @@ export class MssqlPartsCompiler<T extends Object>
         [ConditionOperands.NOT_LIKE]: "NOT LIKE",
         [ConditionOperands.NOT_EQUALS]: "!=",
         [ConditionOperands.NOT_IN]: "NOT IN",
+        [ConditionOperands.IS]: "IS",
+        [ConditionOperands.IS_NOT]: "IS NOT",
       },
       whereValue.conditionOperand
     );
 
-    return `${joinParts(
-      [
-        this.value(whereValue.sourceValue),
-        operand,
-        this.value(whereValue.targetValue),
-      ],
-      this.avoidableSpace
-    )}`;
+    return `${joinParts([
+      this.value(whereValue.sourceValue),
+      operand,
+      this.value(whereValue.targetValue),
+    ])}`;
   };
 
   join = (joinValue: Join<T>) => {
@@ -233,6 +232,8 @@ export class MssqlPartsCompiler<T extends Object>
 
   // Utils
   escape = (value: AllowedValues) => {
+    if (value === null) return "NULL";
+
     switch (typeof value) {
       case "string":
         return `'${value.replace(/'/g, "''")}'`;

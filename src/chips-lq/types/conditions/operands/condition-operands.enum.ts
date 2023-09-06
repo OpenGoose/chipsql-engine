@@ -7,6 +7,8 @@ export enum ConditionOperands {
   NOT_EQUALS = "neq",
   LIKE = "lk",
   NOT_LIKE = "nlk",
+  IS = "IS",
+  IS_NOT = "IS NOT",
 
   // AGGREGATE
   IN = "in",

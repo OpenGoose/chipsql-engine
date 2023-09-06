@@ -12,14 +12,35 @@ export const mssqlFunctions = <T extends Object>(
     partsCompiler
   );
   switch (funcValue.function) {
+    // Aggregate
     case Functions.COUNT:
       return funcCompiler.count(funcValue);
-    case Functions.CUSTOM:
-      return funcCompiler.custom(funcValue);
     case Functions.MAX:
       return funcCompiler.max(funcValue);
     case Functions.MIN:
       return funcCompiler.min(funcValue);
+
+    // Scalar
+    case Functions.LOWER:
+      return funcCompiler.lower(funcValue);
+    case Functions.UPPER:
+      return funcCompiler.upper(funcValue);
+    case Functions.CONCAT:
+      return funcCompiler.concat(funcValue);
+
+    // Conditionals
+    case Functions.IF:
+      return funcCompiler.if(funcValue);
+    case Functions.COALESCE:
+      return funcCompiler.coalesce(funcValue);
+
+    // Casting
+    case Functions.CAST:
+      return funcCompiler.cast(funcValue);
+
+    // Custom
+    case Functions.CUSTOM:
+      return funcCompiler.custom(funcValue);
   }
   throw new UnavailableFeatureError(funcValue.function);
 };

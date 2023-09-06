@@ -470,7 +470,7 @@ service.expectQuery(
       },
     },
   },
-  "SELECT * FROM [sales].[customers][c] WHERE [c].[zip_code]IN('xxxxx',(SELECT TOP 1 [c2].[zip_code] FROM [sales].[customers][c2] WHERE [c2].[email]='x@themineway.cat'));",
+  "SELECT * FROM [sales].[customers][c] WHERE [c].[zip_code] IN ('xxxxx',(SELECT TOP 1 [c2].[zip_code] FROM [sales].[customers][c2] WHERE [c2].[email] = 'x@themineway.cat'));",
   {
     compactQuery: true,
   }

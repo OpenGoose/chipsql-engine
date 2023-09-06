@@ -10,4 +10,10 @@ export type DatetimeType = {
   date: Date;
 };
 
-export type AllowedValues = string | number | boolean | DateType | DatetimeType;
+export type AllowedValues =
+  | string
+  | number
+  | boolean
+  | DateType
+  | DatetimeType
+  | null;
