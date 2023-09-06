@@ -77,3 +77,40 @@ service.testFunction(
     compactQuery: true,
   }
 );
+
+service.testFunction(
+  "CONCAT function",
+  {
+    function: Functions.CONCAT,
+    values: [
+      {
+        valueType: ValueTypes.RAW_VALUE,
+        value: "Hi! ",
+      },
+      {
+        valueType: ValueTypes.RAW_VALUE,
+        value: "Have ",
+      },
+      {
+        valueType: ValueTypes.SUBSELECT,
+        fields: [
+          {
+            valueType: ValueTypes.RAW_VALUE,
+            value: "a nice day!",
+            alias: "sentence",
+          },
+        ],
+        from: [
+          {
+            name: "test_table",
+          },
+        ],
+        limit: {
+          valueType: ValueTypes.RAW_VALUE,
+          value: 1,
+        },
+      },
+    ],
+  },
+  "CONCAT('Hi! ', 'Have ', (SELECT TOP 1 'a nice day!' AS 'sentence' FROM [test_table]))"
+);
