@@ -915,7 +915,7 @@ service.expectQuery(
 );
 
 service.expectQuery(
-  "Generate SELECT age as VARCHAR(127) AND birthday as DATE",
+  "Generate SELECT age as VARCHAR(127), age as VARCHAR(MAX), AND birthday as DATE",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -929,6 +929,19 @@ service.expectQuery(
         as: {
           dataType: DataTypes.VARCHAR,
           length: 127,
+        },
+        alias: "age",
+      },
+      {
+        valueType: ValueTypes.FUNCTION,
+        function: Functions.CAST,
+        value: {
+          valueType: ValueTypes.COLUMN,
+          field: "age",
+        },
+        as: {
+          dataType: DataTypes.VARCHAR,
+          length: Infinity,
         },
         alias: "age",
       },
@@ -951,5 +964,5 @@ service.expectQuery(
       },
     ],
   },
-  "SELECT CAST([age] AS VARCHAR(127)) AS 'age', CAST([birthday] AS DATE) AS 'birthday' FROM [customers];"
+  "SELECT CAST([age] AS VARCHAR(127)) AS 'age', CAST([age] AS VARCHAR(MAX)) AS 'age', CAST([birthday] AS DATE) AS 'birthday' FROM [customers];"
 );

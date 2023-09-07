@@ -12,7 +12,7 @@ export class MssqlDataTypesCompiler<T extends Object> extends DataTypesCompiler<
         super(partsCompiler);
     }
 
-    varchar = (datatype: VarcharDataType) => this.buildDataType('VARCHAR', [datatype.length?.toString()]);
+    varchar = (datatype: VarcharDataType) => this.buildDataType('VARCHAR', [datatype.length === Infinity ? 'MAX' : datatype.length?.toString()]);
     int = (datatype: IntDataType) => this.buildDataType('INT');
     decimal = (datatype: DecimalDataType) => this.buildDataType('DECIMAL');
     boolean = (datatype: BooleanDataType) => this.buildDataType('BIT');
