@@ -14,7 +14,7 @@ import { UpperFunction } from "../../../chips-lq/types/functions/scalar/text/upp
 export class MssqlFunctionsCompiler<
   T extends Object
 > extends FunctionsCompiler<T> {
-  constructor(protected readonly partsCompiler: IQueryPartsCompiler<T>) {
+  constructor(partsCompiler: IQueryPartsCompiler<T>) {
     super(partsCompiler);
   }
 
@@ -60,7 +60,7 @@ export class MssqlFunctionsCompiler<
   // Casting
 
   cast = (values: CastFunction<T>) =>
-    this.buildFunction("CAST", [this.value(values.value) + " AS "]); // TODO: add casting
+    this.buildFunction("CAST", [this.value(values.value) + " AS " + this.partsCompiler.dataType(values.as)]); // TODO: add casting
 
   // Custom
 

@@ -2,7 +2,6 @@ export enum DataTypes {
     VARCHAR,
     INT,
     DECIMAL,
-    BIT,
+    BOOLEAN,
     DATE,
-    DATETIME,
 }

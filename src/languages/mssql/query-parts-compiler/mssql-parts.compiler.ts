@@ -27,6 +27,8 @@ import { GroupBy } from "../../../chips-lq/types/grouping/group-by.type";
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
 import { DataTypes } from "../../../chips-lq/types/datatypes/datatypes.enum";
 import { mssqlFunctions } from "../functions/mssql-functions";
+import { DataType } from "../../../chips-lq/types/datatypes/datatype.type";
+import { mssqlDataTypes } from "../datatypes/mssql-datatypes";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
@@ -230,6 +232,8 @@ export class MssqlPartsCompiler<T extends Object>
     return this.value(groupByValue);
   };
 
+  dataType = (value: DataType): string => mssqlDataTypes(value, this);
+
   // Utils
   escape = (value: AllowedValues) => {
     if (value === null) return "NULL";
@@ -244,14 +248,12 @@ export class MssqlPartsCompiler<T extends Object>
         return value.toString();
     }
 
-    switch (value.dataType) {
+    switch (value.type) {
       case DataTypes.DATE:
+        if (value.includeTime) return `'${format(value.date, "yyyy-MM-dd HH:mm:ss")}'`;
         return `'${format(value.date, "yyyy-MM-dd")}'`;
-      case DataTypes.DATETIME:
-        return `'${format(value.date, "yyyy-MM-dd HH:mm:ss")}'`;
+      default: throw new UnavailableFeatureError(`Conversion to ${typeof value}`);
     }
-
-    throw new UnavailableFeatureError(`Conversion to ${typeof value}`);
   };
   generateField = (field: string) => `[${field}]`;
 

@@ -889,7 +889,8 @@ service.expectQuery(
       {
         valueType: ValueTypes.RAW_VALUE,
         value: {
-          dataType: DataTypes.DATETIME,
+          type: DataTypes.DATE,
+          includeTime: true,
           date: new Date("2023-09-03 22:06:00"),
         },
         alias: "Commit datetime",
@@ -897,7 +898,7 @@ service.expectQuery(
       {
         valueType: ValueTypes.RAW_VALUE,
         value: {
-          dataType: DataTypes.DATE,
+          type: DataTypes.DATE,
           date: new Date("2023-09-03"),
         },
         alias: "Commit date",
@@ -911,4 +912,44 @@ service.expectQuery(
     ],
   },
   "SELECT 'HI' AS 'name', 1 AS '''SQL'' injection free?', 0 AS 'Does ChipsQL require payment?', '2023-09-03 22:06:00' AS 'Commit datetime', '2023-09-03' AS 'Commit date' FROM [sales].[customers];"
+);
+
+service.expectQuery(
+  "Generate SELECT age as VARCHAR(127) AND birthday as DATE",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.FUNCTION,
+        function: Functions.CAST,
+        value: {
+          valueType: ValueTypes.COLUMN,
+          field: "age",
+        },
+        as: {
+          dataType: DataTypes.VARCHAR,
+          length: 127,
+        },
+        alias: "age",
+      },
+      {
+        valueType: ValueTypes.FUNCTION,
+        function: Functions.CAST,
+        value: {
+          valueType: ValueTypes.COLUMN,
+          field: "birthday",
+        },
+        as: {
+          dataType: DataTypes.DATE,
+        },
+        alias: "birthday",
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+      },
+    ],
+  },
+  "SELECT CAST([age] AS VARCHAR(127)) AS 'age', CAST([birthday] AS DATE) AS 'birthday' FROM [customers];"
 );

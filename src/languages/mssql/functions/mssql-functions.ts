@@ -8,7 +8,7 @@ export const mssqlFunctions = <T extends Object>(
   funcValue: FunctionValue<T>,
   partsCompiler: MssqlPartsCompiler<T>
 ) => {
-  const funcCompiler: MssqlFunctionsCompiler<T> = new MssqlFunctionsCompiler(
+  const funcCompiler: MssqlFunctionsCompiler<T> = new MssqlFunctionsCompiler<T>(
     partsCompiler
   );
   switch (funcValue.function) {
@@ -41,6 +41,7 @@ export const mssqlFunctions = <T extends Object>(
     // Custom
     case Functions.CUSTOM:
       return funcCompiler.custom(funcValue);
+
+    default: throw new UnavailableFeatureError(funcValue);
   }
-  throw new UnavailableFeatureError(funcValue.function);
 };

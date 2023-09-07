@@ -1,19 +1,14 @@
 import { DataTypes } from "../datatypes/datatypes.enum";
+import { DateDataType } from "../datatypes/datatypes/date/date.datatype";
 
 export type DateType = {
-  dataType: DataTypes.DATE;
+  type: DataTypes.DATE;
   date: Date;
-};
-
-export type DatetimeType = {
-  dataType: DataTypes.DATETIME;
-  date: Date;
-};
+} & Omit<DateDataType, 'dataType'>;
 
 export type AllowedValues =
   | string
   | number
   | boolean
   | DateType
-  | DatetimeType
   | null;

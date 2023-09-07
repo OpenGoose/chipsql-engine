@@ -1,4 +1,5 @@
 import { Where } from "../../chips-lq/types/conditions/where.type";
+import { DataType } from "../../chips-lq/types/datatypes/datatype.type";
 import { GroupBy } from "../../chips-lq/types/grouping/group-by.type";
 import { Join } from "../../chips-lq/types/joins/join.type";
 import { OrderBy } from "../../chips-lq/types/order/order-by.type";
@@ -32,6 +33,7 @@ export interface IQueryPartsCompiler<T extends Object> {
   into: (table: Table<Object>) => string;
   subselect: (select: Omit<Select<Object>, "queryType">) => string;
   func: (funcValue: FunctionValue<T>) => string;
+  dataType: (dataTypeValue: DataType) => string;
 
   // Utils
   escape: (value: AllowedValues) => string;
