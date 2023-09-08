@@ -9,7 +9,7 @@ type JoinOn<T extends Object> =
   | {
       joinType: JoinTypes.SELECT;
       on?: Where<T>;
-      select: Omit<Select<Object>, 'queryType'>; // <-- Object, as it is another table
+      select: Omit<Select<Object>, "queryType">; // <-- Object, as it is another table
       alias: string;
     }
   | {
@@ -20,7 +20,6 @@ type JoinOn<T extends Object> =
 
 export type Join<T extends Object> = JoinOn<T> & {
   on?: Where<T>;
-  full?: boolean;
   direction?: JoinDirections;
   include?: JoinIncludes;
 };

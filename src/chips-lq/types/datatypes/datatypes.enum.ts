@@ -1,8 +1,9 @@
 export enum DataTypes {
-    VARCHAR,
-    INT,
-    DECIMAL,
-    BIT,
-    DATE,
-    DATETIME,
+    VARCHAR = 'varchar',
+    INT = 'int',
+    DECIMAL = 'decimal',
+    BOOLEAN = 'bool',
+    DATE = 'date',
+
+    CUSTOM = 'CUSTOM',
 }

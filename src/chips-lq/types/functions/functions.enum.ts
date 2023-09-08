@@ -1,21 +1,26 @@
 export enum Functions {
-    // AGGREGATE
-    MAX = 'max',
-    MIN = 'min',
-    COUNT = 'count',
+  // AGGREGATE
+  MAX = "max",
+  MIN = "min",
+  COUNT = "count",
 
-    // SCALAR
-    LOWER = 'lower',
-    UPPER = 'upper',
-    CONCAT = 'concat',
+  // SCALAR
+  ASCII = "ascii",
+  CHAR = "char",
+  FIND_INDEX = "find_index",
+  CONCAT = "concat",
+  JOIN = 'join',
+  BYTES_LENGTH = 'bytes_length',
+  LOWER = "lower",
+  UPPER = "upper",
 
-    // Conditionals
-    IF = 'if',
-    COALESCE = 'coalesce',
+  // Conditionals
+  IF = "if",
+  COALESCE = "coalesce",
 
-    // Casting
-    CAST = 'cast',
+  // Casting
+  CAST = "cast",
 
-    // CUSTOM
-    CUSTOM = 'custom'
+  // CUSTOM
+  CUSTOM = "custom",
 }
