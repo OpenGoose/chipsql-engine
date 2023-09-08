@@ -1,5 +1,7 @@
 # ChipsQL Engine
 
+[![CodeQL](https://github.com/OpenGoose/chipsql-engine/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/OpenGoose/chipsql-engine/actions/workflows/github-code-scanning/codeql)
+
 ## Supported languages
 
 List of languages ChipsQL can compile to using this library:
