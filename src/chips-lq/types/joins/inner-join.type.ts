@@ -1,5 +1,5 @@
-import { JoinTypes } from "./join-types.enum";
+import { JoinIncludes } from "./join-includes.enum";
 
 export interface InnerJoin<T extends Object> {
-    joinType: JoinTypes.INNER;
+  joinType: JoinIncludes.INNER;
 }
