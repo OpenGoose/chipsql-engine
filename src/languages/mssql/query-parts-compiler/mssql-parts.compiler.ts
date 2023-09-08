@@ -7,7 +7,7 @@ import {
 } from "../../../chips-lq/types/values/value.type";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { joinParts } from "../../../compiler/utils/query-generation/join-parts.util";
-import { format, isDate } from "date-fns";
+import { format } from "date-fns";
 import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
 import { MssqlCompiler } from "./mssql.compiler";
 import { QueryTypes } from "../../../chips-lq/types/queries/query.type";
@@ -250,9 +250,11 @@ export class MssqlPartsCompiler<T extends Object>
 
     switch (value.type) {
       case DataTypes.DATE:
-        if (value.includeTime) return `'${format(value.date, "yyyy-MM-dd HH:mm:ss")}'`;
+        if (value.includeTime)
+          return `'${format(value.date, "yyyy-MM-dd HH:mm:ss")}'`;
         return `'${format(value.date, "yyyy-MM-dd")}'`;
-      default: throw new UnavailableFeatureError(`Conversion to ${typeof value}`);
+      default:
+        throw new UnavailableFeatureError(`Conversion to ${typeof value}`);
     }
   };
   generateField = (field: string) => `[${field}]`;
