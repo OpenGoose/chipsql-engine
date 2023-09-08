@@ -21,3 +21,9 @@ ChipsQL is a standard database query language that can compile to some well-know
 # Contribute
 
 You are welcome to make changes and create pull requests if yo want to contribute.
+
+# Support
+
+You can support me using _Buy me a coffee_ 😺:
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/joelkmps)
