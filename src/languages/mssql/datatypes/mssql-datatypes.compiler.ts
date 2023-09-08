@@ -1,4 +1,5 @@
 import { BooleanDataType } from "../../../chips-lq/types/datatypes/datatypes/bit/boolean.datatype";
+import { CustomDataType } from "../../../chips-lq/types/datatypes/datatypes/custom/custom.datatype";
 import { DateDataType } from "../../../chips-lq/types/datatypes/datatypes/date/date.datatype";
 import { DecimalDataType } from "../../../chips-lq/types/datatypes/datatypes/numeric/decimal.datatype";
 import { IntDataType } from "../../../chips-lq/types/datatypes/datatypes/numeric/int.datatype";
@@ -20,5 +21,7 @@ export class MssqlDataTypesCompiler<T extends Object> extends DataTypesCompiler<
         const name = datatype.includeTime ? 'DATETIME2' : 'DATE';
         return this.buildDataType(name);
     }
+
+    custom = (dataType: CustomDataType<T>) => this.buildDataType(dataType.name, dataType.parameters.map(this.partsCompiler.value));
     
 }

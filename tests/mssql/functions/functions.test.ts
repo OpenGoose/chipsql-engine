@@ -7,7 +7,7 @@ import { TestService } from "../../test.service";
 
 const service = new TestService(SqlLanguages.MSSQL);
 
-service.testFunction(
+service.expectFunction(
   "COUNT function",
   {
     function: Functions.COUNT,
@@ -19,7 +19,7 @@ service.testFunction(
   "COUNT([id])"
 );
 
-service.testFunction(
+service.expectFunction(
   "IIF function",
   {
     function: Functions.IF,
@@ -47,7 +47,7 @@ service.testFunction(
   "IIF([id] IS NOT NULL, 1, 0)"
 );
 
-service.testFunction(
+service.expectFunction(
   "IIF function (as compact query)",
   {
     function: Functions.IF,
@@ -78,7 +78,7 @@ service.testFunction(
   }
 );
 
-service.testFunction(
+service.expectFunction(
   "CONCAT function",
   {
     function: Functions.CONCAT,

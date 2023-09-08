@@ -20,6 +20,8 @@ export const mssqlDataTypes = <T extends Object>(value: DataType, partsCompiler:
 
         // Date
         case DataTypes.DATE: return compiler.date(value);
+
+        case DataTypes.CUSTOM: return compiler.custom(value);
         default: throw new UnavailableFeatureError(value);
     }
 }
