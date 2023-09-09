@@ -1,6 +1,7 @@
 import { JoinDirections } from "../../../chips-lq/types/joins/join-directions.enum";
 import { JoinIncludes } from "../../../chips-lq/types/joins/join-includes.enum";
 import { Join } from "../../../chips-lq/types/joins/join.type";
+import { Insert } from "../../../chips-lq/types/queries/insert.type";
 import { Query, QueryTypes } from "../../../chips-lq/types/queries/query.type";
 import { Select } from "../../../chips-lq/types/queries/select.type";
 import { From } from "../../../chips-lq/types/tables/from.type";
@@ -27,6 +28,8 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
     switch (this.query.queryType) {
       case QueryTypes.SELECT:
         return this.processSelectWarnings(this.query, queryWarnings);
+      case QueryTypes.INSERT:
+        return this.processInsertWarnings(this.query, queryWarnings);
     }
     throw new UnavailableFeatureError();
   };
@@ -60,6 +63,13 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
     if (joins && joins.length > 0)
       this.processJoinWarnings(joins, queryWarnings);
 
+    return queryWarnings;
+  };
+
+  private processInsertWarnings = (
+    query: Insert<T>,
+    queryWarnings: QueryWarningsService<T>
+  ) => {
     return queryWarnings;
   };
 
