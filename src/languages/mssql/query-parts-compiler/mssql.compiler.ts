@@ -102,7 +102,11 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
               valuesObject.map((row) => {
                 // For each row
                 return `(${joinParts(
-                  row.map(({ value }) => this.partsCompiler.value(value)),
+                  keys.map((key) => {
+                    const cell = row.find(({ field }) => field === key);
+                    if (cell) return this.partsCompiler.value(cell.value);
+                    return "NULL";
+                  }),
                   `,${this.partsCompiler.avoidableSpace}`
                 )})`;
               }),
