@@ -8,6 +8,9 @@ import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compile
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
 import { joinParts } from "../../../compiler/utils/query-generation/join-parts.util";
 import { MssqlWarnings } from "../warnings/mssql.warnings";
+import { Insert } from "../../../chips-lq/types/queries/insert.type";
+import { chunk } from "lodash";
+import { mssqlConstants } from "../constants/mssql.constants";
 
 export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   protected readonly language: SqlLanguages;
@@ -27,6 +30,8 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
     switch (this.query.queryType) {
       case QueryTypes.SELECT:
         return this.compileSelect(this.query);
+      case QueryTypes.INSERT:
+        return this.compileInsert(this.query);
     }
     throw new UnavailableFeatureError(this.query.queryType);
   };
@@ -66,6 +71,51 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
           : null,
       ]) + (this.options?.endWithSemicolon === false ? "" : ";")
     );
+  };
+
+  compileInsert = (insert: Insert<T>) => {
+    const insertValues = chunk(
+      insert.values,
+      insert.options?.batchSize ?? mssqlConstants.BATCH_INSERT_MAX_SIZE
+    );
+
+    return insertValues
+      .map((valuesObject) => {
+        // Identify keys
+        let keys: string[] = [];
+        for (const row of valuesObject) {
+          for (const value of row) {
+            if (!keys.includes(value.field)) keys.push(value.field);
+          }
+        }
+
+        return (
+          joinParts([
+            "INSERT INTO",
+            this.partsCompiler.table(insert.into),
+            `(${joinParts(
+              keys.map(this.partsCompiler.generateField),
+              `,${this.partsCompiler.avoidableSpace}`
+            )}) VALUES`,
+            // Generate values
+            joinParts(
+              valuesObject.map((row) => {
+                // For each row
+                return `(${joinParts(
+                  keys.map((key) => {
+                    const cell = row.find(({ field }) => field === key);
+                    if (cell) return this.partsCompiler.value(cell.value);
+                    return "NULL";
+                  }),
+                  `,${this.partsCompiler.avoidableSpace}`
+                )})`;
+              }),
+              `,${this.partsCompiler.avoidableSpace}`
+            ),
+          ]) + (this.options?.endWithSemicolon === false ? "" : ";")
+        );
+      })
+      .join(this.options?.endWithSemicolon === false ? ";" : "");
   };
 
   static processQueryWarnings = <T extends Object>(

@@ -23,6 +23,8 @@
     "dist/**"
   ],
   "dependencies": {
-    "date-fns": "^2.30.0"
+    "@types/lodash": "^4.14.198",
+    "date-fns": "^2.30.0",
+    "lodash": "^4.17.21"
   }
 }

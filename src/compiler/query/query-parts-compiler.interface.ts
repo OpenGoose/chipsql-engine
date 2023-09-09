@@ -37,4 +37,5 @@ export interface IQueryPartsCompiler<T extends Object> {
 
   // Utils
   escape: (value: AllowedValues) => string;
+  generateField: (field: string) => string;
 }
