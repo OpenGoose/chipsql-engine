@@ -97,12 +97,17 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
               keys.map(this.partsCompiler.generateField),
               `,${this.partsCompiler.avoidableSpace}`
             )}) VALUES`,
-            ...valuesObject.map((row) => {
-              return `(${joinParts(
-                row.map(({ value }) => this.partsCompiler.value(value)),
-                `,${this.partsCompiler.avoidableSpace}`
-              )})`;
-            }),
+            // Generate values
+            joinParts(
+              valuesObject.map((row) => {
+                // For each row
+                return `(${joinParts(
+                  row.map(({ value }) => this.partsCompiler.value(value)),
+                  `,${this.partsCompiler.avoidableSpace}`
+                )})`;
+              }),
+              `,${this.partsCompiler.avoidableSpace}`
+            ),
           ]) + (this.options?.endWithSemicolon === false ? "" : ";")
         );
       })

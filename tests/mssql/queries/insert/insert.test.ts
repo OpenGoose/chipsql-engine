@@ -34,3 +34,49 @@ service.expectQuery(
   },
   "INSERT INTO [sales].[customers] ([name], [lastname]) VALUES ('Gloria', 'Gaynor');"
 );
+
+service.expectQuery(
+  "Basic batch INSERT statement",
+  {
+    queryType: QueryTypes.INSERT,
+    into: {
+      name: "customers",
+      schema: "sales",
+    },
+    values: [
+      [
+        {
+          field: "name",
+          value: {
+            valueType: ValueTypes.RAW_VALUE,
+            value: "Gloria",
+          },
+        },
+        {
+          field: "lastname",
+          value: {
+            valueType: ValueTypes.RAW_VALUE,
+            value: "Gaynor",
+          },
+        },
+      ],
+      [
+        {
+          field: "name",
+          value: {
+            valueType: ValueTypes.RAW_VALUE,
+            value: "Roxie",
+          },
+        },
+        {
+          field: "lastname",
+          value: {
+            valueType: ValueTypes.RAW_VALUE,
+            value: "Hart",
+          },
+        },
+      ],
+    ],
+  },
+  "INSERT INTO [sales].[customers] ([name], [lastname]) VALUES ('Gloria', 'Gaynor'), ('Roxie', 'Hart');"
+);
