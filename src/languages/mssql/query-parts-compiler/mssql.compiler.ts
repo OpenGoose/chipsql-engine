@@ -9,8 +9,8 @@ import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-opt
 import { joinParts } from "../../../compiler/utils/query-generation/join-parts.util";
 import { MssqlWarnings } from "../warnings/mssql.warnings";
 import { Insert } from "../../../chips-lq/types/queries/insert.type";
-import { chunk } from "lodash";
 import { mssqlConstants } from "../constants/mssql.constants";
+import { ExecutionWillFailException } from "../../../errors/warnings/execution-will-fail.exception";
 
 export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   protected readonly language: SqlLanguages;
@@ -74,48 +74,41 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   };
 
   compileInsert = (insert: Insert<T>) => {
-    const insertValues = chunk(
-      insert.values,
-      insert.options?.batchSize ?? mssqlConstants.BATCH_INSERT_MAX_SIZE
-    );
+    if (insert.values.length > mssqlConstants.BATCH_INSERT_MAX_SIZE) throw new ExecutionWillFailException();
 
-    return insertValues
-      .map((valuesObject) => {
-        // Identify keys
-        let keys: string[] = [];
-        for (const row of valuesObject) {
-          for (const value of row) {
-            if (!keys.includes(value.field)) keys.push(value.field);
-          }
+      // Identify keys
+      let keys: string[] = [];
+      for (const row of insert.values) {
+        for (const value of row) {
+          if (!keys.includes(value.field)) keys.push(value.field);
         }
+      }
 
-        return (
-          joinParts([
-            "INSERT INTO",
-            this.partsCompiler.table(insert.into),
-            `(${joinParts(
-              keys.map(this.partsCompiler.generateField),
-              `,${this.partsCompiler.avoidableSpace}`
-            )}) VALUES`,
-            // Generate values
-            joinParts(
-              valuesObject.map((row) => {
-                // For each row
-                return `(${joinParts(
-                  keys.map((key) => {
-                    const cell = row.find(({ field }) => field === key);
-                    if (cell) return this.partsCompiler.value(cell.value);
-                    return "NULL";
-                  }),
-                  `,${this.partsCompiler.avoidableSpace}`
-                )})`;
-              }),
-              `,${this.partsCompiler.avoidableSpace}`
-            ),
-          ]) + (this.options?.endWithSemicolon === false ? "" : ";")
-        );
-      })
-      .join(this.options?.endWithSemicolon === false ? ";" : "");
+      return (
+        joinParts([
+          "INSERT INTO",
+          this.partsCompiler.table(insert.into),
+          `(${joinParts(
+            keys.map(this.partsCompiler.generateField),
+            `,${this.partsCompiler.avoidableSpace}`
+          )}) VALUES`,
+          // Generate values
+          joinParts(
+            insert.values.map((row) => {
+              // For each row
+              return `(${joinParts(
+                keys.map((key) => {
+                  const cell = row.find(({ field }) => field === key);
+                  if (cell) return this.partsCompiler.value(cell.value);
+                  return "NULL";
+                }),
+                `,${this.partsCompiler.avoidableSpace}`
+              )})`;
+            }),
+            `,${this.partsCompiler.avoidableSpace}`
+          ),
+        ]) + (this.options?.endWithSemicolon === false ? "" : ";")
+      );
   };
 
   static processQueryWarnings = <T extends Object>(
