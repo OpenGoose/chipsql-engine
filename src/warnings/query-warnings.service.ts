@@ -1,4 +1,4 @@
-import { Query } from "../chips-lq/types/queries/query.type";
+import { Query } from "../chips-ql/types/queries/query.type";
 import { SqlLanguages } from "../sql/sql-languages.enum";
 import { WarningLevels } from "./warning-levels.enum";
 import { WarningOptions } from "./warning-options.type";

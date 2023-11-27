@@ -1,20 +1,20 @@
-import { CountFunction } from "../../../chips-lq/types/functions/aggregate/count.function";
-import { MaxFunction } from "../../../chips-lq/types/functions/aggregate/max.function.type";
-import { MinFunction } from "../../../chips-lq/types/functions/aggregate/min.function.type";
-import { CustomFunction } from "../../../chips-lq/types/functions/custom/custom.function";
+import { CountFunction } from "../../../chips-ql/types/functions/aggregate/count.function";
+import { MaxFunction } from "../../../chips-ql/types/functions/aggregate/max.function.type";
+import { MinFunction } from "../../../chips-ql/types/functions/aggregate/min.function.type";
+import { CustomFunction } from "../../../chips-ql/types/functions/custom/custom.function";
 import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
 import { FunctionsCompiler } from "../../../compiler/functions/functions-compiler.service";
-import { CastFunction } from "../../../chips-lq/types/functions/scalar/casting/cast.function";
-import { CoalesceFunction } from "../../../chips-lq/types/functions/scalar/conditionals/coalesce.function";
-import { IfFunction } from "../../../chips-lq/types/functions/scalar/conditionals/if.function";
-import { ConcatFunction } from "../../../chips-lq/types/functions/scalar/text/concat.function";
-import { LowerFunction } from "../../../chips-lq/types/functions/scalar/text/lower.function";
-import { UpperFunction } from "../../../chips-lq/types/functions/scalar/text/upper.function";
-import { AsciiFunction } from "../../../chips-lq/types/functions/scalar/text/ascii.function";
-import { CharFunction } from "../../../chips-lq/types/functions/scalar/text/char.function";
-import { FindIndexFunction } from "../../../chips-lq/types/functions/scalar/text/find-index.function";
-import { JoinFunction } from "../../../chips-lq/types/functions/scalar/text/join.function";
-import { BytesLengthFunction } from "../../../chips-lq/types/functions/scalar/bytes/bytes-length.function";
+import { CastFunction } from "../../../chips-ql/types/functions/scalar/casting/cast.function";
+import { CoalesceFunction } from "../../../chips-ql/types/functions/scalar/conditionals/coalesce.function";
+import { IfFunction } from "../../../chips-ql/types/functions/scalar/conditionals/if.function";
+import { ConcatFunction } from "../../../chips-ql/types/functions/scalar/text/concat.function";
+import { LowerFunction } from "../../../chips-ql/types/functions/scalar/text/lower.function";
+import { UpperFunction } from "../../../chips-ql/types/functions/scalar/text/upper.function";
+import { AsciiFunction } from "../../../chips-ql/types/functions/scalar/text/ascii.function";
+import { CharFunction } from "../../../chips-ql/types/functions/scalar/text/char.function";
+import { FindIndexFunction } from "../../../chips-ql/types/functions/scalar/text/find-index.function";
+import { JoinFunction } from "../../../chips-ql/types/functions/scalar/text/join.function";
+import { BytesLengthFunction } from "../../../chips-ql/types/functions/scalar/bytes/bytes-length.function";
 
 export class MssqlFunctionsCompiler<
   T extends Object

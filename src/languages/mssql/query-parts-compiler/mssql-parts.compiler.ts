@@ -1,33 +1,33 @@
-import { Table } from "../../../chips-lq/types/tables/table.type";
-import { AllowedValues } from "../../../chips-lq/types/values/allowed-values.type";
+import { Table } from "../../../chips-ql/types/tables/table.type";
+import { AllowedValues } from "../../../chips-ql/types/values/allowed-values.type";
 import {
   FunctionValue,
   Value,
   ValueTypes,
-} from "../../../chips-lq/types/values/value.type";
+} from "../../../chips-ql/types/values/value.type";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { joinParts } from "../../../compiler/utils/query-generation/join-parts.util";
 import { format } from "date-fns";
 import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
 import { MssqlCompiler } from "./mssql.compiler";
-import { QueryTypes } from "../../../chips-lq/types/queries/query.type";
-import { Join } from "../../../chips-lq/types/joins/join.type";
+import { QueryTypes } from "../../../chips-ql/types/queries/query.type";
+import { Join } from "../../../chips-ql/types/joins/join.type";
 import { valueSelector } from "../../../compiler/utils/selectors/value-selector.util";
-import { JoinDirections } from "../../../chips-lq/types/joins/join-directions.enum";
-import { JoinIncludes } from "../../../chips-lq/types/joins/join-includes.enum";
-import { JoinTypes } from "../../../chips-lq/types/joins/join-types.enum";
-import { Select } from "../../../chips-lq/types/queries/select.type";
-import { Where } from "../../../chips-lq/types/conditions/where.type";
-import { ConditionType } from "../../../chips-lq/types/conditions/condition-type.enum";
-import { JoinerOperands } from "../../../chips-lq/types/conditions/operands/joiner-operands.enum";
-import { ConditionOperands } from "../../../chips-lq/types/conditions/operands/condition-operands.enum";
-import { OrderBy } from "../../../chips-lq/types/order/order-by.type";
-import { OrderDirection } from "../../../chips-lq/types/order/order-direction.enum";
-import { GroupBy } from "../../../chips-lq/types/grouping/group-by.type";
+import { JoinDirections } from "../../../chips-ql/types/joins/join-directions.enum";
+import { JoinIncludes } from "../../../chips-ql/types/joins/join-includes.enum";
+import { JoinTypes } from "../../../chips-ql/types/joins/join-types.enum";
+import { Select } from "../../../chips-ql/types/queries/select.type";
+import { Where } from "../../../chips-ql/types/conditions/where.type";
+import { ConditionType } from "../../../chips-ql/types/conditions/condition-type.enum";
+import { JoinerOperands } from "../../../chips-ql/types/conditions/operands/joiner-operands.enum";
+import { ConditionOperands } from "../../../chips-ql/types/conditions/operands/condition-operands.enum";
+import { OrderBy } from "../../../chips-ql/types/order/order-by.type";
+import { OrderDirection } from "../../../chips-ql/types/order/order-direction.enum";
+import { GroupBy } from "../../../chips-ql/types/grouping/group-by.type";
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
-import { DataTypes } from "../../../chips-lq/types/datatypes/datatypes.enum";
+import { DataTypes } from "../../../chips-ql/types/datatypes/datatypes.enum";
 import { mssqlFunctions } from "../functions/mssql-functions";
-import { DataType } from "../../../chips-lq/types/datatypes/datatype.type";
+import { DataType } from "../../../chips-ql/types/datatypes/datatype.type";
 import { mssqlDataTypes } from "../datatypes/mssql-datatypes";
 
 export class MssqlPartsCompiler<T extends Object>

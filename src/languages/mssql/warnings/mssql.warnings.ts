@@ -1,10 +1,10 @@
-import { JoinDirections } from "../../../chips-lq/types/joins/join-directions.enum";
-import { JoinIncludes } from "../../../chips-lq/types/joins/join-includes.enum";
-import { Join } from "../../../chips-lq/types/joins/join.type";
-import { Insert } from "../../../chips-lq/types/queries/insert.type";
-import { Query, QueryTypes } from "../../../chips-lq/types/queries/query.type";
-import { Select } from "../../../chips-lq/types/queries/select.type";
-import { From } from "../../../chips-lq/types/tables/from.type";
+import { JoinDirections } from "../../../chips-ql/types/joins/join-directions.enum";
+import { JoinIncludes } from "../../../chips-ql/types/joins/join-includes.enum";
+import { Join } from "../../../chips-ql/types/joins/join.type";
+import { Insert } from "../../../chips-ql/types/queries/insert.type";
+import { Query, QueryTypes } from "../../../chips-ql/types/queries/query.type";
+import { Select } from "../../../chips-ql/types/queries/select.type";
+import { From } from "../../../chips-ql/types/tables/from.type";
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { SqlLanguages } from "../../../sql/sql-languages.enum";
