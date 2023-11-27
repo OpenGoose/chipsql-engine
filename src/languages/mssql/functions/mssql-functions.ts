@@ -1,5 +1,5 @@
-import { Functions } from "../../../chips-lq/types/functions/functions.enum";
-import { FunctionValue } from "../../../chips-lq/types/values/value.type";
+import { Functions } from "../../../chips-ql/types/functions/functions.enum";
+import { FunctionValue } from "../../../chips-ql/types/values/value.type";
 import { MssqlPartsCompiler } from "../query-parts-compiler/mssql-parts.compiler";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { MssqlFunctionsCompiler } from "./mssql-functions.compiler";
