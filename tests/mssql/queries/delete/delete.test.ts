@@ -56,3 +56,15 @@ service.expectQuery('Delete user by id (without semicolon)', {
 }, 'DELETE FROM [auth].[users] WHERE [id] = 1', {
     endWithSemicolon: false,
 });
+
+service.expectQuery('Delete top 10 rows of table', {
+    queryType: QueryTypes.DELETE,
+    from: {
+        name: 'users',
+        schema: 'auth'
+    },
+    limit: {
+        valueType: ValueTypes.RAW_VALUE,
+        value: 10,
+    }
+}, 'DELETE TOP (10) FROM [auth].[users];');

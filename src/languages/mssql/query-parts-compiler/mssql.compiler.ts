@@ -115,7 +115,7 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   };
 
   compileDelete = (del: Delete<T>) => {
-    return joinParts(["DELETE FROM", this.partsCompiler.from([del.from]), del.where ? ("WHERE " + this.partsCompiler.where(del.where)) : null]) + (this.options?.endWithSemicolon === false ? "" : ";");
+    return joinParts(["DELETE", del.limit ? `TOP (${this.partsCompiler.value(del.limit)})` : null,"FROM", this.partsCompiler.from([del.from]), del.where ? ("WHERE " + this.partsCompiler.where(del.where)) : null]) + (this.options?.endWithSemicolon === false ? "" : ";");
   };
 
   static processQueryWarnings = <T extends Object>(
