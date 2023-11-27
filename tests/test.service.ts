@@ -1,4 +1,4 @@
-import { Query } from "../src/chips-lq/types/queries/query.type";
+import { Query } from "../src/chips-ql/types/queries/query.type";
 import { UnavailableFeatureError } from "../src/errors/compiler/unavailable-feature.error";
 import { QueryCompilerOptions } from "../src/compiler/query/query-compiler-options.type";
 import { QueryCompiler } from "../src/compiler/query/query.compiler";
@@ -10,9 +10,9 @@ import {
 import { MssqlCompiler } from "../src/languages/mssql/query-parts-compiler/mssql.compiler";
 import { MssqlPartsCompiler } from "../src/languages/mssql/query-parts-compiler/mssql-parts.compiler";
 import { IQueryPartsCompiler } from "../src/compiler/query/query-parts-compiler.interface";
-import { Function } from "../src/chips-lq/types/functions/function.type";
-import { ValueTypes } from "../src/chips-lq/types/values/value.type";
-import { DataType } from "../src/chips-lq/types/datatypes/datatype.type";
+import { Function } from "../src/chips-ql/types/functions/function.type";
+import { ValueTypes } from "../src/chips-ql/types/values/value.type";
+import { DataType } from "../src/chips-ql/types/datatypes/datatype.type";
 
 export class TestService {
   constructor(private readonly language: SqlLanguages) {}

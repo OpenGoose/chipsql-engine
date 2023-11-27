@@ -1,14 +1,14 @@
-import { ConditionType } from "../../../../src/chips-lq/types/conditions/condition-type.enum";
-import { ConditionOperands } from "../../../../src/chips-lq/types/conditions/operands/condition-operands.enum";
-import { JoinerOperands } from "../../../../src/chips-lq/types/conditions/operands/joiner-operands.enum";
-import { DataTypes } from "../../../../src/chips-lq/types/datatypes/datatypes.enum";
-import { Functions } from "../../../../src/chips-lq/types/functions/functions.enum";
-import { JoinDirections } from "../../../../src/chips-lq/types/joins/join-directions.enum";
-import { JoinIncludes } from "../../../../src/chips-lq/types/joins/join-includes.enum";
-import { JoinTypes } from "../../../../src/chips-lq/types/joins/join-types.enum";
-import { OrderDirection } from "../../../../src/chips-lq/types/order/order-direction.enum";
-import { QueryTypes } from "../../../../src/chips-lq/types/queries/query.type";
-import { ValueTypes } from "../../../../src/chips-lq/types/values/value.type";
+import { ConditionType } from "../../../../src/chips-ql/types/conditions/condition-type.enum";
+import { ConditionOperands } from "../../../../src/chips-ql/types/conditions/operands/condition-operands.enum";
+import { JoinerOperands } from "../../../../src/chips-ql/types/conditions/operands/joiner-operands.enum";
+import { DataTypes } from "../../../../src/chips-ql/types/datatypes/datatypes.enum";
+import { Functions } from "../../../../src/chips-ql/types/functions/functions.enum";
+import { JoinDirections } from "../../../../src/chips-ql/types/joins/join-directions.enum";
+import { JoinIncludes } from "../../../../src/chips-ql/types/joins/join-includes.enum";
+import { JoinTypes } from "../../../../src/chips-ql/types/joins/join-types.enum";
+import { OrderDirection } from "../../../../src/chips-ql/types/order/order-direction.enum";
+import { QueryTypes } from "../../../../src/chips-ql/types/queries/query.type";
+import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
 import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
 import { TestService } from "../../../test.service";
 

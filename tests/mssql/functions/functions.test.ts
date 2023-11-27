@@ -1,7 +1,7 @@
-import { ConditionType } from "../../../src/chips-lq/types/conditions/condition-type.enum";
-import { ConditionOperands } from "../../../src/chips-lq/types/conditions/operands/condition-operands.enum";
-import { Functions } from "../../../src/chips-lq/types/functions/functions.enum";
-import { ValueTypes } from "../../../src/chips-lq/types/values/value.type";
+import { ConditionType } from "../../../src/chips-ql/types/conditions/condition-type.enum";
+import { ConditionOperands } from "../../../src/chips-ql/types/conditions/operands/condition-operands.enum";
+import { Functions } from "../../../src/chips-ql/types/functions/functions.enum";
+import { ValueTypes } from "../../../src/chips-ql/types/values/value.type";
 import { SqlLanguages } from "../../../src/sql/sql-languages.enum";
 import { TestService } from "../../test.service";
 
