@@ -11,6 +11,7 @@ import { MssqlWarnings } from "../warnings/mssql.warnings";
 import { Insert } from "../../../chips-ql/types/queries/insert.type";
 import { mssqlConstants } from "../constants/mssql.constants";
 import { ExecutionWillFailException } from "../../../errors/warnings/execution-will-fail.exception";
+import { Delete } from "../../../chips-ql/types/queries/delete.type";
 
 export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   protected readonly language: SqlLanguages;
@@ -32,6 +33,8 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
         return this.compileSelect(this.query);
       case QueryTypes.INSERT:
         return this.compileInsert(this.query);
+      case QueryTypes.DELETE:
+        return this.compileDelete(this.query);
     }
     throw new UnavailableFeatureError(this.query.queryType);
   };
@@ -109,6 +112,10 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
           ),
         ]) + (this.options?.endWithSemicolon === false ? "" : ";")
       );
+  };
+
+  compileDelete = (del: Delete<T>) => {
+    return joinParts(["DELETE FROM", this.partsCompiler.from([del.from]), del.where ? ("WHERE " + this.partsCompiler.where(del.where)) : null]) + (this.options?.endWithSemicolon === false ? "" : ";");
   };
 
   static processQueryWarnings = <T extends Object>(
