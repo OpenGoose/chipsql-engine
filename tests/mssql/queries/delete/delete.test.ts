@@ -34,3 +34,25 @@ service.expectQuery('Delete user by id', {
         conditionOperand: ConditionOperands.EQUALS,
     }
 }, 'DELETE FROM [auth].[users] WHERE [id] = 1;');
+
+service.expectQuery('Delete user by id (without semicolon)', {
+    queryType: QueryTypes.DELETE,
+    from: {
+        name: 'users',
+        schema: 'auth'
+    },
+    where: {
+        conditionType: ConditionType.CONDITION,
+        sourceValue: {
+            valueType: ValueTypes.COLUMN,
+            field: 'id'
+        },
+        targetValue: {
+            valueType: ValueTypes.RAW_VALUE,
+            value: 1,
+        },
+        conditionOperand: ConditionOperands.EQUALS,
+    }
+}, 'DELETE FROM [auth].[users] WHERE [id] = 1', {
+    endWithSemicolon: false,
+});
