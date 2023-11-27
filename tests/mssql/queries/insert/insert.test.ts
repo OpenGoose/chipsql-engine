@@ -1,5 +1,5 @@
-import { QueryTypes } from "../../../../src/chips-lq/types/queries/query.type";
-import { ValueTypes } from "../../../../src/chips-lq/types/values/value.type";
+import { QueryTypes } from "../../../../src/chips-ql/types/queries/query.type";
+import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
 import { ExecutionWillFailException } from "../../../../src/errors/warnings/execution-will-fail.exception";
 import { mssqlConstants } from "../../../../src/languages/mssql/constants/mssql.constants";
 import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";

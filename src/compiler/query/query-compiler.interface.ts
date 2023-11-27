@@ -1,6 +1,6 @@
-import { Insert } from "../../chips-lq/types/queries/insert.type";
-import { Query } from "../../chips-lq/types/queries/query.type";
-import { Select } from "../../chips-lq/types/queries/select.type";
+import { Insert } from "../../chips-ql/types/queries/insert.type";
+import { Query } from "../../chips-ql/types/queries/query.type";
+import { Select } from "../../chips-ql/types/queries/select.type";
 
 export interface IQueryCompiler<T extends Object> {
   readonly query: Query<T>;

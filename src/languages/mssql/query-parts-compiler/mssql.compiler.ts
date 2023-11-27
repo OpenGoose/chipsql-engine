@@ -1,5 +1,5 @@
-import { Query, QueryTypes } from "../../../chips-lq/types/queries/query.type";
-import { Select } from "../../../chips-lq/types/queries/select.type";
+import { Query, QueryTypes } from "../../../chips-ql/types/queries/query.type";
+import { Select } from "../../../chips-ql/types/queries/select.type";
 import { SqlLanguages } from "../../../sql/sql-languages.enum";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { MssqlPartsCompiler } from "./mssql-parts.compiler";
@@ -8,7 +8,7 @@ import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compile
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
 import { joinParts } from "../../../compiler/utils/query-generation/join-parts.util";
 import { MssqlWarnings } from "../warnings/mssql.warnings";
-import { Insert } from "../../../chips-lq/types/queries/insert.type";
+import { Insert } from "../../../chips-ql/types/queries/insert.type";
 import { mssqlConstants } from "../constants/mssql.constants";
 import { ExecutionWillFailException } from "../../../errors/warnings/execution-will-fail.exception";
 

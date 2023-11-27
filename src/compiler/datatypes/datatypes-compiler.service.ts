@@ -1,9 +1,9 @@
-import { BooleanDataType } from "../../chips-lq/types/datatypes/datatypes/bit/boolean.datatype";
-import { CustomDataType } from "../../chips-lq/types/datatypes/datatypes/custom/custom.datatype";
-import { DateDataType } from "../../chips-lq/types/datatypes/datatypes/date/date.datatype";
-import { DecimalDataType } from "../../chips-lq/types/datatypes/datatypes/numeric/decimal.datatype";
-import { IntDataType } from "../../chips-lq/types/datatypes/datatypes/numeric/int.datatype";
-import { VarcharDataType } from "../../chips-lq/types/datatypes/datatypes/text/varchar.datatype";
+import { BooleanDataType } from "../../chips-ql/types/datatypes/datatypes/bit/boolean.datatype";
+import { CustomDataType } from "../../chips-ql/types/datatypes/datatypes/custom/custom.datatype";
+import { DateDataType } from "../../chips-ql/types/datatypes/datatypes/date/date.datatype";
+import { DecimalDataType } from "../../chips-ql/types/datatypes/datatypes/numeric/decimal.datatype";
+import { IntDataType } from "../../chips-ql/types/datatypes/datatypes/numeric/int.datatype";
+import { VarcharDataType } from "../../chips-ql/types/datatypes/datatypes/text/varchar.datatype";
 import { IQueryPartsCompiler } from "../query/query-parts-compiler.interface";
 import { joinParts } from "../utils/query-generation/join-parts.util";
 

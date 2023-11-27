@@ -1,5 +1,5 @@
-import { DataType } from "../../../chips-lq/types/datatypes/datatype.type";
-import { DataTypes } from "../../../chips-lq/types/datatypes/datatypes.enum";
+import { DataType } from "../../../chips-ql/types/datatypes/datatype.type";
+import { DataTypes } from "../../../chips-ql/types/datatypes/datatypes.enum";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { MssqlPartsCompiler } from "../query-parts-compiler/mssql-parts.compiler";
 import { MssqlDataTypesCompiler } from "./mssql-datatypes.compiler";

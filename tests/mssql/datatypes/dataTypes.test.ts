@@ -1,5 +1,5 @@
-import { DataTypes } from "../../../src/chips-lq/types/datatypes/datatypes.enum";
-import { ValueTypes } from "../../../src/chips-lq/types/values/value.type";
+import { DataTypes } from "../../../src/chips-ql/types/datatypes/datatypes.enum";
+import { ValueTypes } from "../../../src/chips-ql/types/values/value.type";
 import { SqlLanguages } from "../../../src/sql/sql-languages.enum";
 import { TestService } from "../../test.service";
 

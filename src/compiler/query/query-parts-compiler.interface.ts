@@ -1,12 +1,12 @@
-import { Where } from "../../chips-lq/types/conditions/where.type";
-import { DataType } from "../../chips-lq/types/datatypes/datatype.type";
-import { GroupBy } from "../../chips-lq/types/grouping/group-by.type";
-import { Join } from "../../chips-lq/types/joins/join.type";
-import { OrderBy } from "../../chips-lq/types/order/order-by.type";
-import { Select } from "../../chips-lq/types/queries/select.type";
-import { Table } from "../../chips-lq/types/tables/table.type";
-import { AllowedValues } from "../../chips-lq/types/values/allowed-values.type";
-import { FunctionValue, Value } from "../../chips-lq/types/values/value.type";
+import { Where } from "../../chips-ql/types/conditions/where.type";
+import { DataType } from "../../chips-ql/types/datatypes/datatype.type";
+import { GroupBy } from "../../chips-ql/types/grouping/group-by.type";
+import { Join } from "../../chips-ql/types/joins/join.type";
+import { OrderBy } from "../../chips-ql/types/order/order-by.type";
+import { Select } from "../../chips-ql/types/queries/select.type";
+import { Table } from "../../chips-ql/types/tables/table.type";
+import { AllowedValues } from "../../chips-ql/types/values/allowed-values.type";
+import { FunctionValue, Value } from "../../chips-ql/types/values/value.type";
 import { QueryCompilerOptions } from "./query-compiler-options.type";
 
 export interface IQueryPartsCompiler<T extends Object> {
