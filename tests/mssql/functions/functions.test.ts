@@ -106,8 +106,10 @@ service.expectFunction(
           },
         ],
         limit: {
-          valueType: ValueTypes.RAW_VALUE,
-          value: 1,
+          value: {
+            valueType: ValueTypes.RAW_VALUE,
+            value: 1,
+          }
         },
       },
     ],

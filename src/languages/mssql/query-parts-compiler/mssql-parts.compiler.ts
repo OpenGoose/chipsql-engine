@@ -29,6 +29,9 @@ import { DataTypes } from "../../../chips-ql/types/datatypes/datatypes.enum";
 import { mssqlFunctions } from "../functions/mssql-functions";
 import { DataType } from "../../../chips-ql/types/datatypes/datatype.type";
 import { mssqlDataTypes } from "../datatypes/mssql-datatypes";
+import { Limit } from "../../../chips-ql/types/limit/limit.type";
+import { LimitMode } from "../../../chips-ql/types/limit/limit-mode.enum";
+import { LimitOptions } from "../../../chips-ql/types/limit/limit-options.type";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
@@ -222,7 +225,7 @@ export class MssqlPartsCompiler<T extends Object>
     return joinParts([value, direction]);
   };
 
-  limit = (limitValue: Value<T>) => this.value(limitValue);
+  limit = (limitValue: Limit<T>, options?: LimitOptions) => (options?.valueInParenthesis ? `(${this.value(limitValue.value)})` : this.value(limitValue.value)) + (limitValue.limitMode === LimitMode.PERCENT ? ' PERCENT' : '');
   offset = (offsetValue: Value<T>) => this.value(offsetValue);
 
   into = (table: Table<Object>) => this.table(table);

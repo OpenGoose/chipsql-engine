@@ -10,6 +10,7 @@ import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
 import { mssqlWarningMessages } from "../../../../src/languages/mssql/warnings/mssql-warning-messages.constant";
 import { WarningLevels } from "../../../../src/warnings/warning-levels.enum";
 import { TestService } from "../../../test.service";
+import { LimitMode } from "../../../../src/chips-ql/types/limit/limit-mode.enum";
 
 const service = new TestService(SqlLanguages.MSSQL);
 
@@ -125,6 +126,37 @@ service.expectException(
     },
   }
 );
+
+// Limit & Offset
+
+service.expectWarning('Test warning when trying to set LIMIT with PERCENT and OFFSET', {
+  queryType: QueryTypes.SELECT,
+  from: [
+    {
+      name: 'customers',
+      schema: 'sales'
+  }
+  ],
+  fields: [
+    {
+      valueType: ValueTypes.ALL_COLUMNS,
+    }
+  ],
+  limit: {
+      value: {
+          value: 10,
+          valueType: ValueTypes.RAW_VALUE,
+      },
+      limitMode: LimitMode.PERCENT,
+  },
+  offset: {
+    value: 10,
+    valueType: ValueTypes.RAW_VALUE,
+  }
+}, {
+  level: WarningLevels.EXECUTION_WILL_FAIL,
+  message: mssqlWarningMessages.PERCENT_LIMIT_WITH_OFfSET,
+});
 
 // Joins
 

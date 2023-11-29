@@ -1,5 +1,6 @@
 import { ConditionType } from "../../../../src/chips-ql/types/conditions/condition-type.enum";
 import { ConditionOperands } from "../../../../src/chips-ql/types/conditions/operands/condition-operands.enum";
+import { LimitMode } from "../../../../src/chips-ql/types/limit/limit-mode.enum";
 import { QueryTypes } from "../../../../src/chips-ql/types/queries/query.type";
 import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
 import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
@@ -64,7 +65,24 @@ service.expectQuery('Delete top 10 rows of table', {
         schema: 'auth'
     },
     limit: {
-        valueType: ValueTypes.RAW_VALUE,
-        value: 10,
+        value: {
+            valueType: ValueTypes.RAW_VALUE,
+            value: 10,
+        },
     }
 }, 'DELETE TOP (10) FROM [auth].[users];');
+
+service.expectQuery('DELETE TOP 10 PERCENT rows of table', {
+    queryType: QueryTypes.DELETE,
+    from: {
+        name: 'customers',
+        schema: 'sales'
+    },
+    limit: {
+        value: {
+            value: 10,
+            valueType: ValueTypes.RAW_VALUE,
+        },
+        limitMode: LimitMode.PERCENT,
+    }
+}, 'DELETE TOP (10) PERCENT FROM [sales].[customers];');
