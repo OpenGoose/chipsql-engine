@@ -6,6 +6,7 @@ import { Functions } from "../../../../src/chips-ql/types/functions/functions.en
 import { JoinDirections } from "../../../../src/chips-ql/types/joins/join-directions.enum";
 import { JoinIncludes } from "../../../../src/chips-ql/types/joins/join-includes.enum";
 import { JoinTypes } from "../../../../src/chips-ql/types/joins/join-types.enum";
+import { LimitMode } from "../../../../src/chips-ql/types/limit/limit-mode.enum";
 import { OrderDirection } from "../../../../src/chips-ql/types/order/order-direction.enum";
 import { QueryTypes } from "../../../../src/chips-ql/types/queries/query.type";
 import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
@@ -818,6 +819,29 @@ service.expectQuery(
     endWithSemicolon: false,
   }
 );
+
+service.expectQuery('SELECT with PERCENT in TOP statement', {
+  queryType: QueryTypes.SELECT,
+  fields: [
+    {
+      valueType: ValueTypes.ALL_COLUMNS,
+    }
+  ],
+  from: [
+    {
+      name: 'customers',
+      alias: 'c',
+      schema: 'sales',
+    }
+  ],
+  limit: {
+    value: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: 50
+    },
+    limitMode: LimitMode.PERCENT,
+  }
+}, 'SELECT TOP 50 PERCENT * FROM [sales].[customers] [c];')
 
 service.expectQuery(
   "Generate SELECT ALL into another table",
