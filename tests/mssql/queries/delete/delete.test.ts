@@ -85,4 +85,4 @@ service.expectQuery('DELETE TOP 10 PERCENT rows of table', {
         },
         limitMode: LimitMode.PERCENT,
     }
-}, 'DELETE TOP (10) PERCENT FROM [sales].[customers];')
+}, 'DELETE TOP (10) PERCENT FROM [sales].[customers];');

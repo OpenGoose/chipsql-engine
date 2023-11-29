@@ -1,11 +1,14 @@
 import { JoinDirections } from "../../../chips-ql/types/joins/join-directions.enum";
 import { JoinIncludes } from "../../../chips-ql/types/joins/join-includes.enum";
 import { Join } from "../../../chips-ql/types/joins/join.type";
+import { LimitMode } from "../../../chips-ql/types/limit/limit-mode.enum";
+import { Limit } from "../../../chips-ql/types/limit/limit.type";
 import { Delete } from "../../../chips-ql/types/queries/delete.type";
 import { Insert } from "../../../chips-ql/types/queries/insert.type";
 import { Query, QueryTypes } from "../../../chips-ql/types/queries/query.type";
 import { Select } from "../../../chips-ql/types/queries/select.type";
 import { From } from "../../../chips-ql/types/tables/from.type";
+import { Value } from "../../../chips-ql/types/values/value.type";
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { SqlLanguages } from "../../../sql/sql-languages.enum";
@@ -43,11 +46,8 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
   ) => {
     const { offset, orderBy, groupBy, having, joins, from, fields } = query;
 
-    if (offset && (!orderBy || orderBy.length <= 0))
-      queryWarnings.appendWarning(
-        mssqlWarningMessages.OFFSET_WITHOUT_GROUP_BY,
-        WarningLevels.EXECUTION_WILL_FAIL
-      );
+    this.processLimitAndOffsetWarnings(queryWarnings, query);
+
     if (having && (!groupBy || groupBy.length <= 0)) {
       queryWarnings.appendWarning(
         mssqlWarningMessages.HAVING_WITHOUT_GROUP_BY,
@@ -110,7 +110,15 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
         WarningLevels.EXECUTION_WILL_FAIL
       );
     }
-
-    return QueryWarnings;
   };
+
+  private processLimitAndOffsetWarnings = (queryWarnings: QueryWarningsService<T>, {limit, offset, orderBy }: Partial<Select<T>>) => {
+    if (offset && limit && limit.limitMode === LimitMode.PERCENT) queryWarnings.appendWarning(mssqlWarningMessages.PERCENT_LIMIT_WITH_OFfSET, WarningLevels.EXECUTION_WILL_FAIL);
+
+    if (offset && (!orderBy || orderBy.length <= 0))
+    queryWarnings.appendWarning(
+      mssqlWarningMessages.OFFSET_WITHOUT_GROUP_BY,
+      WarningLevels.EXECUTION_WILL_FAIL
+    );
+  }
 }
