@@ -390,8 +390,10 @@ service.expectQuery(
               },
             },
             limit: {
-              valueType: ValueTypes.RAW_VALUE,
-              value: 1,
+              value: {
+                valueType: ValueTypes.RAW_VALUE,
+                value: 1,
+              }
             },
           },
         ],
@@ -462,8 +464,10 @@ service.expectQuery(
               },
             },
             limit: {
-              valueType: ValueTypes.RAW_VALUE,
+              value: {
+                valueType: ValueTypes.RAW_VALUE,
               value: 1,
+              }
             },
           },
         ],
@@ -501,8 +505,10 @@ service.expectQuery(
       },
     ],
     limit: {
-      valueType: ValueTypes.RAW_VALUE,
-      value: 25,
+      value: {
+        valueType: ValueTypes.RAW_VALUE,
+        value: 25,
+      }
     },
     offset: {
       valueType: ValueTypes.RAW_VALUE,

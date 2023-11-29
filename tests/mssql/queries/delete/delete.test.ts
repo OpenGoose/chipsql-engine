@@ -64,7 +64,9 @@ service.expectQuery('Delete top 10 rows of table', {
         schema: 'auth'
     },
     limit: {
-        valueType: ValueTypes.RAW_VALUE,
-        value: 10,
+        value: {
+            valueType: ValueTypes.RAW_VALUE,
+            value: 10,
+        },
     }
 }, 'DELETE TOP (10) FROM [auth].[users];');
