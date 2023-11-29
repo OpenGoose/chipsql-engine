@@ -12,6 +12,7 @@ import { Insert } from "../../../chips-ql/types/queries/insert.type";
 import { mssqlConstants } from "../constants/mssql.constants";
 import { ExecutionWillFailException } from "../../../errors/warnings/execution-will-fail.exception";
 import { Delete } from "../../../chips-ql/types/queries/delete.type";
+import { Update } from "../../../chips-ql/types/queries/update.type";
 
 export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   protected readonly language: SqlLanguages;
@@ -35,8 +36,9 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
         return this.compileInsert(this.query);
       case QueryTypes.DELETE:
         return this.compileDelete(this.query);
+      case QueryTypes.UPDATE:
+        return this.compileUpdate(this.query);
     }
-    throw new UnavailableFeatureError(this.query.queryType);
   };
 
   compileSelect = ({
@@ -117,6 +119,10 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   compileDelete = (del: Delete<T>) => {
     return joinParts(["DELETE", del.limit ? `TOP ${this.partsCompiler.limit(del.limit, { valueInParenthesis: true })}` : null,"FROM", this.partsCompiler.from([del.from]), del.where ? ("WHERE " + this.partsCompiler.where(del.where)) : null]) + (this.options?.endWithSemicolon === false ? "" : ";");
   };
+
+  compileUpdate = (update: Update<T>) => {
+    return joinParts(['UPDATE', this.partsCompiler.from([update.from]), 'SET', 'FROM', this.partsCompiler.from([update.from])]) + (this.options?.endWithSemicolon === false ? "" : ";");;
+  }
 
   static processQueryWarnings = <T extends Object>(
     query: Query<T>,
