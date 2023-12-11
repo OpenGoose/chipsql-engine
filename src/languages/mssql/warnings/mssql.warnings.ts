@@ -2,14 +2,12 @@ import { JoinDirections } from "../../../chips-ql/types/joins/join-directions.en
 import { JoinIncludes } from "../../../chips-ql/types/joins/join-includes.enum";
 import { Join } from "../../../chips-ql/types/joins/join.type";
 import { LimitMode } from "../../../chips-ql/types/limit/limit-mode.enum";
-import { Limit } from "../../../chips-ql/types/limit/limit.type";
 import { Delete } from "../../../chips-ql/types/queries/delete.type";
 import { Insert } from "../../../chips-ql/types/queries/insert.type";
 import { Query, QueryTypes } from "../../../chips-ql/types/queries/query.type";
 import { Select } from "../../../chips-ql/types/queries/select.type";
 import { Update } from "../../../chips-ql/types/queries/update.type";
 import { From } from "../../../chips-ql/types/tables/from.type";
-import { Value } from "../../../chips-ql/types/values/value.type";
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { SqlLanguages } from "../../../sql/sql-languages.enum";
