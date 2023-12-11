@@ -6,6 +6,6 @@ import { QueryTypes } from "./query.type";
 export interface Update<T extends Object> {
     queryType: QueryTypes.UPDATE;
     from: Table<T>;
-    values: Set<T>[];
+    values: Set<T>;
     where?: Where<T>;
 }

@@ -121,7 +121,7 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   };
 
   compileUpdate = (update: Update<T>) => {
-    return joinParts(['UPDATE', this.partsCompiler.from([update.from]), 'SET', 'FROM', this.partsCompiler.from([update.from])]) + (this.options?.endWithSemicolon === false ? "" : ";");;
+    return joinParts(['UPDATE', this.partsCompiler.from([update.from]), 'SET', this.partsCompiler.set(update.values), 'FROM', this.partsCompiler.from([update.from])]) + (this.options?.endWithSemicolon === false ? "" : ";");;
   }
 
   static processQueryWarnings = <T extends Object>(
