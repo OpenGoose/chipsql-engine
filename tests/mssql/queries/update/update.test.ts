@@ -26,3 +26,27 @@ service.expectQuery<{ zip_code: string }>(
   },
   "UPDATE [customers] SET [zip_code] = '1234' FROM [sales].[customers];"
 );
+
+service.expectQuery<{ zip_code: string }>(
+  "Basic UPDATE statement in compact mode",
+  {
+    queryType: QueryTypes.UPDATE,
+    from: {
+      name: "customers",
+      schema: "sales",
+    },
+    values: [
+      {
+        value: {
+          valueType: ValueTypes.RAW_VALUE,
+          value: '1234'
+        },
+        field: 'zip_code',
+      }
+    ]
+  },
+  "UPDATE [customers] SET [zip_code]='1234' FROM [sales].[customers];",
+  {
+    compactQuery: true,
+  },
+);
