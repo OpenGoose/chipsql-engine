@@ -236,7 +236,12 @@ export class MssqlPartsCompiler<T extends Object>
     return this.value(groupByValue);
   };
 
-  set = (set: Set<T>) => joinParts([]);
+  set = (set: Set<T>) => joinParts(set.map((value) => {
+    return this.value({
+      ...value,
+      valueType: ValueTypes.COLUMN,
+    }) + `${this.avoidableSpace}=${this.avoidableSpace}` + this.value(value.value);
+  }));
 
   dataType = (value: DataType): string => mssqlDataTypes(value, this);
 
