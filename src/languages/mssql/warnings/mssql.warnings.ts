@@ -7,6 +7,7 @@ import { Delete } from "../../../chips-ql/types/queries/delete.type";
 import { Insert } from "../../../chips-ql/types/queries/insert.type";
 import { Query, QueryTypes } from "../../../chips-ql/types/queries/query.type";
 import { Select } from "../../../chips-ql/types/queries/select.type";
+import { Update } from "../../../chips-ql/types/queries/update.type";
 import { From } from "../../../chips-ql/types/tables/from.type";
 import { Value } from "../../../chips-ql/types/values/value.type";
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
@@ -36,6 +37,8 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
         return this.processInsertWarnings(this.query, queryWarnings);
       case QueryTypes.DELETE:
         return this.processDeleteWarnings(this.query, queryWarnings);
+      case QueryTypes.UPDATE:
+        return this.processUpdateWarnings(this.query, queryWarnings);
     }
     throw new UnavailableFeatureError();
   };
@@ -71,6 +74,13 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
 
   private processInsertWarnings = (
     query: Insert<T>,
+    queryWarnings: QueryWarningsService<T>
+  ) => {
+    return queryWarnings;
+  };
+
+  private processUpdateWarnings = (
+    query: Update<T>,
     queryWarnings: QueryWarningsService<T>
   ) => {
     return queryWarnings;
