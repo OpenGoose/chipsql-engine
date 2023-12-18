@@ -27,7 +27,7 @@ service.expectQuery<{ zip_code: string }>(
       },
     ],
   },
-  "UPDATE [customers] SET [zip_code] = '1234' FROM [sales].[customers];"
+  "UPDATE [sales].[customers] SET [zip_code] = '1234' FROM [sales].[customers];"
 );
 
 service.expectQuery<{ zip_code: string }>(
@@ -48,7 +48,7 @@ service.expectQuery<{ zip_code: string }>(
       },
     ],
   },
-  "UPDATE [customers] SET [zip_code]='1234' FROM [sales].[customers];",
+  "UPDATE [sales].[customers] SET [zip_code]='1234' FROM [sales].[customers];",
   {
     compactQuery: true,
   }
