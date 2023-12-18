@@ -139,12 +139,7 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
         "UPDATE",
         update.from.alias
           ? this.partsCompiler.generateField(update.from.alias)
-          : this.partsCompiler.from([
-              {
-                ...update.from,
-                schema: undefined,
-              },
-            ]),
+          : this.partsCompiler.from([update.from]),
         "SET",
         this.partsCompiler.set(update.values),
         "FROM",
