@@ -133,7 +133,7 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
     );
   };
 
-  compileUpdate = (update: Update<T>) => {
+  compileUpdate = ({ joins, ...update }: Update<T>) => {
     return (
       joinParts([
         "UPDATE",
@@ -149,6 +149,7 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
         this.partsCompiler.set(update.values),
         "FROM",
         this.partsCompiler.from([update.from]),
+        joins ? this.partsCompiler.joins(joins) : null,
         update.where ? `WHERE ${this.partsCompiler.where(update.where)}` : null,
       ]) + (this.options?.endWithSemicolon === false ? "" : ";")
     );
