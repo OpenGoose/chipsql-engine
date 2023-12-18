@@ -137,6 +137,11 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
     return (
       joinParts([
         "UPDATE",
+        update.limit
+          ? `TOP ${this.partsCompiler.limit(update.limit, {
+              valueInParenthesis: true,
+            })}`
+          : null,
         update.from.alias
           ? this.partsCompiler.generateField(update.from.alias)
           : this.partsCompiler.from([update.from]),

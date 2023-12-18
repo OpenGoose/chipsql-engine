@@ -1,6 +1,7 @@
 import { ConditionType } from "../../../../src/chips-ql/types/conditions/condition-type.enum";
 import { ConditionOperands } from "../../../../src/chips-ql/types/conditions/operands/condition-operands.enum";
 import { JoinerOperands } from "../../../../src/chips-ql/types/conditions/operands/joiner-operands.enum";
+import { LimitMode } from "../../../../src/chips-ql/types/limit/limit-mode.enum";
 import { QueryTypes } from "../../../../src/chips-ql/types/queries/query.type";
 import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
 import { ExecutionWillFailException } from "../../../../src/errors/warnings/execution-will-fail.exception";
@@ -106,4 +107,59 @@ service.expectQuery<{ zip_code: string }>(
     ],
   },
   "UPDATE [c] SET [zip_code] = '1234' FROM [sales].[customers] [c] WHERE ([c].[age] >= 18 AND [c].[name] LIKE 'Tanjiro');"
+);
+
+service.expectQuery<{ zip_code: string }>(
+  "UPDATE statement with TOP 10",
+  {
+    queryType: QueryTypes.UPDATE,
+    from: {
+      name: "customers",
+      schema: "sales",
+    },
+    values: [
+      {
+        value: {
+          valueType: ValueTypes.RAW_VALUE,
+          value: "1234",
+        },
+        field: "zip_code",
+      },
+    ],
+    limit: {
+      value: {
+        valueType: ValueTypes.RAW_VALUE,
+        value: 10,
+      },
+    },
+  },
+  "UPDATE TOP (10) [sales].[customers] SET [zip_code] = '1234' FROM [sales].[customers];"
+);
+
+service.expectQuery<{ zip_code: string }>(
+  "UPDATE statement with TOP 10 PERCENT",
+  {
+    queryType: QueryTypes.UPDATE,
+    from: {
+      name: "customers",
+      schema: "sales",
+    },
+    values: [
+      {
+        value: {
+          valueType: ValueTypes.RAW_VALUE,
+          value: "1234",
+        },
+        field: "zip_code",
+      },
+    ],
+    limit: {
+      value: {
+        valueType: ValueTypes.RAW_VALUE,
+        value: 10,
+      },
+      limitMode: LimitMode.PERCENT,
+    },
+  },
+  "UPDATE TOP (10) PERCENT [sales].[customers] SET [zip_code] = '1234' FROM [sales].[customers];"
 );
