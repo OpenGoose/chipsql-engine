@@ -15,6 +15,7 @@ import { CharFunction } from "../../../chips-ql/types/functions/scalar/text/char
 import { FindIndexFunction } from "../../../chips-ql/types/functions/scalar/text/find-index.function";
 import { JoinFunction } from "../../../chips-ql/types/functions/scalar/text/join.function";
 import { BytesLengthFunction } from "../../../chips-ql/types/functions/scalar/bytes/bytes-length.function";
+import { Functions } from "../../../chips-ql/types/functions/functions.enum";
 
 export class MssqlFunctionsCompiler<
   T extends Object
@@ -35,10 +36,23 @@ export class MssqlFunctionsCompiler<
 
   // Scalar
 
-  ascii = (values: AsciiFunction<T>) => this.buildFunction('ASCII', [this.value(values.value)]);
-  char = (values: CharFunction<T>) => this.buildFunction('CHAR', [this.value(values.value)]);
-  findIndex = (values: FindIndexFunction<T>) => this.buildFunction('CHARINDEX', [this.value(values.find), this.value(values.on), values.startAt ? this.value(values.startAt) : null]);
-  join = (values: JoinFunction<T>) => this.buildFunction('CONCAT_WS', [values.sepparator ? this.value(values.sepparator) : '', ...values.values.map(this.value)]);
+  ascii = (values: AsciiFunction<T>) =>
+    this.buildFunction("ASCII", [this.value(values.value)]);
+  char = (values: CharFunction<T>) =>
+    this.buildFunction("CHAR", [this.value(values.value)]);
+  findIndex = (values: FindIndexFunction<T>) =>
+    this.buildFunction("CHARINDEX", [
+      this.value(values.find),
+      this.value(values.on),
+      values.startAt ? this.value(values.startAt) : null,
+    ]);
+  join = (values: JoinFunction<T>) =>
+    values.sepparator
+      ? this.buildFunction("CONCAT_WS", [
+          values.sepparator ? this.value(values.sepparator) : "",
+          ...values.values.map(this.value),
+        ])
+      : this.concat({ ...values, function: Functions.CONCAT });
   lower = (values: LowerFunction<T>) =>
     this.buildFunction("LOWER", [this.value(values.value)]);
   upper = (values: UpperFunction<T>) =>
@@ -47,7 +61,8 @@ export class MssqlFunctionsCompiler<
     this.buildFunction("CONCAT", values.values.map(this.value));
 
   // Bytes
-  bytesLength = (values: BytesLengthFunction<T>) => this.buildFunction('DATALENGTH', [this.value(values.value)]);
+  bytesLength = (values: BytesLengthFunction<T>) =>
+    this.buildFunction("DATALENGTH", [this.value(values.value)]);
 
   // Conditionals
 
@@ -72,7 +87,11 @@ export class MssqlFunctionsCompiler<
   // Casting
 
   cast = (values: CastFunction<T>) =>
-    this.buildFunction("CAST", [this.value(values.value) + " AS " + this.partsCompiler.dataType(values.as)]); // TODO: add casting
+    this.buildFunction("CAST", [
+      this.value(values.value) +
+        " AS " +
+        this.partsCompiler.dataType(values.as),
+    ]); // TODO: add casting
 
   // Custom
 

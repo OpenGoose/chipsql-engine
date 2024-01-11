@@ -9,8 +9,8 @@ export enum Functions {
   CHAR = "char",
   FIND_INDEX = "find_index",
   CONCAT = "concat",
-  JOIN = 'join',
-  BYTES_LENGTH = 'bytes_length',
+  JOIN = "join",
+  BYTES_LENGTH = "bytes_length",
   LOWER = "lower",
   UPPER = "upper",
 
