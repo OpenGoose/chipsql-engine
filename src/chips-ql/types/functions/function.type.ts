@@ -4,7 +4,9 @@ import { MinFunction } from "./aggregate/min.function.type";
 import { CustomFunction } from "./custom/custom.function";
 import { BytesLengthFunction } from "./scalar/bytes/bytes-length.function";
 import { CastFunction } from "./scalar/casting/cast.function";
+import { ConvertFunction } from "./scalar/casting/convert.function";
 import { CoalesceFunction } from "./scalar/conditionals/coalesce.function";
+import { IfNullFunction } from "./scalar/conditionals/if-null.function";
 import { IfFunction } from "./scalar/conditionals/if.function";
 import { AsciiFunction } from "./scalar/text/ascii.function";
 import { CharFunction } from "./scalar/text/char.function";
@@ -19,9 +21,8 @@ type FunctionProps = {
 };
 
 export type Function<T extends Object> = FunctionProps &
-  (
-    // Aggregate
-    | MaxFunction<T>
+  // Aggregate
+  (| MaxFunction<T>
     | MinFunction<T>
     | CountFunction<T>
 
@@ -40,9 +41,11 @@ export type Function<T extends Object> = FunctionProps &
     // Conditionals
     | IfFunction<T>
     | CoalesceFunction<T>
+    | IfNullFunction<T>
 
     // Casting
     | CastFunction<T>
+    | ConvertFunction<T>
 
     // Custom
     | CustomFunction<T>

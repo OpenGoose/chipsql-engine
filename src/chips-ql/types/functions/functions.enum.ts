@@ -17,9 +17,11 @@ export enum Functions {
   // Conditionals
   IF = "if",
   COALESCE = "coalesce",
+  IF_NULL = "if_null",
 
   // Casting
   CAST = "cast",
+  CONVERT = "convert",
 
   // CUSTOM
   CUSTOM = "custom",

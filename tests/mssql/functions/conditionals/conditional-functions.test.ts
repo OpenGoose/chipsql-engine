@@ -7,7 +7,7 @@ import { TestService } from "../../../test.service";
 
 const service = new TestService(SqlLanguages.MSSQL);
 
-// IIF
+// IF
 service.expectFunction(
   "IIF function",
   {
@@ -64,4 +64,40 @@ service.expectFunction(
   {
     compactQuery: true,
   }
+);
+
+// IF NULL
+service.expectFunction(
+  "IF_NULL function",
+  {
+    function: Functions.IF_NULL,
+    value: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: null,
+    },
+    whenNull: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: "Is null!",
+    },
+  },
+  "ISNULL(NULL, 'Is null!')"
+);
+
+// COALESCE
+service.expectFunction(
+  "COALESCE function",
+  {
+    function: Functions.COALESCE,
+    values: [
+      {
+        valueType: ValueTypes.RAW_VALUE,
+        value: null,
+      },
+      {
+        valueType: ValueTypes.RAW_VALUE,
+        value: "Not null",
+      },
+    ],
+  },
+  "COALESCE(NULL, 'Not null')"
 );

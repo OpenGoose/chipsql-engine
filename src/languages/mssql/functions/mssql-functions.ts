@@ -45,15 +45,20 @@ export const mssqlFunctions = <T extends Object>(
       return funcCompiler.if(value);
     case Functions.COALESCE:
       return funcCompiler.coalesce(value);
+    case Functions.IF_NULL:
+      return funcCompiler.ifNull(value);
 
     // Casting
     case Functions.CAST:
       return funcCompiler.cast(value);
+    case Functions.CONVERT:
+      return funcCompiler.convert(value);
 
     // Custom
     case Functions.CUSTOM:
       return funcCompiler.custom(value);
 
-    default: throw new UnavailableFeatureError(value);
+    default:
+      throw new UnavailableFeatureError(value);
   }
 };

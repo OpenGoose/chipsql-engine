@@ -4,7 +4,9 @@ import { MinFunction } from "../../chips-ql/types/functions/aggregate/min.functi
 import { CustomFunction } from "../../chips-ql/types/functions/custom/custom.function";
 import { BytesLengthFunction } from "../../chips-ql/types/functions/scalar/bytes/bytes-length.function";
 import { CastFunction } from "../../chips-ql/types/functions/scalar/casting/cast.function";
+import { ConvertFunction } from "../../chips-ql/types/functions/scalar/casting/convert.function";
 import { CoalesceFunction } from "../../chips-ql/types/functions/scalar/conditionals/coalesce.function";
+import { IfNullFunction } from "../../chips-ql/types/functions/scalar/conditionals/if-null.function";
 import { IfFunction } from "../../chips-ql/types/functions/scalar/conditionals/if.function";
 import { AsciiFunction } from "../../chips-ql/types/functions/scalar/text/ascii.function";
 import { CharFunction } from "../../chips-ql/types/functions/scalar/text/char.function";
@@ -49,11 +51,13 @@ export abstract class FunctionsCompiler<T extends Object> {
   abstract bytesLength: (values: BytesLengthFunction<T>) => string;
 
   // Conditionals
-  abstract if: (values: IfFunction<T>) => void;
-  abstract coalesce: (values: CoalesceFunction<T>) => void;
+  abstract if: (values: IfFunction<T>) => string;
+  abstract coalesce: (values: CoalesceFunction<T>) => string;
+  abstract ifNull: (values: IfNullFunction<T>) => string;
 
   // Casting
-  abstract cast: (values: CastFunction<T>) => void;
+  abstract cast: (values: CastFunction<T>) => string;
+  abstract convert: (values: ConvertFunction<T>) => string;
 
   // Custom
   abstract custom: (values: CustomFunction<T>) => string;

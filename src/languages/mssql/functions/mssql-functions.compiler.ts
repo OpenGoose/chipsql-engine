@@ -5,7 +5,7 @@ import { CustomFunction } from "../../../chips-ql/types/functions/custom/custom.
 import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
 import { FunctionsCompiler } from "../../../compiler/functions/functions-compiler.service";
 import { CastFunction } from "../../../chips-ql/types/functions/scalar/casting/cast.function";
-import { CoalesceFunction } from "../../../chips-ql/types/functions/scalar/conditionals/coalesce.function";
+import { IfNullFunction } from "../../../chips-ql/types/functions/scalar/conditionals/if-null.function";
 import { IfFunction } from "../../../chips-ql/types/functions/scalar/conditionals/if.function";
 import { ConcatFunction } from "../../../chips-ql/types/functions/scalar/text/concat.function";
 import { LowerFunction } from "../../../chips-ql/types/functions/scalar/text/lower.function";
@@ -16,6 +16,8 @@ import { FindIndexFunction } from "../../../chips-ql/types/functions/scalar/text
 import { JoinFunction } from "../../../chips-ql/types/functions/scalar/text/join.function";
 import { BytesLengthFunction } from "../../../chips-ql/types/functions/scalar/bytes/bytes-length.function";
 import { Functions } from "../../../chips-ql/types/functions/functions.enum";
+import { CoalesceFunction } from "../../../chips-ql/types/functions/scalar/conditionals/coalesce.function";
+import { ConvertFunction } from "../../../chips-ql/types/functions/scalar/casting/convert.function";
 
 export class MssqlFunctionsCompiler<
   T extends Object
@@ -78,8 +80,11 @@ export class MssqlFunctionsCompiler<
       ].filter((v) => v !== null) as string[]
     );
 
-  coalesce = (values: CoalesceFunction<T>) =>
-    this.buildFunction("COALSECE", [
+  coalesce = ({ values }: CoalesceFunction<T>) =>
+    this.buildFunction("COALESCE", values.map(this.value));
+
+  ifNull = (values: IfNullFunction<T>) =>
+    this.buildFunction("ISNULL", [
       this.value(values.value),
       this.value(values.whenNull),
     ]);
@@ -91,7 +96,14 @@ export class MssqlFunctionsCompiler<
       this.value(values.value) +
         " AS " +
         this.partsCompiler.dataType(values.as),
-    ]); // TODO: add casting
+    ]);
+
+  convert = ({ as, value, style }: ConvertFunction<T>) =>
+    this.buildFunction("CONVERT", [
+      this.partsCompiler.dataType(as),
+      this.value(value),
+      style ? this.value(style) : null,
+    ]);
 
   // Custom
 
