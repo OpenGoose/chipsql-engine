@@ -63,8 +63,8 @@ export class MssqlFunctionsCompiler<
     this.buildFunction("UPPER", [this.value(values.value)]);
   difference = ({ origin, target }: DifferenceFunction<T>) =>
     this.buildFunction("DIFFERENCE", [this.value(origin), this.value(target)]);
-  format = ({ value, format }: FormatFunction<T>) =>
-    this.buildFunction("FORMAT", [this.value(value), this.value(format)]);
+  format = ({ value, format, culture }: FormatFunction<T>) =>
+    this.buildFunction("FORMAT", [this.value(value), this.value(format), culture && this.value(culture)]);
   concat = (values: ConcatFunction<T>) =>
     this.buildFunction("CONCAT", values.values.map(this.value));
 

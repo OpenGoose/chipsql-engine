@@ -219,3 +219,24 @@ service.expectFunction(
   },
   "FORMAT('11/09/1714', 'd')"
 );
+
+// FORMAT
+service.expectFunction(
+  "FORMAT function using en-US culture",
+  {
+    function: Functions.FORMAT,
+    value: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: "11/09/1714",
+    },
+    format: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: "d"
+    },
+    culture: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: "en-US"
+    }
+  },
+  "FORMAT('11/09/1714', 'd', 'en-US')"
+);
