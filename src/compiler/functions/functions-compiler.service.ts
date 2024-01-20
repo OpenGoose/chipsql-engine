@@ -19,6 +19,9 @@ import { LeftSubstringFunction } from "../../chips-ql/types/functions/scalar/tex
 import { LengthFunction } from "../../chips-ql/types/functions/scalar/text/length.function";
 import { LowerFunction } from "../../chips-ql/types/functions/scalar/text/lower.function";
 import { RightSubstringFunction } from "../../chips-ql/types/functions/scalar/text/right-substring.function";
+import { TrimLeftFunction } from "../../chips-ql/types/functions/scalar/text/trim-left.function";
+import { TrimRightFunction } from "../../chips-ql/types/functions/scalar/text/trim-right.function";
+import { TrimFunction } from "../../chips-ql/types/functions/scalar/text/trim.function";
 import { UpperFunction } from "../../chips-ql/types/functions/scalar/text/upper.function";
 import { Value } from "../../chips-ql/types/values/value.type";
 import { IQueryPartsCompiler } from "../query/query-parts-compiler.interface";
@@ -56,6 +59,9 @@ export abstract class FunctionsCompiler<T extends Object> {
   abstract leftSubstring: (values: LeftSubstringFunction<T>) => string;
   abstract rightSubstring: (values: RightSubstringFunction<T>) => string;
   abstract length: (value: LengthFunction<T>) => string;
+  abstract trim: (value: TrimFunction<T>) => string;
+  abstract trimRight: (value: TrimRightFunction<T>) => string;
+  abstract trimLeft: (value: TrimLeftFunction<T>) => string;
 
   // Bytes
   abstract bytesLength: (values: BytesLengthFunction<T>) => string;

@@ -275,3 +275,30 @@ service.expectFunction("RIGHT SUBSTRING", {
     value: "Don't make lemonade",
   },
 }, "LEN('Don''t make lemonade')");
+
+// TRIM
+service.expectFunction("TRIM text", {
+  function: Functions.TRIM,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: "  This is what happens  ",
+  },
+}, "TRIM('  This is what happens  ')");
+
+// TRIM LEFT
+service.expectFunction("TRIM LEFT text", {
+  function: Functions.TRIM_LEFT,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: "  This is what happens",
+  },
+}, "LTRIM('  This is what happens')");
+
+// TRIM RIGHT
+service.expectFunction("TRIM RIGHT text", {
+  function: Functions.TRIM_RIGHT,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: "This is what happens  ",
+  },
+}, "RTRIM('This is what happens  ')");

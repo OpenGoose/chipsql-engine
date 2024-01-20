@@ -23,6 +23,9 @@ import { FormatFunction } from "../../../chips-ql/types/functions/scalar/text/fo
 import { RightSubstringFunction } from "../../../chips-ql/types/functions/scalar/text/right-substring.function";
 import { LeftSubstringFunction } from "../../../chips-ql/types/functions/scalar/text/left-substring.function";
 import { LengthFunction } from "../../../chips-ql/types/functions/scalar/text/length.function";
+import { TrimFunction } from "../../../chips-ql/types/functions/scalar/text/trim.function";
+import { TrimLeftFunction } from "../../../chips-ql/types/functions/scalar/text/trim-left.function";
+import { TrimRightFunction } from "../../../chips-ql/types/functions/scalar/text/trim-right.function";
 
 export class MssqlFunctionsCompiler<
   T extends Object
@@ -73,6 +76,9 @@ export class MssqlFunctionsCompiler<
   length = ({value}: LengthFunction<T>) => this.buildFunction('LEN', [this.value(value)])
   rightSubstring = ({value, length}: RightSubstringFunction<T>) => this.buildFunction('RIGHT', [this.value(value), this.value(length)]);
   leftSubstring = ({value, length}: LeftSubstringFunction<T>) => this.buildFunction('LEFT', [this.value(value), this.value(length)]);
+  trim = ({value}: TrimFunction<T>) => this.buildFunction('TRIM', [this.value(value)]);
+  trimLeft = ({value}: TrimLeftFunction<T>) => this.buildFunction('LTRIM', [this.value(value)]);;
+  trimRight = ({value}: TrimRightFunction<T>) => this.buildFunction('RTRIM', [this.value(value)]);;
 
   // Bytes
   bytesLength = (values: BytesLengthFunction<T>) =>

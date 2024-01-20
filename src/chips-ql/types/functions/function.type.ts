@@ -19,6 +19,9 @@ import { LeftSubstringFunction } from "./scalar/text/left-substring.function";
 import { LengthFunction } from "./scalar/text/length.function";
 import { LowerFunction } from "./scalar/text/lower.function";
 import { RightSubstringFunction } from "./scalar/text/right-substring.function";
+import { TrimLeftFunction } from "./scalar/text/trim-left.function";
+import { TrimRightFunction } from "./scalar/text/trim-right.function";
+import { TrimFunction } from "./scalar/text/trim.function";
 import { UpperFunction } from "./scalar/text/upper.function";
 
 type FunctionProps = {
@@ -43,6 +46,9 @@ export type Function<T extends Object> = FunctionProps &
     | LeftSubstringFunction<T>
     | RightSubstringFunction<T>
     | LengthFunction<T>
+    | TrimFunction<T>
+    | TrimLeftFunction<T>
+    | TrimRightFunction<T>
     | ConcatFunction<T>
 
     // Bytes

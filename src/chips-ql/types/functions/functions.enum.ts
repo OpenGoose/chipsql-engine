@@ -17,6 +17,9 @@ export enum Functions {
   LOWER = "lower",
   LEFT_SUBSTRING = 'left_substring',
   RIGHT_SUBSTRING = 'right_substring',
+  TRIM_LEFT = 'trim_left',
+  TRIM_RIGHT = 'trim_right',
+  TRIM = 'trim',
   UPPER = "upper",
 
   // Conditionals
