@@ -11,6 +11,7 @@ import { IfFunction } from "../../chips-ql/types/functions/scalar/conditionals/i
 import { AsciiFunction } from "../../chips-ql/types/functions/scalar/text/ascii.function";
 import { CharFunction } from "../../chips-ql/types/functions/scalar/text/char.function";
 import { ConcatFunction } from "../../chips-ql/types/functions/scalar/text/concat.function";
+import { DifferenceFunction } from "../../chips-ql/types/functions/scalar/text/difference.function";
 import { FindIndexFunction } from "../../chips-ql/types/functions/scalar/text/find-index.function";
 import { JoinFunction } from "../../chips-ql/types/functions/scalar/text/join.function";
 import { LowerFunction } from "../../chips-ql/types/functions/scalar/text/lower.function";
@@ -43,9 +44,10 @@ export abstract class FunctionsCompiler<T extends Object> {
   abstract char: (values: CharFunction<T>) => string;
   abstract findIndex: (values: FindIndexFunction<T>) => string;
   abstract join: (values: JoinFunction<T>) => string;
-  abstract lower: (values: LowerFunction<T>) => void;
-  abstract upper: (values: UpperFunction<T>) => void;
-  abstract concat: (values: ConcatFunction<T>) => void;
+  abstract lower: (values: LowerFunction<T>) => string;
+  abstract upper: (values: UpperFunction<T>) => string;
+  abstract difference: (values: DifferenceFunction<T>) => string;
+  abstract concat: (values: ConcatFunction<T>) => string;
 
   // Bytes
   abstract bytesLength: (values: BytesLengthFunction<T>) => string;

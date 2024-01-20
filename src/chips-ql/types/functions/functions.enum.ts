@@ -13,6 +13,7 @@ export enum Functions {
   BYTES_LENGTH = "bytes_length",
   LOWER = "lower",
   UPPER = "upper",
+  DIFFERENCE = "difference",
 
   // Conditionals
   IF = "if",

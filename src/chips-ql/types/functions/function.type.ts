@@ -11,6 +11,7 @@ import { IfFunction } from "./scalar/conditionals/if.function";
 import { AsciiFunction } from "./scalar/text/ascii.function";
 import { CharFunction } from "./scalar/text/char.function";
 import { ConcatFunction } from "./scalar/text/concat.function";
+import { DifferenceFunction } from "./scalar/text/difference.function";
 import { FindIndexFunction } from "./scalar/text/find-index.function";
 import { JoinFunction } from "./scalar/text/join.function";
 import { LowerFunction } from "./scalar/text/lower.function";
@@ -33,6 +34,7 @@ export type Function<T extends Object> = FunctionProps &
     | JoinFunction<T>
     | LowerFunction<T>
     | UpperFunction<T>
+    | DifferenceFunction<T>
     | ConcatFunction<T>
 
     // Bytes

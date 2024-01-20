@@ -18,6 +18,7 @@ import { BytesLengthFunction } from "../../../chips-ql/types/functions/scalar/by
 import { Functions } from "../../../chips-ql/types/functions/functions.enum";
 import { CoalesceFunction } from "../../../chips-ql/types/functions/scalar/conditionals/coalesce.function";
 import { ConvertFunction } from "../../../chips-ql/types/functions/scalar/casting/convert.function";
+import { DifferenceFunction } from "../../../chips-ql/types/functions/scalar/text/difference.function";
 
 export class MssqlFunctionsCompiler<
   T extends Object
@@ -59,6 +60,8 @@ export class MssqlFunctionsCompiler<
     this.buildFunction("LOWER", [this.value(values.value)]);
   upper = (values: UpperFunction<T>) =>
     this.buildFunction("UPPER", [this.value(values.value)]);
+  difference = ({ origin, target }: DifferenceFunction<T>) =>
+    this.buildFunction("DIFFERENCE", [this.value(origin), this.value(target)]);
   concat = (values: ConcatFunction<T>) =>
     this.buildFunction("CONCAT", values.values.map(this.value));
 

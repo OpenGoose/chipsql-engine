@@ -185,3 +185,20 @@ service.expectFunction(
   },
   "UPPER('TMW')"
 );
+
+// DIFFERENCE
+service.expectFunction(
+  "DIFFERENCE function",
+  {
+    function: Functions.DIFFERENCE,
+    origin: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: "irumyuui",
+    },
+    target: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: "iruburu"
+    }
+  },
+  "DIFFERENCE('irumyuui', 'iruburu')"
+);
