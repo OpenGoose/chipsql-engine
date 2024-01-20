@@ -3,6 +3,5 @@ import { Functions } from "../../functions.enum";
 
 export interface CoalesceFunction<T extends Object> {
   function: Functions.COALESCE;
-  value: Value<T>;
-  whenNull: Value<T>;
+  values: Value<T>[];
 }

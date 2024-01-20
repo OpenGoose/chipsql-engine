@@ -35,6 +35,60 @@ export const mssqlFunctions = <T extends Object>(
       return funcCompiler.upper(value);
     case Functions.CONCAT:
       return funcCompiler.concat(value);
+    case Functions.DIFFERENCE:
+      return funcCompiler.difference(value);
+    case Functions.FORMAT:
+      return funcCompiler.format(value);
+    case Functions.LEFT_SUBSTRING:
+      return funcCompiler.leftSubstring(value);
+    case Functions.RIGHT_SUBSTRING:
+      return funcCompiler.rightSubstring(value);
+    case Functions.LENGTH:
+      return funcCompiler.length(value);
+    case Functions.TRIM:
+      return funcCompiler.trim(value);
+    case Functions.TRIM_LEFT:
+      return funcCompiler.trimLeft(value);
+    case Functions.TRIM_RIGHT:
+      return funcCompiler.trimRight(value);
+
+    // Scalar - Math
+    case Functions.ABS:
+      return funcCompiler.abs(value);
+    case Functions.CEIL:
+      return funcCompiler.ceil(value);
+    case Functions.COS:
+      return funcCompiler.cos(value);
+    case Functions.EXP:
+      return funcCompiler.exp(value);
+    case Functions.FLOOR:
+      return funcCompiler.floor(value);
+    case Functions.LOG:
+      return funcCompiler.log(value);
+    case Functions.PI:
+      return funcCompiler.pi();
+    case Functions.POWER:
+      return funcCompiler.power(value);
+    case Functions.ROUND:
+      return funcCompiler.round(value);
+    case Functions.SIN:
+      return funcCompiler.sin(value);
+    case Functions.SQRT:
+      return funcCompiler.sqrt(value);
+    case Functions.TAN:
+      return funcCompiler.tan(value);
+    
+    // Scalar - Time
+    case Functions.CURRENT_TIME:
+      return funcCompiler.currentTime();
+    case Functions.DATE_DIFFERENCE:
+      return funcCompiler.dateDifference(value);
+    case Functions.DAY:
+      return funcCompiler.day(value);
+    case Functions.MONTH:
+      return funcCompiler.month(value);
+    case Functions.YEAR:
+      return funcCompiler.year(value);
 
     // Bytes
     case Functions.BYTES_LENGTH:
@@ -45,15 +99,20 @@ export const mssqlFunctions = <T extends Object>(
       return funcCompiler.if(value);
     case Functions.COALESCE:
       return funcCompiler.coalesce(value);
+    case Functions.IF_NULL:
+      return funcCompiler.ifNull(value);
 
     // Casting
     case Functions.CAST:
       return funcCompiler.cast(value);
+    case Functions.CONVERT:
+      return funcCompiler.convert(value);
 
     // Custom
     case Functions.CUSTOM:
       return funcCompiler.custom(value);
 
-    default: throw new UnavailableFeatureError(value);
+    default:
+      throw new UnavailableFeatureError(value);
   }
 };
