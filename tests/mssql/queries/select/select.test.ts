@@ -34,7 +34,7 @@ service.expectQuery(
 );
 
 service.expectQuery(
-  "SELECT muliple fields",
+  "SELECT multiple fields",
   {
     queryType: QueryTypes.SELECT,
     fields: [
@@ -56,6 +56,27 @@ service.expectQuery(
     ],
   },
   "SELECT [first_name] AS 'name', 'TheMineWay' AS 'admin' FROM [customers];"
+);
+
+service.expectQuery(
+  "SELECT using DISTINCT",
+  {
+    queryType: QueryTypes.SELECT,
+    fields: [
+      {
+        valueType: ValueTypes.COLUMN,
+        field: "first_name",
+        alias: "name",
+        distinct: true,
+      },
+    ],
+    from: [
+      {
+        name: "customers",
+      },
+    ],
+  },
+  "SELECT DISTINCT [first_name] AS 'name' FROM [customers];"
 );
 
 service.expectQuery(
