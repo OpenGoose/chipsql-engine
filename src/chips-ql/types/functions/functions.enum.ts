@@ -1,23 +1,23 @@
 export enum Functions {
   // AGGREGATE
+  COUNT = "count",
   MAX = "max",
   MIN = "min",
-  COUNT = "count",
 
   // SCALAR
   ASCII = "ascii",
-  CHAR = "char",
-  FIND_INDEX = "find_index",
-  CONCAT = "concat",
-  JOIN = "join",
   BYTES_LENGTH = "bytes_length",
+  CHAR = "char",
+  CONCAT = "concat",
+  DIFFERENCE = "difference",
+  FIND_INDEX = "find_index",
+  JOIN = "join",
   LOWER = "lower",
   UPPER = "upper",
-  DIFFERENCE = "difference",
 
   // Conditionals
-  IF = "if",
   COALESCE = "coalesce",
+  IF = "if",
   IF_NULL = "if_null",
 
   // Casting
