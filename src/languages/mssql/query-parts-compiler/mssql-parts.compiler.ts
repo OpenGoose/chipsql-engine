@@ -32,6 +32,7 @@ import { mssqlDataTypes } from "../datatypes/mssql-datatypes";
 import { Limit } from "../../../chips-ql/types/limit/limit.type";
 import { LimitMode } from "../../../chips-ql/types/limit/limit-mode.enum";
 import { LimitOptions } from "../../../chips-ql/types/limit/limit-options.type";
+import { Set } from "../../../chips-ql/types/values/set.type";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
@@ -234,6 +235,13 @@ export class MssqlPartsCompiler<T extends Object>
     if (typeof groupByValue === "number") return groupByValue.toString();
     return this.value(groupByValue);
   };
+
+  set = (set: Set<T>) => joinParts(set.map((value) => {
+    return this.value({
+      ...value,
+      valueType: ValueTypes.COLUMN,
+    }) + `${this.avoidableSpace}=${this.avoidableSpace}` + this.value(value.value);
+  }));
 
   dataType = (value: DataType): string => mssqlDataTypes(value, this);
 
