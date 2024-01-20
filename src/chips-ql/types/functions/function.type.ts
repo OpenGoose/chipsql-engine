@@ -13,6 +13,7 @@ import { CharFunction } from "./scalar/text/char.function";
 import { ConcatFunction } from "./scalar/text/concat.function";
 import { DifferenceFunction } from "./scalar/text/difference.function";
 import { FindIndexFunction } from "./scalar/text/find-index.function";
+import { FormatFunction } from "./scalar/text/format.function";
 import { JoinFunction } from "./scalar/text/join.function";
 import { LowerFunction } from "./scalar/text/lower.function";
 import { UpperFunction } from "./scalar/text/upper.function";
@@ -35,6 +36,7 @@ export type Function<T extends Object> = FunctionProps &
     | LowerFunction<T>
     | UpperFunction<T>
     | DifferenceFunction<T>
+    | FormatFunction<T>
     | ConcatFunction<T>
 
     // Bytes

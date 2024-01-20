@@ -13,6 +13,7 @@ import { CharFunction } from "../../chips-ql/types/functions/scalar/text/char.fu
 import { ConcatFunction } from "../../chips-ql/types/functions/scalar/text/concat.function";
 import { DifferenceFunction } from "../../chips-ql/types/functions/scalar/text/difference.function";
 import { FindIndexFunction } from "../../chips-ql/types/functions/scalar/text/find-index.function";
+import { FormatFunction } from "../../chips-ql/types/functions/scalar/text/format.function";
 import { JoinFunction } from "../../chips-ql/types/functions/scalar/text/join.function";
 import { LowerFunction } from "../../chips-ql/types/functions/scalar/text/lower.function";
 import { UpperFunction } from "../../chips-ql/types/functions/scalar/text/upper.function";
@@ -47,6 +48,7 @@ export abstract class FunctionsCompiler<T extends Object> {
   abstract lower: (values: LowerFunction<T>) => string;
   abstract upper: (values: UpperFunction<T>) => string;
   abstract difference: (values: DifferenceFunction<T>) => string;
+  abstract format: (values: FormatFunction<T>) => string;
   abstract concat: (values: ConcatFunction<T>) => string;
 
   // Bytes

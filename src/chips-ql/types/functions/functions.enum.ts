@@ -10,6 +10,7 @@ export enum Functions {
   CHAR = "char",
   CONCAT = "concat",
   DIFFERENCE = "difference",
+  FORMAT = 'format',
   FIND_INDEX = "find_index",
   JOIN = "join",
   LOWER = "lower",

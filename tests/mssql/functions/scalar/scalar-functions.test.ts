@@ -202,3 +202,20 @@ service.expectFunction(
   },
   "DIFFERENCE('irumyuui', 'iruburu')"
 );
+
+// FORMAT
+service.expectFunction(
+  "FORMAT function",
+  {
+    function: Functions.FORMAT,
+    value: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: "11/09/1714",
+    },
+    format: {
+      valueType: ValueTypes.RAW_VALUE,
+      value: "d"
+    }
+  },
+  "FORMAT('11/09/1714', 'd')"
+);
