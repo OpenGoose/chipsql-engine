@@ -1,4 +1,5 @@
 import { Functions } from "../../../../src/chips-ql/types/functions/functions.enum";
+import { TimeInterval } from "../../../../src/chips-ql/types/intervals/time-interval.enum";
 import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
 import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
 import { TestService } from "../../../test.service";
@@ -408,3 +409,58 @@ service.expectFunction("Math - TANGENT", {
     value: 55,
   },
 }, "TAN(55)");
+
+// TIME
+
+service.expectFunction("Time - CURRENT_TIME", {
+  function: Functions.CURRENT_TIME,
+}, "CURRENT_TIMESTAMP");
+
+service.expectFunction("Time - DATE DIFFERENCE", {
+  function: Functions.DATE_DIFFERENCE,
+  origin: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: '2017/08/25',
+  },
+  target: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: '2011/08/25',
+  },
+  interval: TimeInterval.YEAR,
+}, "DATEDIFF(year, '2017/08/25', '2011/08/25')");
+
+service.expectFunction("Time - DATE DIFFERENCE with default", {
+  function: Functions.DATE_DIFFERENCE,
+  origin: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: '2017/08/25',
+  },
+  target: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: '2011/08/25',
+  },
+}, "DATEDIFF(day, '2017/08/25', '2011/08/25')");
+
+service.expectFunction("Time - DAY", {
+  function: Functions.DAY,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: '2017/08/25',
+  },
+}, "DAY('2017/08/25')");
+
+service.expectFunction("Math - MONTH", {
+  function: Functions.MONTH,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: '2017/08/25',
+  },
+}, "MONTH('2017/08/25')");
+
+service.expectFunction("Math - YEAR", {
+  function: Functions.YEAR,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: '2017/08/25',
+  },
+}, "YEAR('2017/08/25')");

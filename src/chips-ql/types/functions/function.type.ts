@@ -35,6 +35,11 @@ import { TrimLeftFunction } from "./scalar/text/trim-left.function";
 import { TrimRightFunction } from "./scalar/text/trim-right.function";
 import { TrimFunction } from "./scalar/text/trim.function";
 import { UpperFunction } from "./scalar/text/upper.function";
+import { CurrentTimeFunction } from "./scalar/time/current-time.function";
+import { DateDifferenceFunction } from "./scalar/time/date-difference.function";
+import { DayFunction } from "./scalar/time/day.function";
+import { MonthFunction } from "./scalar/time/month.function";
+import { YearFunction } from "./scalar/time/year.function";
 
 type FunctionProps = {
   alias?: string;
@@ -76,6 +81,13 @@ export type Function<T extends Object> = FunctionProps &
     | SinFunction<T>
     | SqrtFunction<T>
     | TanFunction<T>
+
+    // Scalar - Time
+    | CurrentTimeFunction<T>
+    | DateDifferenceFunction<T>
+    | DayFunction<T>
+    | MonthFunction<T>
+    | YearFunction<T>
 
     // Bytes
     | BytesLengthFunction<T>

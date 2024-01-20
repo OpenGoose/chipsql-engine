@@ -37,6 +37,10 @@ import { RoundFunction } from "../../../chips-ql/types/functions/scalar/math/rou
 import { SinFunction } from "../../../chips-ql/types/functions/scalar/math/sin.function";
 import { SqrtFunction } from "../../../chips-ql/types/functions/scalar/math/sqrt.function";
 import { TanFunction } from "../../../chips-ql/types/functions/scalar/math/tan.function";
+import { DateDifferenceFunction } from "../../../chips-ql/types/functions/scalar/time/date-difference.function";
+import { DayFunction } from "../../../chips-ql/types/functions/scalar/time/day.function";
+import { MonthFunction } from "../../../chips-ql/types/functions/scalar/time/month.function";
+import { YearFunction } from "../../../chips-ql/types/functions/scalar/time/year.function";
 
 export class MssqlFunctionsCompiler<
   T extends Object
@@ -125,6 +129,13 @@ export class MssqlFunctionsCompiler<
     this.buildFunction("SQRT", [this.value(value)]);
   tan = ({ value }: TanFunction<T>) =>
     this.buildFunction("TAN", [this.value(value)]);
+
+  // Scalar - Time
+  currentTime = () => 'CURRENT_TIMESTAMP';
+  dateDifference = ({interval, origin, target}: DateDifferenceFunction<T>) => this.buildFunction('DATEDIFF', [interval ? interval : 'day', this.value(origin), this.value(target)]);
+  day = ({value}: DayFunction<T>) => this.buildFunction('DAY', [this.value(value)]);
+  month = ({value}: MonthFunction<T>) => this.buildFunction('MONTH', [this.value(value)]);
+  year = ({value}: YearFunction<T>) => this.buildFunction('YEAR', [this.value(value)]);
 
   // Bytes
   bytesLength = (values: BytesLengthFunction<T>) =>

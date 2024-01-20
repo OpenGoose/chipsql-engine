@@ -35,6 +35,13 @@ export enum Functions {
   SIN = 'sin',
   SQRT = 'sqrt',
   TAN = 'tan',
+
+  // SCALAR - TIME
+  CURRENT_TIME = 'current_time',
+  DATE_DIFFERENCE = 'date_difference',
+  DAY = 'day',
+  MONTH = 'month',
+  YEAR = 'year',
   
 
   // Conditionals

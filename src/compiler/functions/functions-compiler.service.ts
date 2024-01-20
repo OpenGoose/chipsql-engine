@@ -35,6 +35,11 @@ import { TrimLeftFunction } from "../../chips-ql/types/functions/scalar/text/tri
 import { TrimRightFunction } from "../../chips-ql/types/functions/scalar/text/trim-right.function";
 import { TrimFunction } from "../../chips-ql/types/functions/scalar/text/trim.function";
 import { UpperFunction } from "../../chips-ql/types/functions/scalar/text/upper.function";
+import { CurrentTimeFunction } from "../../chips-ql/types/functions/scalar/time/current-time.function";
+import { DateDifferenceFunction } from "../../chips-ql/types/functions/scalar/time/date-difference.function";
+import { DayFunction } from "../../chips-ql/types/functions/scalar/time/day.function";
+import { MonthFunction } from "../../chips-ql/types/functions/scalar/time/month.function";
+import { YearFunction } from "../../chips-ql/types/functions/scalar/time/year.function";
 import { Value } from "../../chips-ql/types/values/value.type";
 import { IQueryPartsCompiler } from "../query/query-parts-compiler.interface";
 import { joinParts } from "../utils/query-generation/join-parts.util";
@@ -88,6 +93,13 @@ export abstract class FunctionsCompiler<T extends Object> {
   abstract sin: (value: SinFunction<T>) => string;
   abstract sqrt: (value: SqrtFunction<T>) => string;
   abstract tan: (value: TanFunction<T>) => string;
+
+  // Scalar - Time
+  abstract currentTime: (value: CurrentTimeFunction<T>) => string;
+  abstract dateDifference: (value: DateDifferenceFunction<T>) => string;
+  abstract day: (value: DayFunction<T>) => string;
+  abstract month: (value: MonthFunction<T>) => string;
+  abstract year: (value: YearFunction<T>) => string;
 
   // Bytes
   abstract bytesLength: (values: BytesLengthFunction<T>) => string;

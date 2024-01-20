@@ -77,6 +77,18 @@ export const mssqlFunctions = <T extends Object>(
       return funcCompiler.sqrt(value);
     case Functions.TAN:
       return funcCompiler.tan(value);
+    
+    // Scalar - Time
+    case Functions.CURRENT_TIME:
+      return funcCompiler.currentTime();
+    case Functions.DATE_DIFFERENCE:
+      return funcCompiler.dateDifference(value);
+    case Functions.DAY:
+      return funcCompiler.day(value);
+    case Functions.MONTH:
+      return funcCompiler.month(value);
+    case Functions.YEAR:
+      return funcCompiler.year(value);
 
     // Bytes
     case Functions.BYTES_LENGTH:
