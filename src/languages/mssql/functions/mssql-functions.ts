@@ -52,6 +52,32 @@ export const mssqlFunctions = <T extends Object>(
     case Functions.TRIM_RIGHT:
       return funcCompiler.trimRight(value);
 
+    // Scalar - Math
+    case Functions.ABS:
+      return funcCompiler.abs(value);
+    case Functions.CEIL:
+      return funcCompiler.ceil(value);
+    case Functions.COS:
+      return funcCompiler.cos(value);
+    case Functions.EXP:
+      return funcCompiler.exp(value);
+    case Functions.FLOOR:
+      return funcCompiler.floor(value);
+    case Functions.LOG:
+      return funcCompiler.log(value);
+    case Functions.PI:
+      return funcCompiler.pi();
+    case Functions.POWER:
+      return funcCompiler.power(value);
+    case Functions.ROUND:
+      return funcCompiler.round(value);
+    case Functions.SIN:
+      return funcCompiler.sin(value);
+    case Functions.SQRT:
+      return funcCompiler.sqrt(value);
+    case Functions.TAN:
+      return funcCompiler.tan(value);
+
     // Bytes
     case Functions.BYTES_LENGTH:
       return funcCompiler.bytesLength(value);

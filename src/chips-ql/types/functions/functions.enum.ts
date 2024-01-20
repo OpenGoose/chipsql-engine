@@ -22,6 +22,21 @@ export enum Functions {
   TRIM = 'trim',
   UPPER = "upper",
 
+  // SCALAR - MATH
+  ABS = 'abs',
+  CEIL = 'ceil',
+  COS = 'cos',
+  EXP = 'exp',
+  FLOOR = 'floor',
+  LOG = 'log',
+  PI = 'pi',
+  POWER = 'power',
+  ROUND = 'round',
+  SIN = 'sin',
+  SQRT = 'sqrt',
+  TAN = 'tan',
+  
+
   // Conditionals
   COALESCE = "coalesce",
   IF = "if",

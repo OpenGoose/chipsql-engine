@@ -26,6 +26,17 @@ import { LengthFunction } from "../../../chips-ql/types/functions/scalar/text/le
 import { TrimFunction } from "../../../chips-ql/types/functions/scalar/text/trim.function";
 import { TrimLeftFunction } from "../../../chips-ql/types/functions/scalar/text/trim-left.function";
 import { TrimRightFunction } from "../../../chips-ql/types/functions/scalar/text/trim-right.function";
+import { AbsFunction } from "../../../chips-ql/types/functions/scalar/math/abs.function";
+import { CeilFunction } from "../../../chips-ql/types/functions/scalar/math/ceil.function";
+import { CosFunction } from "../../../chips-ql/types/functions/scalar/math/cos.function";
+import { ExpFunction } from "../../../chips-ql/types/functions/scalar/math/exp.function";
+import { FloorFunction } from "../../../chips-ql/types/functions/scalar/math/floor.function";
+import { LogFunction } from "../../../chips-ql/types/functions/scalar/math/log.function";
+import { PowerFunction } from "../../../chips-ql/types/functions/scalar/math/power.function";
+import { RoundFunction } from "../../../chips-ql/types/functions/scalar/math/round.function";
+import { SinFunction } from "../../../chips-ql/types/functions/scalar/math/sin.function";
+import { SqrtFunction } from "../../../chips-ql/types/functions/scalar/math/sqrt.function";
+import { TanFunction } from "../../../chips-ql/types/functions/scalar/math/tan.function";
 
 export class MssqlFunctionsCompiler<
   T extends Object
@@ -57,9 +68,9 @@ export class MssqlFunctionsCompiler<
       values.startAt ? this.value(values.startAt) : null,
     ]);
   join = (values: JoinFunction<T>) =>
-    values.sepparator
+    values.separator
       ? this.buildFunction("CONCAT_WS", [
-          values.sepparator ? this.value(values.sepparator) : "",
+          values.separator ? this.value(values.separator) : "",
           ...values.values.map(this.value),
         ])
       : this.concat({ ...values, function: Functions.CONCAT });
@@ -70,15 +81,50 @@ export class MssqlFunctionsCompiler<
   difference = ({ origin, target }: DifferenceFunction<T>) =>
     this.buildFunction("DIFFERENCE", [this.value(origin), this.value(target)]);
   format = ({ value, format, culture }: FormatFunction<T>) =>
-    this.buildFunction("FORMAT", [this.value(value), this.value(format), culture && this.value(culture)]);
+    this.buildFunction("FORMAT", [
+      this.value(value),
+      this.value(format),
+      culture && this.value(culture),
+    ]);
   concat = (values: ConcatFunction<T>) =>
     this.buildFunction("CONCAT", values.values.map(this.value));
-  length = ({value}: LengthFunction<T>) => this.buildFunction('LEN', [this.value(value)])
-  rightSubstring = ({value, length}: RightSubstringFunction<T>) => this.buildFunction('RIGHT', [this.value(value), this.value(length)]);
-  leftSubstring = ({value, length}: LeftSubstringFunction<T>) => this.buildFunction('LEFT', [this.value(value), this.value(length)]);
-  trim = ({value}: TrimFunction<T>) => this.buildFunction('TRIM', [this.value(value)]);
-  trimLeft = ({value}: TrimLeftFunction<T>) => this.buildFunction('LTRIM', [this.value(value)]);;
-  trimRight = ({value}: TrimRightFunction<T>) => this.buildFunction('RTRIM', [this.value(value)]);;
+  length = ({ value }: LengthFunction<T>) =>
+    this.buildFunction("LEN", [this.value(value)]);
+  rightSubstring = ({ value, length }: RightSubstringFunction<T>) =>
+    this.buildFunction("RIGHT", [this.value(value), this.value(length)]);
+  leftSubstring = ({ value, length }: LeftSubstringFunction<T>) =>
+    this.buildFunction("LEFT", [this.value(value), this.value(length)]);
+  trim = ({ value }: TrimFunction<T>) =>
+    this.buildFunction("TRIM", [this.value(value)]);
+  trimLeft = ({ value }: TrimLeftFunction<T>) =>
+    this.buildFunction("LTRIM", [this.value(value)]);
+  trimRight = ({ value }: TrimRightFunction<T>) =>
+    this.buildFunction("RTRIM", [this.value(value)]);
+
+  // Scalar - Math
+  abs = ({ value }: AbsFunction<T>) =>
+    this.buildFunction("ABS", [this.value(value)]);
+  ceil = ({ value }: CeilFunction<T>) =>
+    this.buildFunction("CEILING", [this.value(value)]);
+  cos = ({ value }: CosFunction<T>) =>
+    this.buildFunction("COS", [this.value(value)]);
+  exp = ({ value }: ExpFunction<T>) =>
+    this.buildFunction("EXP", [this.value(value)]);
+  floor = ({ value }: FloorFunction<T>) =>
+    this.buildFunction("FLOOR", [this.value(value)]);
+  log = ({ value }: LogFunction<T>) =>
+    this.buildFunction("LOG", [this.value(value)]);
+  pi = () => this.buildFunction("PI", []);
+  power = ({ value }: PowerFunction<T>) =>
+    this.buildFunction("POWER", [this.value(value)]);
+  round = ({ value }: RoundFunction<T>) =>
+    this.buildFunction("ROUND", [this.value(value)]);
+  sin = ({ value }: SinFunction<T>) =>
+    this.buildFunction("SIN", [this.value(value)]);
+  sqrt = ({ value }: SqrtFunction<T>) =>
+    this.buildFunction("SQRT", [this.value(value)]);
+  tan = ({ value }: TanFunction<T>) =>
+    this.buildFunction("TAN", [this.value(value)]);
 
   // Bytes
   bytesLength = (values: BytesLengthFunction<T>) =>

@@ -8,6 +8,18 @@ import { ConvertFunction } from "./scalar/casting/convert.function";
 import { CoalesceFunction } from "./scalar/conditionals/coalesce.function";
 import { IfNullFunction } from "./scalar/conditionals/if-null.function";
 import { IfFunction } from "./scalar/conditionals/if.function";
+import { AbsFunction } from "./scalar/math/abs.function";
+import { CeilFunction } from "./scalar/math/ceil.function";
+import { CosFunction } from "./scalar/math/cos.function";
+import { ExpFunction } from "./scalar/math/exp.function";
+import { FloorFunction } from "./scalar/math/floor.function";
+import { LogFunction } from "./scalar/math/log.function";
+import { PIFunction } from "./scalar/math/pi.function";
+import { PowerFunction } from "./scalar/math/power.function";
+import { RoundFunction } from "./scalar/math/round.function";
+import { SinFunction } from "./scalar/math/sin.function";
+import { SqrtFunction } from "./scalar/math/sqrt.function";
+import { TanFunction } from "./scalar/math/tan.function";
 import { AsciiFunction } from "./scalar/text/ascii.function";
 import { CharFunction } from "./scalar/text/char.function";
 import { ConcatFunction } from "./scalar/text/concat.function";
@@ -50,6 +62,20 @@ export type Function<T extends Object> = FunctionProps &
     | TrimLeftFunction<T>
     | TrimRightFunction<T>
     | ConcatFunction<T>
+
+    // Scalar - Math
+    | AbsFunction<T>
+    | CeilFunction<T>
+    | CosFunction<T>
+    | ExpFunction<T>
+    | FloorFunction<T>
+    | LogFunction<T>
+    | PIFunction<T>
+    | PowerFunction<T>
+    | RoundFunction<T>
+    | SinFunction<T>
+    | SqrtFunction<T>
+    | TanFunction<T>
 
     // Bytes
     | BytesLengthFunction<T>

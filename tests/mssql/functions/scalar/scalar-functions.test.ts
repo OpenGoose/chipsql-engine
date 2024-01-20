@@ -112,7 +112,7 @@ service.expectFunction(
   "JOIN function",
   {
     function: Functions.JOIN,
-    sepparator: {
+    separator: {
       valueType: ValueTypes.RAW_VALUE,
       value: ">",
     },
@@ -302,3 +302,109 @@ service.expectFunction("TRIM RIGHT text", {
     value: "This is what happens  ",
   },
 }, "RTRIM('This is what happens  ')");
+
+// MATH
+
+// ABS
+service.expectFunction("Math - ABS", {
+  function: Functions.ABS,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: -16,
+  },
+}, "ABS(-16)");
+
+// CEIL
+service.expectFunction("Math - CEIL", {
+  function: Functions.CEIL,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 12.15,
+  },
+}, "CEILING(12.15)");
+
+// COS
+service.expectFunction("Math - ABS", {
+  function: Functions.COS,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 5,
+  },
+}, "COS(5)");
+
+// EXP
+service.expectFunction("Math - EXP", {
+  function: Functions.EXP,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 10,
+  },
+}, "EXP(10)");
+
+// FLOOR
+service.expectFunction("Math - FLOOR", {
+  function: Functions.FLOOR,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 9.99,
+  },
+}, "FLOOR(9.99)");
+
+// LOG
+service.expectFunction("Math - LOG", {
+  function: Functions.LOG,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 22,
+  },
+}, "LOG(22)");
+
+// PI
+service.expectFunction("Math - PI", {
+  function: Functions.PI,
+}, "PI()");
+
+// POWER
+service.expectFunction("Math - ABS", {
+  function: Functions.POWER,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 5,
+  },
+}, "POWER(5)");
+
+// ROUND
+service.expectFunction("Math - ROUND", {
+  function: Functions.ROUND,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: -16,
+  },
+}, "ROUND(-16)");
+
+// SIN
+service.expectFunction("Math - SIN", {
+  function: Functions.SIN,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 8,
+  },
+}, "SIN(8)");
+
+// SQUARE ROOT
+service.expectFunction("Math - SQUARE ROOT", {
+  function: Functions.SQRT,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 16,
+  },
+}, "SQRT(16)");
+
+// TANGENT
+service.expectFunction("Math - TANGENT", {
+  function: Functions.TAN,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 55,
+  },
+}, "TAN(55)");
