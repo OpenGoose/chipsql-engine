@@ -39,6 +39,10 @@ export const mssqlFunctions = <T extends Object>(
       return funcCompiler.difference(value);
     case Functions.FORMAT:
       return funcCompiler.format(value);
+    case Functions.LEFT_SUBSTRING:
+      return funcCompiler.leftSubstring(value);
+    case Functions.RIGHT_SUBSTRING:
+      return funcCompiler.rightSubstring(value);
 
     // Bytes
     case Functions.BYTES_LENGTH:

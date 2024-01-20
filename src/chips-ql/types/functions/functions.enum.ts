@@ -14,6 +14,8 @@ export enum Functions {
   FIND_INDEX = "find_index",
   JOIN = "join",
   LOWER = "lower",
+  LEFT_SUBSTRING = 'left_substring',
+  RIGHT_SUBSTRING = 'right_substring',
   UPPER = "upper",
 
   // Conditionals

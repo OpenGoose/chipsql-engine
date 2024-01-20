@@ -240,3 +240,29 @@ service.expectFunction(
   },
   "FORMAT('11/09/1714', 'd', 'en-US')"
 );
+
+// LEFT SUBSTRING
+service.expectFunction("LEFT SUBSTRING", {
+  function: Functions.LEFT_SUBSTRING,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 'I wanna live to see The golden city',
+  },
+  length: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 10,
+  }
+}, "LEFT('I wanna live to see The golden city', 10)");
+
+// RIGHT SUBSTRING
+service.expectFunction("RIGHT SUBSTRING", {
+  function: Functions.RIGHT_SUBSTRING,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 'Be safe around portals',
+  },
+  length: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: 5,
+  }
+}, "RIGHT('Be safe around portals', 5)");

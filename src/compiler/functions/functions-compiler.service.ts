@@ -15,7 +15,9 @@ import { DifferenceFunction } from "../../chips-ql/types/functions/scalar/text/d
 import { FindIndexFunction } from "../../chips-ql/types/functions/scalar/text/find-index.function";
 import { FormatFunction } from "../../chips-ql/types/functions/scalar/text/format.function";
 import { JoinFunction } from "../../chips-ql/types/functions/scalar/text/join.function";
+import { LeftSubstringFunction } from "../../chips-ql/types/functions/scalar/text/left-substring.function";
 import { LowerFunction } from "../../chips-ql/types/functions/scalar/text/lower.function";
+import { RightSubstringFunction } from "../../chips-ql/types/functions/scalar/text/right-substring.function";
 import { UpperFunction } from "../../chips-ql/types/functions/scalar/text/upper.function";
 import { Value } from "../../chips-ql/types/values/value.type";
 import { IQueryPartsCompiler } from "../query/query-parts-compiler.interface";
@@ -50,6 +52,8 @@ export abstract class FunctionsCompiler<T extends Object> {
   abstract difference: (values: DifferenceFunction<T>) => string;
   abstract format: (values: FormatFunction<T>) => string;
   abstract concat: (values: ConcatFunction<T>) => string;
+  abstract leftSubstring: (values: LeftSubstringFunction<T>) => string;
+  abstract rightSubstring: (values: RightSubstringFunction<T>) => string;
 
   // Bytes
   abstract bytesLength: (values: BytesLengthFunction<T>) => string;
