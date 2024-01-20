@@ -43,6 +43,8 @@ export const mssqlFunctions = <T extends Object>(
       return funcCompiler.leftSubstring(value);
     case Functions.RIGHT_SUBSTRING:
       return funcCompiler.rightSubstring(value);
+    case Functions.LENGTH:
+      return funcCompiler.length(value);
 
     // Bytes
     case Functions.BYTES_LENGTH:

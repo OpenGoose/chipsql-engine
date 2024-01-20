@@ -22,6 +22,7 @@ import { DifferenceFunction } from "../../../chips-ql/types/functions/scalar/tex
 import { FormatFunction } from "../../../chips-ql/types/functions/scalar/text/format.function";
 import { RightSubstringFunction } from "../../../chips-ql/types/functions/scalar/text/right-substring.function";
 import { LeftSubstringFunction } from "../../../chips-ql/types/functions/scalar/text/left-substring.function";
+import { LengthFunction } from "../../../chips-ql/types/functions/scalar/text/length.function";
 
 export class MssqlFunctionsCompiler<
   T extends Object
@@ -69,6 +70,7 @@ export class MssqlFunctionsCompiler<
     this.buildFunction("FORMAT", [this.value(value), this.value(format), culture && this.value(culture)]);
   concat = (values: ConcatFunction<T>) =>
     this.buildFunction("CONCAT", values.values.map(this.value));
+  length = ({value}: LengthFunction<T>) => this.buildFunction('LEN', [this.value(value)])
   rightSubstring = ({value, length}: RightSubstringFunction<T>) => this.buildFunction('RIGHT', [this.value(value), this.value(length)]);
   leftSubstring = ({value, length}: LeftSubstringFunction<T>) => this.buildFunction('LEFT', [this.value(value), this.value(length)]);
 

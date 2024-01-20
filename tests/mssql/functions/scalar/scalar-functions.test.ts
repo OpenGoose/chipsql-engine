@@ -266,3 +266,12 @@ service.expectFunction("RIGHT SUBSTRING", {
     value: 5,
   }
 }, "RIGHT('Be safe around portals', 5)");
+
+// LENGTH
+service.expectFunction("RIGHT SUBSTRING", {
+  function: Functions.LENGTH,
+  value: {
+    valueType: ValueTypes.RAW_VALUE,
+    value: "Don't make lemonade",
+  },
+}, "LEN('Don''t make lemonade')");

@@ -13,6 +13,7 @@ export enum Functions {
   FORMAT = 'format',
   FIND_INDEX = "find_index",
   JOIN = "join",
+  LENGTH = 'length',
   LOWER = "lower",
   LEFT_SUBSTRING = 'left_substring',
   RIGHT_SUBSTRING = 'right_substring',

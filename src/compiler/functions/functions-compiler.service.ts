@@ -16,6 +16,7 @@ import { FindIndexFunction } from "../../chips-ql/types/functions/scalar/text/fi
 import { FormatFunction } from "../../chips-ql/types/functions/scalar/text/format.function";
 import { JoinFunction } from "../../chips-ql/types/functions/scalar/text/join.function";
 import { LeftSubstringFunction } from "../../chips-ql/types/functions/scalar/text/left-substring.function";
+import { LengthFunction } from "../../chips-ql/types/functions/scalar/text/length.function";
 import { LowerFunction } from "../../chips-ql/types/functions/scalar/text/lower.function";
 import { RightSubstringFunction } from "../../chips-ql/types/functions/scalar/text/right-substring.function";
 import { UpperFunction } from "../../chips-ql/types/functions/scalar/text/upper.function";
@@ -54,6 +55,7 @@ export abstract class FunctionsCompiler<T extends Object> {
   abstract concat: (values: ConcatFunction<T>) => string;
   abstract leftSubstring: (values: LeftSubstringFunction<T>) => string;
   abstract rightSubstring: (values: RightSubstringFunction<T>) => string;
+  abstract length: (value: LengthFunction<T>) => string;
 
   // Bytes
   abstract bytesLength: (values: BytesLengthFunction<T>) => string;

@@ -16,6 +16,7 @@ import { FindIndexFunction } from "./scalar/text/find-index.function";
 import { FormatFunction } from "./scalar/text/format.function";
 import { JoinFunction } from "./scalar/text/join.function";
 import { LeftSubstringFunction } from "./scalar/text/left-substring.function";
+import { LengthFunction } from "./scalar/text/length.function";
 import { LowerFunction } from "./scalar/text/lower.function";
 import { RightSubstringFunction } from "./scalar/text/right-substring.function";
 import { UpperFunction } from "./scalar/text/upper.function";
@@ -41,6 +42,7 @@ export type Function<T extends Object> = FunctionProps &
     | FormatFunction<T>
     | LeftSubstringFunction<T>
     | RightSubstringFunction<T>
+    | LengthFunction<T>
     | ConcatFunction<T>
 
     // Bytes
