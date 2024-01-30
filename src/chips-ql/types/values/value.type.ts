@@ -8,39 +8,39 @@ type ColumnField = {
 };
 
 export type ColumnarValue<T extends Object> = {
-  valueType: ValueTypes.COLUMN;
+  valueType: ValueType.COLUMN;
 } & ColumnField;
 
 export type AllColumnsValue<T extends Object> = {
-  valueType: ValueTypes.ALL_COLUMNS;
+  valueType: ValueType.ALL_COLUMNS;
 } & Omit<ColumnarValue<T>, "valueType" | "alias" | "field" | "distinct">;
 
 export type RawValue<T extends Object> = {
-  valueType: ValueTypes.RAW_VALUE;
+  valueType: ValueType.RAW_VALUE;
   value: AllowedValues;
 };
 
 export type FunctionValue<T extends Object> = {
-  valueType: ValueTypes.FUNCTION;
+  valueType: ValueType.FUNCTION;
 } & Function<T>;
 
 export type SubselectValue<T extends Object = Object> = Omit<
   Select<T>,
   "queryType"
-> & { valueType: ValueTypes.SUBSELECT };
+> & { valueType: ValueType.SUBSELECT };
 
 export type VariableType<T extends Object> = {
-  valueType: ValueTypes.VARIABLE;
+  valueType: ValueType.VARIABLE;
   name: string;
 };
 
 export type RawSql = {
-  valueType: ValueTypes.RAW_SQL;
+  valueType: ValueType.RAW_SQL;
   sql: string;
 };
 
 export type SetType<T extends Object> = {
-  valueType: ValueTypes.SET;
+  valueType: ValueType.SET;
   values: Value<T>[];
 };
 
@@ -55,7 +55,7 @@ export type Value<T extends Object> = (
   | SetType<T>
 ) & { alias?: string; distinct?: boolean };
 
-export enum ValueTypes {
+export enum ValueType {
   COLUMN = "col",
   ALL_COLUMNS = "allcols",
   RAW_VALUE = "rv",

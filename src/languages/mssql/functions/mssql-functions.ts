@@ -1,4 +1,4 @@
-import { Functions } from "../../../chips-ql/types/functions/functions.enum";
+import { Function } from "../../../chips-ql/types/functions/functions.enum";
 import { FunctionValue } from "../../../chips-ql/types/values/value.type";
 import { MssqlPartsCompiler } from "../query-parts-compiler/mssql-parts.compiler";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
@@ -13,103 +13,103 @@ export const mssqlFunctions = <T extends Object>(
   );
   switch (value.function) {
     // Aggregate
-    case Functions.COUNT:
+    case Function.COUNT:
       return funcCompiler.count(value);
-    case Functions.MAX:
+    case Function.MAX:
       return funcCompiler.max(value);
-    case Functions.MIN:
+    case Function.MIN:
       return funcCompiler.min(value);
 
     // Scalar
-    case Functions.ASCII:
+    case Function.ASCII:
       return funcCompiler.ascii(value);
-    case Functions.CHAR:
+    case Function.CHAR:
       return funcCompiler.char(value);
-    case Functions.FIND_INDEX:
+    case Function.FIND_INDEX:
       return funcCompiler.findIndex(value);
-    case Functions.JOIN:
+    case Function.JOIN:
       return funcCompiler.join(value);
-    case Functions.LOWER:
+    case Function.LOWER:
       return funcCompiler.lower(value);
-    case Functions.UPPER:
+    case Function.UPPER:
       return funcCompiler.upper(value);
-    case Functions.CONCAT:
+    case Function.CONCAT:
       return funcCompiler.concat(value);
-    case Functions.DIFFERENCE:
+    case Function.DIFFERENCE:
       return funcCompiler.difference(value);
-    case Functions.FORMAT:
+    case Function.FORMAT:
       return funcCompiler.format(value);
-    case Functions.LEFT_SUBSTRING:
+    case Function.LEFT_SUBSTRING:
       return funcCompiler.leftSubstring(value);
-    case Functions.RIGHT_SUBSTRING:
+    case Function.RIGHT_SUBSTRING:
       return funcCompiler.rightSubstring(value);
-    case Functions.LENGTH:
+    case Function.LENGTH:
       return funcCompiler.length(value);
-    case Functions.TRIM:
+    case Function.TRIM:
       return funcCompiler.trim(value);
-    case Functions.TRIM_LEFT:
+    case Function.TRIM_LEFT:
       return funcCompiler.trimLeft(value);
-    case Functions.TRIM_RIGHT:
+    case Function.TRIM_RIGHT:
       return funcCompiler.trimRight(value);
 
     // Scalar - Math
-    case Functions.ABS:
+    case Function.ABS:
       return funcCompiler.abs(value);
-    case Functions.CEIL:
+    case Function.CEIL:
       return funcCompiler.ceil(value);
-    case Functions.COS:
+    case Function.COS:
       return funcCompiler.cos(value);
-    case Functions.EXP:
+    case Function.EXP:
       return funcCompiler.exp(value);
-    case Functions.FLOOR:
+    case Function.FLOOR:
       return funcCompiler.floor(value);
-    case Functions.LOG:
+    case Function.LOG:
       return funcCompiler.log(value);
-    case Functions.PI:
+    case Function.PI:
       return funcCompiler.pi();
-    case Functions.POWER:
+    case Function.POWER:
       return funcCompiler.power(value);
-    case Functions.ROUND:
+    case Function.ROUND:
       return funcCompiler.round(value);
-    case Functions.SIN:
+    case Function.SIN:
       return funcCompiler.sin(value);
-    case Functions.SQRT:
+    case Function.SQRT:
       return funcCompiler.sqrt(value);
-    case Functions.TAN:
+    case Function.TAN:
       return funcCompiler.tan(value);
     
     // Scalar - Time
-    case Functions.CURRENT_TIME:
+    case Function.CURRENT_TIME:
       return funcCompiler.currentTime();
-    case Functions.DATE_DIFFERENCE:
+    case Function.DATE_DIFFERENCE:
       return funcCompiler.dateDifference(value);
-    case Functions.DAY:
+    case Function.DAY:
       return funcCompiler.day(value);
-    case Functions.MONTH:
+    case Function.MONTH:
       return funcCompiler.month(value);
-    case Functions.YEAR:
+    case Function.YEAR:
       return funcCompiler.year(value);
 
     // Bytes
-    case Functions.BYTES_LENGTH:
+    case Function.BYTES_LENGTH:
       return funcCompiler.bytesLength(value);
 
     // Conditionals
-    case Functions.IF:
+    case Function.IF:
       return funcCompiler.if(value);
-    case Functions.COALESCE:
+    case Function.COALESCE:
       return funcCompiler.coalesce(value);
-    case Functions.IF_NULL:
+    case Function.IF_NULL:
       return funcCompiler.ifNull(value);
 
     // Casting
-    case Functions.CAST:
+    case Function.CAST:
       return funcCompiler.cast(value);
-    case Functions.CONVERT:
+    case Function.CONVERT:
       return funcCompiler.convert(value);
 
     // Custom
-    case Functions.CUSTOM:
+    case Function.CUSTOM:
       return funcCompiler.custom(value);
 
     default:

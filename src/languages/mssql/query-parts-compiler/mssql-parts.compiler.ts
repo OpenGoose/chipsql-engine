@@ -3,29 +3,29 @@ import { AllowedValues } from "../../../chips-ql/types/values/allowed-values.typ
 import {
   FunctionValue,
   Value,
-  ValueTypes,
+  ValueType,
 } from "../../../chips-ql/types/values/value.type";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { joinParts } from "../../../compiler/utils/query-generation/join-parts.util";
 import { format } from "date-fns";
 import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
 import { MssqlCompiler } from "./mssql.compiler";
-import { QueryTypes } from "../../../chips-ql/types/queries/query.type";
+import { QueryType } from "../../../chips-ql/types/queries/query.type";
 import { Join } from "../../../chips-ql/types/joins/join.type";
 import { valueSelector } from "../../../compiler/utils/selectors/value-selector.util";
-import { JoinDirections } from "../../../chips-ql/types/joins/join-directions.enum";
-import { JoinIncludes } from "../../../chips-ql/types/joins/join-includes.enum";
-import { JoinTypes } from "../../../chips-ql/types/joins/join-types.enum";
+import { JoinDirection } from "../../../chips-ql/types/joins/join-directions.enum";
+import { JoinInclude } from "../../../chips-ql/types/joins/join-includes.enum";
+import { JoinType } from "../../../chips-ql/types/joins/join-types.enum";
 import { Select } from "../../../chips-ql/types/queries/select.type";
 import { Where } from "../../../chips-ql/types/conditions/where.type";
 import { ConditionType } from "../../../chips-ql/types/conditions/condition-type.enum";
-import { JoinerOperands } from "../../../chips-ql/types/conditions/operands/joiner-operands.enum";
-import { ConditionOperands } from "../../../chips-ql/types/conditions/operands/condition-operands.enum";
+import { JoinerOperand } from "../../../chips-ql/types/conditions/operands/joiner-operands.enum";
+import { ConditionOperand } from "../../../chips-ql/types/conditions/operands/condition-operands.enum";
 import { OrderBy } from "../../../chips-ql/types/order/order-by.type";
 import { OrderDirection } from "../../../chips-ql/types/order/order-direction.enum";
 import { GroupBy } from "../../../chips-ql/types/grouping/group-by.type";
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
-import { DataTypes } from "../../../chips-ql/types/datatypes/datatypes.enum";
+import { DataType } from "../../../chips-ql/types/datatypes/datatypes.enum";
 import { mssqlFunctions } from "../functions/mssql-functions";
 import { DataType } from "../../../chips-ql/types/datatypes/datatype.type";
 import { mssqlDataTypes } from "../datatypes/mssql-datatypes";
@@ -56,11 +56,11 @@ export class MssqlPartsCompiler<T extends Object>
   value = (value: Value<T>): string => {
     const processValue = () => {
       switch (value.valueType) {
-        case ValueTypes.RAW_SQL:
+        case ValueType.RAW_SQL:
           return value.sql;
-        case ValueTypes.RAW_VALUE:
+        case ValueType.RAW_VALUE:
           return this.escape(value.value);
-        case ValueTypes.ALL_COLUMNS:
+        case ValueType.ALL_COLUMNS:
           return joinParts(
             [
               value.tableAlias ? this.generateField(value.tableAlias) : null,
@@ -68,7 +68,7 @@ export class MssqlPartsCompiler<T extends Object>
             ],
             "."
           );
-        case ValueTypes.COLUMN:
+        case ValueType.COLUMN:
           return joinParts(
             [
               value.tableAlias ? this.generateField(value.tableAlias) : null,
@@ -76,14 +76,14 @@ export class MssqlPartsCompiler<T extends Object>
             ],
             "."
           );
-        case ValueTypes.FUNCTION:
+        case ValueType.FUNCTION:
           return this.func(value);
-        case ValueTypes.VARIABLE:
+        case ValueType.VARIABLE:
           return `@${value.name}`;
-        case ValueTypes.SUBSELECT:
+        case ValueType.SUBSELECT:
           const { alias, distinct, ...query } = value;
           return this.subselect(query);
-        case ValueTypes.SET:
+        case ValueType.SET:
           return `(${joinParts(
             value.values.map(this.value),
             "," + this.avoidableSpace
@@ -118,8 +118,8 @@ export class MssqlPartsCompiler<T extends Object>
     if (whereValue.conditionType === ConditionType.JOINER) {
       const joiner = valueSelector(
         {
-          [JoinerOperands.AND]: "AND",
-          [JoinerOperands.OR]: "OR",
+          [JoinerOperand.AND]: "AND",
+          [JoinerOperand.OR]: "OR",
         },
         whereValue.joinerOperand
       );
@@ -133,18 +133,18 @@ export class MssqlPartsCompiler<T extends Object>
 
     const operand = valueSelector(
       {
-        [ConditionOperands.EQUALS]: "=",
-        [ConditionOperands.EQUALS_OR_GREATER_THAN]: ">=",
-        [ConditionOperands.EQUALS_OR_LESS_THAN]: "<=",
-        [ConditionOperands.GHREATER_THAN]: ">",
-        [ConditionOperands.IN]: "IN",
-        [ConditionOperands.LESS_THAN]: "<",
-        [ConditionOperands.LIKE]: "LIKE",
-        [ConditionOperands.NOT_LIKE]: "NOT LIKE",
-        [ConditionOperands.NOT_EQUALS]: "!=",
-        [ConditionOperands.NOT_IN]: "NOT IN",
-        [ConditionOperands.IS]: "IS",
-        [ConditionOperands.IS_NOT]: "IS NOT",
+        [ConditionOperand.EQUALS]: "=",
+        [ConditionOperand.EQUALS_OR_GREATER_THAN]: ">=",
+        [ConditionOperand.EQUALS_OR_LESS_THAN]: "<=",
+        [ConditionOperand.GREATER_THAN]: ">",
+        [ConditionOperand.IN]: "IN",
+        [ConditionOperand.LESS_THAN]: "<",
+        [ConditionOperand.LIKE]: "LIKE",
+        [ConditionOperand.NOT_LIKE]: "NOT LIKE",
+        [ConditionOperand.NOT_EQUALS]: "!=",
+        [ConditionOperand.NOT_IN]: "NOT IN",
+        [ConditionOperand.IS]: "IS",
+        [ConditionOperand.IS_NOT]: "IS NOT",
       },
       whereValue.conditionOperand
     );
@@ -159,23 +159,23 @@ export class MssqlPartsCompiler<T extends Object>
   join = (joinValue: Join<T>) => {
     const direction = valueSelector(
       {
-        [JoinDirections.FULL]: "FULL",
-        [JoinDirections.RIGHT]: "RIGHT",
-        [JoinDirections.LEFT]: "LEFT",
+        [JoinDirection.FULL]: "FULL",
+        [JoinDirection.RIGHT]: "RIGHT",
+        [JoinDirection.LEFT]: "LEFT",
       },
       joinValue.direction
     );
 
     const include = valueSelector(
       {
-        [JoinIncludes.INNER]: "INNER",
-        [JoinIncludes.OUTER]: "OUTER",
+        [JoinInclude.INNER]: "INNER",
+        [JoinInclude.OUTER]: "OUTER",
       },
       joinValue.include
     );
 
     const joins =
-      joinValue.joinType === JoinTypes.TABLE
+      joinValue.joinType === JoinType.TABLE
         ? this.table(joinValue.table)
         : joinParts([
             this.subselect(joinValue.select),
@@ -195,7 +195,7 @@ export class MssqlPartsCompiler<T extends Object>
     return `(${new MssqlCompiler(
       {
         ...select,
-        queryType: QueryTypes.SELECT,
+        queryType: QueryType.SELECT,
       },
       {
         endWithSemicolon: false,
@@ -239,7 +239,7 @@ export class MssqlPartsCompiler<T extends Object>
   set = (set: Set<T>) => joinParts(set.map((value) => {
     return this.value({
       ...value,
-      valueType: ValueTypes.COLUMN,
+      valueType: ValueType.COLUMN,
     }) + `${this.avoidableSpace}=${this.avoidableSpace}` + this.value(value.value);
   }));
 
@@ -260,7 +260,7 @@ export class MssqlPartsCompiler<T extends Object>
     }
 
     switch (value.type) {
-      case DataTypes.DATE:
+      case DataType.DATE:
         if (value.includeTime)
           return `'${format(value.date, "yyyy-MM-dd HH:mm:ss")}'`;
         return `'${format(value.date, "yyyy-MM-dd")}'`;

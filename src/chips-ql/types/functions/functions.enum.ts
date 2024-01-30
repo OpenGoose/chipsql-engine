@@ -1,4 +1,4 @@
-export enum Functions {
+export enum Function {
   // AGGREGATE
   COUNT = "count",
   MAX = "max",

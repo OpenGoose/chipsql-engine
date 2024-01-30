@@ -1,6 +1,6 @@
-export enum ConditionOperands {
+export enum ConditionOperand {
   EQUALS = "eq",
-  GHREATER_THAN = "gt",
+  GREATER_THAN = "gt",
   LESS_THAN = "lt",
   EQUALS_OR_GREATER_THAN = "egt",
   EQUALS_OR_LESS_THAN = "elt",

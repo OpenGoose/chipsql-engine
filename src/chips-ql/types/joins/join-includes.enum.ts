@@ -1,4 +1,4 @@
-export enum JoinIncludes {
+export enum JoinInclude {
     INNER = 'inner',
     OUTER = 'outer',
 }

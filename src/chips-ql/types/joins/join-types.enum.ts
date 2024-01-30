@@ -1,4 +1,4 @@
-export enum JoinTypes {
+export enum JoinType {
     TABLE = 'table',
     SELECT = 'select'
 }

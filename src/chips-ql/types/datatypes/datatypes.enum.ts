@@ -1,4 +1,4 @@
-export enum DataTypes {
+export enum DataType {
     VARCHAR = 'varchar',
     INT = 'int',
     DECIMAL = 'decimal',

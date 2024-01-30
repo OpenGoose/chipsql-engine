@@ -5,7 +5,7 @@ import { Update } from "./update.type";
 
 export type Query<T extends Object> = Select<T> | Insert<T> | Update<T> | Delete<T>;
 
-export enum QueryTypes {
+export enum QueryType {
     SELECT = 'select',
     INSERT = 'insert',
     UPDATE = 'update',

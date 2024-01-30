@@ -1,25 +1,25 @@
 import { Where } from "../conditions/where.type";
 import { Select } from "../queries/select.type";
 import { Table } from "../tables/table.type";
-import { JoinDirections } from "./join-directions.enum";
-import { JoinIncludes } from "./join-includes.enum";
-import { JoinTypes } from "./join-types.enum";
+import { JoinDirection } from "./join-directions.enum";
+import { JoinInclude } from "./join-includes.enum";
+import { JoinType } from "./join-types.enum";
 
 type JoinOn<T extends Object> =
   | {
-      joinType: JoinTypes.SELECT;
+      joinType: JoinType.SELECT;
       on?: Where<T>;
       select: Omit<Select<Object>, "queryType">; // <-- Object, as it is another table
       alias: string;
     }
   | {
-      joinType: JoinTypes.TABLE;
+      joinType: JoinType.TABLE;
       on?: Where<T>;
       table: Table<Object>; // <-- Object, as it is another table
     };
 
 export type Join<T extends Object> = JoinOn<T> & {
   on?: Where<T>;
-  direction?: JoinDirections;
-  include?: JoinIncludes;
+  direction?: JoinDirection;
+  include?: JoinInclude;
 };

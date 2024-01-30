@@ -1,3 +1,3 @@
-export enum SqlLanguages {
+export enum SqlLanguage {
     MSSQL = 'mssql',
 }

@@ -1,17 +1,17 @@
 import { Value } from "../values/value.type";
 import { ConditionType } from "./condition-type.enum";
-import { ConditionOperands } from "./operands/condition-operands.enum";
-import { JoinerOperands } from "./operands/joiner-operands.enum";
+import { ConditionOperand } from "./operands/condition-operands.enum";
+import { JoinerOperand } from "./operands/joiner-operands.enum";
 
 export type Condition<T extends Object> =
   | {
       conditionType: ConditionType.CONDITION;
       sourceValue: Value<T>;
       targetValue: Value<T>;
-      conditionOperand: ConditionOperands;
+      conditionOperand: ConditionOperand;
     }
   | {
       conditionType: ConditionType.JOINER;
       conditions: Condition<T>[];
-      joinerOperand: JoinerOperands;
+      joinerOperand: JoinerOperand;
     };

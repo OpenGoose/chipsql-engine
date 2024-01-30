@@ -1,7 +1,7 @@
 import { Value } from "../../../values/value.type";
-import { Functions } from "../../functions.enum";
+import { Function } from "../../functions.enum";
 
 export interface CoalesceFunction<T extends Object> {
-  function: Functions.COALESCE;
+  function: Function.COALESCE;
   values: Value<T>[];
 }

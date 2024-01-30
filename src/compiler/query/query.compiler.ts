@@ -1,14 +1,14 @@
 import { Query } from "../../chips-ql/types/queries/query.type";
-import { SqlLanguages } from "../../sql/sql-languages.enum";
+import { SqlLanguage } from "../../sql/sql-languages.enum";
 import { UnavailableFeatureError } from "../../errors/compiler/unavailable-feature.error";
 import { QueryCompilerOptions } from "./query-compiler-options.type";
 import { MssqlCompiler } from "../../languages/mssql/query-parts-compiler/mssql.compiler";
 import { ExecutionWillFailException } from "../../errors/warnings/execution-will-fail.exception";
-import { WarningLevels } from "../../warnings/warning-levels.enum";
+import { WarningLevel } from "../../warnings/warning-levels.enum";
 
 export class QueryCompiler<T extends Object> {
   constructor(
-    private readonly sqlLanguage: SqlLanguages,
+    private readonly sqlLanguage: SqlLanguage,
     private readonly options?: QueryCompilerOptions
   ) {}
 
@@ -20,7 +20,7 @@ export class QueryCompiler<T extends Object> {
     if (
       this.options?.warningOptions?.throwExceptionOnExecutionWillFail &&
       warnings.warnings.some(
-        (w) => w.level === WarningLevels.EXECUTION_WILL_FAIL
+        (w) => w.level === WarningLevel.EXECUTION_WILL_FAIL
       )
     )
       throw new ExecutionWillFailException();
@@ -39,18 +39,18 @@ export class QueryCompiler<T extends Object> {
     compilerOptions?: QueryCompilerOptions
   ) => {
     switch (this.sqlLanguage) {
-      case SqlLanguages.MSSQL:
+      case SqlLanguage.MSSQL:
         return MssqlCompiler.processQueryWarnings(query, compilerOptions);
     }
   };
 
   public static getCompiler = <T extends Object>(
-    sqlLanguage: SqlLanguages,
+    sqlLanguage: SqlLanguage,
     query: Query<T>,
     options?: QueryCompilerOptions
   ) => {
     switch (sqlLanguage) {
-      case SqlLanguages.MSSQL:
+      case SqlLanguage.MSSQL:
         return new MssqlCompiler(query, options);
     }
     throw new UnavailableFeatureError(sqlLanguage);

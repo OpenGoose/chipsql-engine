@@ -15,7 +15,7 @@ import { CharFunction } from "../../../chips-ql/types/functions/scalar/text/char
 import { FindIndexFunction } from "../../../chips-ql/types/functions/scalar/text/find-index.function";
 import { JoinFunction } from "../../../chips-ql/types/functions/scalar/text/join.function";
 import { BytesLengthFunction } from "../../../chips-ql/types/functions/scalar/bytes/bytes-length.function";
-import { Functions } from "../../../chips-ql/types/functions/functions.enum";
+import { Function } from "../../../chips-ql/types/functions/functions.enum";
 import { CoalesceFunction } from "../../../chips-ql/types/functions/scalar/conditionals/coalesce.function";
 import { ConvertFunction } from "../../../chips-ql/types/functions/scalar/casting/convert.function";
 import { DifferenceFunction } from "../../../chips-ql/types/functions/scalar/text/difference.function";
@@ -77,7 +77,7 @@ export class MssqlFunctionsCompiler<
           values.separator ? this.value(values.separator) : "",
           ...values.values.map(this.value),
         ])
-      : this.concat({ ...values, function: Functions.CONCAT });
+      : this.concat({ ...values, function: Function.CONCAT });
   lower = (values: LowerFunction<T>) =>
     this.buildFunction("LOWER", [this.value(values.value)]);
   upper = (values: UpperFunction<T>) =>

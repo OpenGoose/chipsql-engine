@@ -1,8 +1,8 @@
 import { Value } from "../../../values/value.type";
-import { Functions } from "../../functions.enum";
+import { Function } from "../../functions.enum";
 
 export interface LeftSubstringFunction<T extends Object> {
-    function: Functions.LEFT_SUBSTRING;
+    function: Function.LEFT_SUBSTRING;
     value: Value<T>;
     length: Value<T>;
 }

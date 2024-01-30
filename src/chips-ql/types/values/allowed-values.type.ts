@@ -1,8 +1,8 @@
-import { DataTypes } from "../datatypes/datatypes.enum";
+import { DataType } from "../datatypes/datatypes.enum";
 import { DateDataType } from "../datatypes/datatypes/date/date.datatype";
 
 export type DateType = {
-  type: DataTypes.DATE;
+  type: DataType.DATE;
   date: Date;
 } & Omit<DateDataType, 'dataType'>;
 

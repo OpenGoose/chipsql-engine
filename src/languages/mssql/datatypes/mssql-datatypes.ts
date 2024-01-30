@@ -1,5 +1,5 @@
 import { DataType } from "../../../chips-ql/types/datatypes/datatype.type";
-import { DataTypes } from "../../../chips-ql/types/datatypes/datatypes.enum";
+import { DataType } from "../../../chips-ql/types/datatypes/datatypes.enum";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { MssqlPartsCompiler } from "../query-parts-compiler/mssql-parts.compiler";
 import { MssqlDataTypesCompiler } from "./mssql-datatypes.compiler";
@@ -12,25 +12,25 @@ export const mssqlDataTypes = <T extends Object>(
 
   switch (value.dataType) {
     // Text
-    case DataTypes.VARCHAR:
+    case DataType.VARCHAR:
       return compiler.varchar(value);
 
     // Number
-    case DataTypes.INT:
+    case DataType.INT:
       return compiler.int(value);
-    case DataTypes.DECIMAL:
+    case DataType.DECIMAL:
       return compiler.decimal(value);
 
     // Bit
-    case DataTypes.BOOLEAN:
+    case DataType.BOOLEAN:
       return compiler.boolean(value);
 
     // Date
-    case DataTypes.DATE:
+    case DataType.DATE:
       return compiler.date(value);
 
     // Custom
-    case DataTypes.CUSTOM:
+    case DataType.CUSTOM:
       return compiler.custom(value);
     default:
       throw new UnavailableFeatureError(value);

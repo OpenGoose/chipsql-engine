@@ -1,7 +1,7 @@
 import { Value } from "../../../values/value.type";
-import { Functions } from "../../functions.enum";
+import { Function } from "../../functions.enum";
 
 export interface CosFunction<T extends Object> {
-    function: Functions.COS,
+    function: Function.COS,
     value: Value<T>;
 }
