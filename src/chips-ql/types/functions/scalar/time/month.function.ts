@@ -1,7 +1,7 @@
 import { Value } from "../../../values/value.type";
 import { Functions } from "../../functions.enum";
 
-export interface MonthFunction<T extends Object> {
+export interface MonthFunction<T extends NonNullable<unknown>> {
     function: Functions.MONTH,
     value: Value<T>;
 }

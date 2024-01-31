@@ -8,7 +8,7 @@ export interface Warning {
   level: WarningLevels;
 }
 
-export class QueryWarningsService<T extends Object> {
+export class QueryWarningsService<T extends NonNullable<unknown>> {
   constructor(
     private readonly query: Query<T>,
     private readonly language: SqlLanguages,

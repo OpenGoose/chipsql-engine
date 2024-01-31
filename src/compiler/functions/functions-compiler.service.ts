@@ -44,7 +44,7 @@ import { Value } from "../../chips-ql/types/values/value.type";
 import { IQueryPartsCompiler } from "../query/query-parts-compiler.interface";
 import { joinParts } from "../utils/query-generation/join-parts.util";
 
-export abstract class FunctionsCompiler<T extends Object> {
+export abstract class FunctionsCompiler<T extends NonNullable<unknown>> {
   protected readonly value: (value: Value<T>) => string;
 
   constructor(

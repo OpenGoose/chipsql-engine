@@ -12,7 +12,7 @@ import { Set } from "../../chips-ql/types/values/set.type";
 import { FunctionValue, Value } from "../../chips-ql/types/values/value.type";
 import { QueryCompilerOptions } from "./query-compiler-options.type";
 
-export interface IQueryPartsCompiler<T extends Object> {
+export interface IQueryPartsCompiler<T extends NonNullable<unknown>> {
   readonly avoidableSpace: string;
   readonly options?: QueryCompilerOptions;
 
@@ -33,8 +33,8 @@ export interface IQueryPartsCompiler<T extends Object> {
   orderBy: (orderByValue: OrderBy<T>) => string;
   limit: (limitValue: Limit<T>, options?: LimitOptions) => string;
   offset: (offsetValue: Value<T>) => string;
-  into: (table: Table<Object>) => string;
-  subselect: (select: Omit<Select<Object>, "queryType">) => string;
+  into: (table: Table<NonNullable<unknown>>) => string;
+  subselect: (select: Omit<Select<NonNullable<unknown>>, "queryType">) => string;
   func: (funcValue: FunctionValue<T>) => string;
   dataType: (dataTypeValue: DataType) => string;
   set: (set: Set<T>) => string;

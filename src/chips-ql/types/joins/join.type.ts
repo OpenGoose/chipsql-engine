@@ -5,20 +5,20 @@ import { JoinDirections } from "./join-directions.enum";
 import { JoinIncludes } from "./join-includes.enum";
 import { JoinTypes } from "./join-types.enum";
 
-type JoinOn<T extends Object> =
+type JoinOn<T extends NonNullable<unknown>> =
   | {
       joinType: JoinTypes.SELECT;
       on?: Where<T>;
-      select: Omit<Select<Object>, "queryType">; // <-- Object, as it is another table
+      select: Omit<Select<NonNullable<unknown>>, "queryType">; // <-- NonNullable<unknown>, as it is another table
       alias: string;
     }
   | {
       joinType: JoinTypes.TABLE;
       on?: Where<T>;
-      table: Table<Object>; // <-- Object, as it is another table
+      table: Table<NonNullable<unknown>>; // <-- NonNullable<unknown>, as it is another table
     };
 
-export type Join<T extends Object> = JoinOn<T> & {
+export type Join<T extends NonNullable<unknown>> = JoinOn<T> & {
   on?: Where<T>;
   direction?: JoinDirections;
   include?: JoinIncludes;

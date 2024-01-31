@@ -43,7 +43,7 @@ import { MonthFunction } from "../../../chips-ql/types/functions/scalar/time/mon
 import { YearFunction } from "../../../chips-ql/types/functions/scalar/time/year.function";
 
 export class MssqlFunctionsCompiler<
-  T extends Object
+  T extends NonNullable<unknown>
 > extends FunctionsCompiler<T> {
   constructor(partsCompiler: IQueryPartsCompiler<T>) {
     super(partsCompiler);

@@ -3,7 +3,7 @@ import { Limit } from "../limit/limit.type";
 import { Table } from "../tables/table.type";
 import { QueryTypes } from "./query.type";
 
-export interface Delete<T extends Object> {
+export interface Delete<T extends NonNullable<unknown>> {
     queryType: QueryTypes.DELETE;
     from: Table<T>;
     where?: Where<T>;

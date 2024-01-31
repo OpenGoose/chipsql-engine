@@ -7,29 +7,29 @@ type ColumnField = {
   field: string;
 };
 
-export type ColumnarValue<T extends Object> = {
+export type ColumnarValue<T extends NonNullable<unknown>> = {
   valueType: ValueTypes.COLUMN;
 } & ColumnField;
 
-export type AllColumnsValue<T extends Object> = {
+export type AllColumnsValue<T extends NonNullable<unknown>> = {
   valueType: ValueTypes.ALL_COLUMNS;
 } & Omit<ColumnarValue<T>, "valueType" | "alias" | "field" | "distinct">;
 
-export type RawValue<T extends Object> = {
+export type RawValue<T extends NonNullable<unknown>> = {
   valueType: ValueTypes.RAW_VALUE;
   value: AllowedValues;
 };
 
-export type FunctionValue<T extends Object> = {
+export type FunctionValue<T extends NonNullable<unknown>> = {
   valueType: ValueTypes.FUNCTION;
 } & Function<T>;
 
-export type SubselectValue<T extends Object = Object> = Omit<
+export type SubselectValue<T extends NonNullable<unknown> = NonNullable<unknown>> = Omit<
   Select<T>,
   "queryType"
 > & { valueType: ValueTypes.SUBSELECT };
 
-export type VariableType<T extends Object> = {
+export type VariableType<T extends NonNullable<unknown>> = {
   valueType: ValueTypes.VARIABLE;
   name: string;
 };
@@ -39,12 +39,12 @@ export type RawSql = {
   sql: string;
 };
 
-export type SetType<T extends Object> = {
+export type SetType<T extends NonNullable<unknown>> = {
   valueType: ValueTypes.SET;
   values: Value<T>[];
 };
 
-export type Value<T extends Object> = (
+export type Value<T extends NonNullable<unknown>> = (
   | ColumnarValue<T>
   | AllColumnsValue<T>
   | RawValue<T>

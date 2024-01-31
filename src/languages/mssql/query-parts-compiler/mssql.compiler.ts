@@ -14,7 +14,7 @@ import { ExecutionWillFailException } from "../../../errors/warnings/execution-w
 import { Delete } from "../../../chips-ql/types/queries/delete.type";
 import { Update } from "../../../chips-ql/types/queries/update.type";
 
-export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
+export class MssqlCompiler<T extends NonNullable<unknown>> implements IQueryCompiler<T> {
   protected readonly language: SqlLanguages;
   readonly query: Query<T>;
   readonly partsCompiler: IQueryPartsCompiler<T>;
@@ -155,7 +155,7 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
     );
   };
 
-  static processQueryWarnings = <T extends Object>(
+  static processQueryWarnings = <T extends NonNullable<unknown>>(
     query: Query<T>,
     queryCompilerOptions?: QueryCompilerOptions
   ) => {

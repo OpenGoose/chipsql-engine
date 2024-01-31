@@ -3,7 +3,7 @@ import { SqlLanguages } from "../sql/sql-languages.enum";
 import { QueryWarningsService } from "./query-warnings.service";
 import { QueryCompilerOptions } from "../compiler/query/query-compiler-options.type";
 
-export abstract class QueryWarnings<T extends Object = Object> {
+export abstract class QueryWarnings<T extends NonNullable<unknown> = NonNullable<unknown>> {
 
   constructor (
     protected readonly query: Query<T>,

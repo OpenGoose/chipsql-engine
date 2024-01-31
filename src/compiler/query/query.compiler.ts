@@ -6,7 +6,7 @@ import { MssqlCompiler } from "../../languages/mssql/query-parts-compiler/mssql.
 import { ExecutionWillFailException } from "../../errors/warnings/execution-will-fail.exception";
 import { WarningLevels } from "../../warnings/warning-levels.enum";
 
-export class QueryCompiler<T extends Object> {
+export class QueryCompiler<T extends NonNullable<unknown>> {
   constructor(
     private readonly sqlLanguage: SqlLanguages,
     private readonly options?: QueryCompilerOptions
@@ -44,7 +44,7 @@ export class QueryCompiler<T extends Object> {
     }
   };
 
-  public static getCompiler = <T extends Object>(
+  public static getCompiler = <T extends NonNullable<unknown>>(
     sqlLanguage: SqlLanguages,
     query: Query<T>,
     options?: QueryCompilerOptions

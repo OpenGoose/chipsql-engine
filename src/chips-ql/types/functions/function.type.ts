@@ -45,7 +45,7 @@ type FunctionProps = {
   alias?: string;
 };
 
-export type Function<T extends Object> = FunctionProps &
+export type Function<T extends NonNullable<unknown>> = FunctionProps &
   // Aggregate
   (| MaxFunction<T>
     | MinFunction<T>
