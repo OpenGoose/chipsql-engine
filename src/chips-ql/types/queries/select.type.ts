@@ -8,7 +8,7 @@ import { Table } from "../tables/table.type";
 import { Value } from "../values/value.type";
 import { QueryTypes } from "./query.type";
 
-export interface Select<T extends NonNullable<unknown>> {
+export interface Select<T extends Object> {
   queryType: QueryTypes.SELECT;
   where?: Where<T>;
   fields: Value<T>[];
@@ -23,5 +23,5 @@ export interface Select<T extends NonNullable<unknown>> {
   limit?: Limit<T>;
   offset?: Value<T>;
 
-  into?: Table<NonNullable<unknown>>;
+  into?: Table<Object>;
 }

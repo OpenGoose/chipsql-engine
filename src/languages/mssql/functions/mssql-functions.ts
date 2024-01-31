@@ -4,7 +4,7 @@ import { MssqlPartsCompiler } from "../query-parts-compiler/mssql-parts.compiler
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { MssqlFunctionsCompiler } from "./mssql-functions.compiler";
 
-export const mssqlFunctions = <T extends NonNullable<unknown>>(
+export const mssqlFunctions = <T extends Object>(
   value: FunctionValue<T>,
   partsCompiler: MssqlPartsCompiler<T>
 ) => {

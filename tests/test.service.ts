@@ -17,14 +17,14 @@ import { DataType } from "../src/chips-ql/types/datatypes/datatype.type";
 export class TestService {
   constructor(private readonly language: SqlLanguages) {}
 
-  expectQuery = <T extends NonNullable<unknown> = NonNullable<unknown>>(
+  expectQuery = <T extends Object = Object>(
     name: string,
     query: Query<T>,
     toBe: string,
     compilerOptions?: QueryCompilerOptions
   ) => {
     test(name, () => {
-      const compiler = new QueryCompiler<NonNullable<unknown>>(
+      const compiler = new QueryCompiler<Object>(
         this.language,
         compilerOptions
       );
@@ -32,7 +32,7 @@ export class TestService {
     });
   };
 
-  expectWarning = <T extends NonNullable<unknown> = NonNullable<unknown>>(
+  expectWarning = <T extends Object = Object>(
     name: string,
     query: Query<T>,
     warning: Warning,
@@ -56,13 +56,13 @@ export class TestService {
     });
   };
 
-  expectException = <T extends NonNullable<unknown> = NonNullable<unknown>>(
+  expectException = <T extends Object = Object>(
     name: string,
     query: Query<T>,
     error: string | RegExp | jest.Constructable | Error | undefined,
     compilerOptions?: QueryCompilerOptions
   ) => {
-    const compiler = new QueryCompiler<NonNullable<unknown>>(this.language, {
+    const compiler = new QueryCompiler<Object>(this.language, {
       ...compilerOptions,
       warningOptions: {
         logger: null,
@@ -74,7 +74,7 @@ export class TestService {
     });
   };
 
-  expectFunction = <T extends NonNullable<unknown> = NonNullable<unknown>>(
+  expectFunction = <T extends Object = Object>(
     name: string,
     func: Function<T>,
     result: string,
@@ -90,7 +90,7 @@ export class TestService {
     });
   };
 
-  expectDataType = <T extends NonNullable<unknown> = NonNullable<unknown>>(
+  expectDataType = <T extends Object = Object>(
     name: string,
     dataType: DataType,
     result: string,
@@ -105,7 +105,7 @@ export class TestService {
 
   // Utils
 
-  private getPartsCompiler = <T extends NonNullable<unknown>>(
+  private getPartsCompiler = <T extends Object>(
     compilerOptions?: QueryCompilerOptions
   ): IQueryPartsCompiler<T> => {
     switch (this.language) {

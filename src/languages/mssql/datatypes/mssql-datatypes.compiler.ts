@@ -8,7 +8,7 @@ import { DataTypesCompiler } from "../../../compiler/datatypes/datatypes-compile
 import { MssqlPartsCompiler } from "../query-parts-compiler/mssql-parts.compiler";
 
 export class MssqlDataTypesCompiler<
-  T extends NonNullable<unknown>
+  T extends Object
 > extends DataTypesCompiler<T> {
   constructor(partsCompiler: MssqlPartsCompiler<T>) {
     super(partsCompiler);

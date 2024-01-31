@@ -1,7 +1,6 @@
 import { Query, QueryTypes } from "../../../chips-ql/types/queries/query.type";
 import { Select } from "../../../chips-ql/types/queries/select.type";
 import { SqlLanguages } from "../../../sql/sql-languages.enum";
-import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { MssqlPartsCompiler } from "./mssql-parts.compiler";
 import { IQueryCompiler } from "../../../compiler/query/query-compiler.interface";
 import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
@@ -14,7 +13,7 @@ import { ExecutionWillFailException } from "../../../errors/warnings/execution-w
 import { Delete } from "../../../chips-ql/types/queries/delete.type";
 import { Update } from "../../../chips-ql/types/queries/update.type";
 
-export class MssqlCompiler<T extends NonNullable<unknown>> implements IQueryCompiler<T> {
+export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
   protected readonly language: SqlLanguages;
   readonly query: Query<T>;
   readonly partsCompiler: IQueryPartsCompiler<T>;
@@ -155,7 +154,7 @@ export class MssqlCompiler<T extends NonNullable<unknown>> implements IQueryComp
     );
   };
 
-  static processQueryWarnings = <T extends NonNullable<unknown>>(
+  static processQueryWarnings = <T extends Object>(
     query: Query<T>,
     queryCompilerOptions?: QueryCompilerOptions
   ) => {

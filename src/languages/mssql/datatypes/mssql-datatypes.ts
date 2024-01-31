@@ -4,7 +4,7 @@ import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-fe
 import { MssqlPartsCompiler } from "../query-parts-compiler/mssql-parts.compiler";
 import { MssqlDataTypesCompiler } from "./mssql-datatypes.compiler";
 
-export const mssqlDataTypes = <T extends NonNullable<unknown>>(
+export const mssqlDataTypes = <T extends Object>(
   value: DataType,
   partsCompiler: MssqlPartsCompiler<T>
 ) => {

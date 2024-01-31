@@ -1,6 +1,6 @@
 import { Value } from "./value.type";
 
-export type ValuesNonNullable<unknown><T extends NonNullable<unknown>> = {
+export type ValuesObject<T extends Object> = {
   field: string;
   value: Value<T>;
 }[];

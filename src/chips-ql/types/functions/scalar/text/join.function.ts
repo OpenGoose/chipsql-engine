@@ -1,8 +1,8 @@
 import { Value } from "../../../values/value.type";
 import { Functions } from "../../functions.enum";
 
-export interface JoinFunction<T extends NonNullable<unknown>> {
+export interface JoinFunction<T extends Object> {
     function: Functions.JOIN;
-    separator?: Value<NonNullable<unknown>>;
-    values: Value<NonNullable<unknown>>[];
+    separator?: Value<Object>;
+    values: Value<Object>[];
 }

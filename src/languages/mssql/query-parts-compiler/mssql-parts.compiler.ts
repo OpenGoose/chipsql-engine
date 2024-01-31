@@ -34,7 +34,7 @@ import { LimitMode } from "../../../chips-ql/types/limit/limit-mode.enum";
 import { LimitOptions } from "../../../chips-ql/types/limit/limit-options.type";
 import { Set } from "../../../chips-ql/types/values/set.type";
 
-export class MssqlPartsCompiler<T extends NonNullable<unknown>>
+export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
 {
   readonly avoidableSpace: string;
@@ -191,7 +191,7 @@ export class MssqlPartsCompiler<T extends NonNullable<unknown>>
     ]);
   };
 
-  subselect = (select: Omit<Select<NonNullable<unknown>>, "queryType">) => {
+  subselect = (select: Omit<Select<Object>, "queryType">) => {
     return `(${new MssqlCompiler(
       {
         ...select,
@@ -229,7 +229,7 @@ export class MssqlPartsCompiler<T extends NonNullable<unknown>>
   limit = (limitValue: Limit<T>, options?: LimitOptions) => (options?.valueInParenthesis ? `(${this.value(limitValue.value)})` : this.value(limitValue.value)) + (limitValue.limitMode === LimitMode.PERCENT ? ' PERCENT' : '');
   offset = (offsetValue: Value<T>) => this.value(offsetValue);
 
-  into = (table: Table<NonNullable<unknown>>) => this.table(table);
+  into = (table: Table<Object>) => this.table(table);
 
   groupBy = (groupByValue: GroupBy<T>) => {
     if (typeof groupByValue === "number") return groupByValue.toString();

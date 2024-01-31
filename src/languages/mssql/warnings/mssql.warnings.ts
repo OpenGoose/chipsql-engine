@@ -16,7 +16,7 @@ import { QueryWarningsService } from "../../../warnings/query-warnings.service";
 import { WarningLevels } from "../../../warnings/warning-levels.enum";
 import { mssqlWarningMessages } from "./mssql-warning-messages.constant";
 
-export class MssqlWarnings<T extends NonNullable<unknown> = NonNullable<unknown>> extends QueryWarnings<T> {
+export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
   constructor(query: Query<T>, queryCompilerOptions?: QueryCompilerOptions) {
     super(query, SqlLanguages.MSSQL, queryCompilerOptions);
   }
@@ -45,7 +45,7 @@ export class MssqlWarnings<T extends NonNullable<unknown> = NonNullable<unknown>
     query: Select<T>,
     queryWarnings: QueryWarningsService<T>
   ) => {
-    const { offset, orderBy, groupBy, having, joins, from, fields } = query;
+    const { groupBy, having, joins, from, fields } = query;
 
     this.processLimitAndOffsetWarnings(queryWarnings, query);
 
