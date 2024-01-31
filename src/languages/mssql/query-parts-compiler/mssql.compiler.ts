@@ -83,7 +83,7 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
       throw new ExecutionWillFailException();
 
     // Identify keys
-    let keys: string[] = [];
+    const keys: string[] = [];
     for (const row of insert.values) {
       for (const value of row) {
         if (!keys.includes(value.field)) keys.push(value.field);
