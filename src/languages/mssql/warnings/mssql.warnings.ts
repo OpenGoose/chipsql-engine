@@ -45,7 +45,7 @@ export class MssqlWarnings<T extends Object = Object> extends QueryWarnings<T> {
     query: Select<T>,
     queryWarnings: QueryWarningsService<T>
   ) => {
-    const { offset, orderBy, groupBy, having, joins, from, fields } = query;
+    const { groupBy, having, joins, from, fields } = query;
 
     this.processLimitAndOffsetWarnings(queryWarnings, query);
 

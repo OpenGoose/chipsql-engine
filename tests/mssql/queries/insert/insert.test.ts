@@ -144,6 +144,7 @@ service.expectException(
       name: "customers",
       schema: "sales",
     },
+    // eslint-disable-next-line prefer-spread
     values: Array.apply(null, Array(mssqlConstants.BATCH_INSERT_MAX_SIZE + 1).map(() => [
       {
         field: "name",

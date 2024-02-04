@@ -80,9 +80,10 @@ export class MssqlPartsCompiler<T extends Object>
           return this.func(value);
         case ValueTypes.VARIABLE:
           return `@${value.name}`;
-        case ValueTypes.SUBSELECT:
-          const { alias, distinct, ...query } = value;
+        case ValueTypes.SUBSELECT: {
+          const { alias: _, distinct: __, ...query } = value;
           return this.subselect(query);
+        }
         case ValueTypes.SET:
           return `(${joinParts(
             value.values.map(this.value),
