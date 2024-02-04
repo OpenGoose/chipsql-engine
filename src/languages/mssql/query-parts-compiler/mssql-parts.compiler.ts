@@ -25,13 +25,14 @@ import { OrderBy } from "../../../chips-ql/types/order/order-by.type";
 import { OrderDirection } from "../../../chips-ql/types/order/order-direction.enum";
 import { GroupBy } from "../../../chips-ql/types/grouping/group-by.type";
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
-import { DataType } from "../../../chips-ql/types/datatypes/datatypes.enum";
+import { DataType as DataTypeType } from "../../../chips-ql/types/datatypes/datatypes.enum";
 import { mssqlFunction } from "../functions/mssql-functions";
 import { mssqlDataType } from "../datatypes/mssql-datatypes";
 import { Limit } from "../../../chips-ql/types/limit/limit.type";
 import { LimitMode } from "../../../chips-ql/types/limit/limit-mode.enum";
 import { LimitOptions } from "../../../chips-ql/types/limit/limit-options.type";
 import { Set } from "../../../chips-ql/types/values/set.type";
+import { DataType } from "../../../chips-ql/types/datatypes/datatype.type";
 
 export class MssqlPartsCompiler<T extends Object>
   implements IQueryPartsCompiler<T>
@@ -260,7 +261,7 @@ export class MssqlPartsCompiler<T extends Object>
     }
 
     switch (value.type) {
-      case DataType.DATE:
+      case DataTypeType.DATE:
         if (value.includeTime)
           return `'${format(value.date, "yyyy-MM-dd HH:mm:ss")}'`;
         return `'${format(value.date, "yyyy-MM-dd")}'`;
