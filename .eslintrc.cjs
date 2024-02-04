@@ -5,6 +5,7 @@ module.exports = {
     plugins: ['@typescript-eslint'],
     root: true,
     rules: {
-        "@typescript-eslint/ban-types": "off"
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/no-unused-vars": "off"
     }
   };
