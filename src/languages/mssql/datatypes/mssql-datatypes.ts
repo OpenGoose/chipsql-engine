@@ -1,11 +1,11 @@
-import { DataType } from "../../../chips-ql/types/datatypes/datatype.type";
+import { DataType as DataTypeType } from "../../../chips-ql/types/datatypes/datatype.type";
 import { DataType } from "../../../chips-ql/types/datatypes/datatypes.enum";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { MssqlPartsCompiler } from "../query-parts-compiler/mssql-parts.compiler";
 import { MssqlDataTypesCompiler } from "./mssql-datatypes.compiler";
 
 export const mssqlDataTypes = <T extends Object>(
-  value: DataType,
+  value: DataTypeType,
   partsCompiler: MssqlPartsCompiler<T>
 ) => {
   const compiler = new MssqlDataTypesCompiler<T>(partsCompiler);

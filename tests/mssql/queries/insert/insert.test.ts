@@ -1,16 +1,16 @@
-import { QueryTypes } from "../../../../src/chips-ql/types/queries/query.type";
-import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
+import { QueryType } from "../../../../src/chips-ql/types/queries/query.type";
+import { ValueType } from "../../../../src/chips-ql/types/values/value.type";
 import { ExecutionWillFailException } from "../../../../src/errors/warnings/execution-will-fail.exception";
 import { mssqlConstants } from "../../../../src/languages/mssql/constants/mssql.constants";
-import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
+import { SqlLanguage } from "../../../../src/sql/sql-languages.enum";
 import { TestService } from "../../../test.service";
 
-const service = new TestService(SqlLanguages.MSSQL);
+const service = new TestService(SqlLanguage.MSSQL);
 
 service.expectQuery(
   "Basic INSERT statement",
   {
-    queryType: QueryTypes.INSERT,
+    queryType: QueryType.INSERT,
     into: {
       name: "customers",
       schema: "sales",
@@ -20,14 +20,14 @@ service.expectQuery(
         {
           field: "name",
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Gloria",
           },
         },
         {
           field: "lastname",
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Gaynor",
           },
         },
@@ -40,7 +40,7 @@ service.expectQuery(
 service.expectQuery(
   "Basic batch INSERT statement",
   {
-    queryType: QueryTypes.INSERT,
+    queryType: QueryType.INSERT,
     into: {
       name: "customers",
       schema: "sales",
@@ -50,14 +50,14 @@ service.expectQuery(
         {
           field: "name",
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Gloria",
           },
         },
         {
           field: "lastname",
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Gaynor",
           },
         },
@@ -66,14 +66,14 @@ service.expectQuery(
         {
           field: "name",
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Roxie",
           },
         },
         {
           field: "lastname",
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Hart",
           },
         },
@@ -86,7 +86,7 @@ service.expectQuery(
 service.expectQuery(
   "Basic batch INSERT statement",
   {
-    queryType: QueryTypes.INSERT,
+    queryType: QueryType.INSERT,
     into: {
       name: "customers",
       schema: "sales",
@@ -96,21 +96,21 @@ service.expectQuery(
         {
           field: "name",
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Rick",
           },
         },
         {
           field: "lastname",
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Sanchez",
           },
         },
         {
           field: "code",
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "C-137",
           },
         },
@@ -119,14 +119,14 @@ service.expectQuery(
         {
           field: "lastname",
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Smith",
           },
         },
         {
           field: "name",
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Morty",
           },
         },
@@ -139,7 +139,7 @@ service.expectQuery(
 service.expectException(
   "Basic INSERT exceding max batch INSERT size",
   {
-    queryType: QueryTypes.INSERT,
+    queryType: QueryType.INSERT,
     into: {
       name: "customers",
       schema: "sales",
@@ -149,21 +149,21 @@ service.expectException(
       {
         field: "name",
         value: {
-          valueType: ValueTypes.RAW_VALUE,
+          valueType: ValueType.RAW_VALUE,
           value: "Rick",
         },
       },
       {
         field: "lastname",
         value: {
-          valueType: ValueTypes.RAW_VALUE,
+          valueType: ValueType.RAW_VALUE,
           value: "Sanchez",
         },
       },
       {
         field: "code",
         value: {
-          valueType: ValueTypes.RAW_VALUE,
+          valueType: ValueType.RAW_VALUE,
           value: "C-137",
         },
       },
