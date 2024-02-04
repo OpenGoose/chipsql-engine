@@ -1,35 +1,35 @@
 import { ConditionType } from "../../../../src/chips-ql/types/conditions/condition-type.enum";
-import { ConditionOperands } from "../../../../src/chips-ql/types/conditions/operands/condition-operands.enum";
-import { Functions } from "../../../../src/chips-ql/types/functions/functions.enum";
-import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
-import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
+import { ConditionOperand } from "../../../../src/chips-ql/types/conditions/operands/condition-operands.enum";
+import { Function } from "../../../../src/chips-ql/types/functions/functions.enum";
+import { ValueType } from "../../../../src/chips-ql/types/values/value.type";
+import { SqlLanguage } from "../../../../src/sql/sql-languages.enum";
 import { TestService } from "../../../test.service";
 
-const service = new TestService(SqlLanguages.MSSQL);
+const service = new TestService(SqlLanguage.MSSQL);
 
 // IF
 service.expectFunction(
   "IIF function",
   {
-    function: Functions.IF,
+    function: Function.IF,
     condition: {
       conditionType: ConditionType.CONDITION,
-      conditionOperand: ConditionOperands.IS_NOT,
+      conditionOperand: ConditionOperand.IS_NOT,
       sourceValue: {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "id",
       },
       targetValue: {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: null,
       },
     },
     whenTrue: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: 1,
     },
     whenFalse: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: 0,
     },
   },
@@ -38,25 +38,25 @@ service.expectFunction(
 service.expectFunction(
   "IIF function (as compact query)",
   {
-    function: Functions.IF,
+    function: Function.IF,
     condition: {
       conditionType: ConditionType.CONDITION,
-      conditionOperand: ConditionOperands.IS_NOT,
+      conditionOperand: ConditionOperand.IS_NOT,
       sourceValue: {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "id",
       },
       targetValue: {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: null,
       },
     },
     whenTrue: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: 1,
     },
     whenFalse: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: 0,
     },
   },
@@ -70,13 +70,13 @@ service.expectFunction(
 service.expectFunction(
   "IF_NULL function",
   {
-    function: Functions.IF_NULL,
+    function: Function.IF_NULL,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: null,
     },
     whenNull: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "Is null!",
     },
   },
@@ -87,14 +87,14 @@ service.expectFunction(
 service.expectFunction(
   "COALESCE function",
   {
-    function: Functions.COALESCE,
+    function: Function.COALESCE,
     values: [
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: null,
       },
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: "Not null",
       },
     ],

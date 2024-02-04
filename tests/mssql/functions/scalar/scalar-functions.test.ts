@@ -1,18 +1,18 @@
-import { Functions } from "../../../../src/chips-ql/types/functions/functions.enum";
+import { Function } from "../../../../src/chips-ql/types/functions/functions.enum";
 import { TimeInterval } from "../../../../src/chips-ql/types/intervals/time-interval.enum";
-import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
-import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
+import { ValueType } from "../../../../src/chips-ql/types/values/value.type";
+import { SqlLanguage } from "../../../../src/sql/sql-languages.enum";
 import { TestService } from "../../../test.service";
 
-const service = new TestService(SqlLanguages.MSSQL);
+const service = new TestService(SqlLanguage.MSSQL);
 
 // ASCII
 service.expectFunction(
   "ASCII function",
   {
-    function: Functions.ASCII,
+    function: Function.ASCII,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "Hi!",
     },
   },
@@ -23,9 +23,9 @@ service.expectFunction(
 service.expectFunction(
   "CHAR function",
   {
-    function: Functions.CHAR,
+    function: Function.CHAR,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: 1,
     },
   },
@@ -36,13 +36,13 @@ service.expectFunction(
 service.expectFunction(
   "FIND_INDEX function",
   {
-    function: Functions.FIND_INDEX,
+    function: Function.FIND_INDEX,
     find: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "p",
     },
     on: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "programmer",
     },
   },
@@ -51,17 +51,17 @@ service.expectFunction(
 service.expectFunction(
   "FIND_INDEX function with startAt",
   {
-    function: Functions.FIND_INDEX,
+    function: Function.FIND_INDEX,
     find: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "p",
     },
     on: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "programmer",
     },
     startAt: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: 2,
     },
   },
@@ -72,21 +72,21 @@ service.expectFunction(
 service.expectFunction(
   "CONCAT function",
   {
-    function: Functions.CONCAT,
+    function: Function.CONCAT,
     values: [
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: "Hi! ",
       },
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: "Have ",
       },
       {
-        valueType: ValueTypes.SUBSELECT,
+        valueType: ValueType.SUBSELECT,
         fields: [
           {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "a nice day!",
             alias: "sentence",
           },
@@ -98,7 +98,7 @@ service.expectFunction(
         ],
         limit: {
           value: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: 1,
           },
         },
@@ -112,18 +112,18 @@ service.expectFunction(
 service.expectFunction(
   "JOIN function",
   {
-    function: Functions.JOIN,
+    function: Function.JOIN,
     separator: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: ">",
     },
     values: [
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: "TS",
       },
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: "JS",
       },
     ],
@@ -133,14 +133,14 @@ service.expectFunction(
 service.expectFunction(
   "JOIN function behaving as CONCAT",
   {
-    function: Functions.JOIN,
+    function: Function.JOIN,
     values: [
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: "TS",
       },
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: "JS",
       },
     ],
@@ -152,9 +152,9 @@ service.expectFunction(
 service.expectFunction(
   "BYTES_LENGTH function",
   {
-    function: Functions.BYTES_LENGTH,
+    function: Function.BYTES_LENGTH,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "TMW",
     },
   },
@@ -165,9 +165,9 @@ service.expectFunction(
 service.expectFunction(
   "LOWER function",
   {
-    function: Functions.LOWER,
+    function: Function.LOWER,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "TMW",
     },
   },
@@ -178,9 +178,9 @@ service.expectFunction(
 service.expectFunction(
   "UPPER function",
   {
-    function: Functions.UPPER,
+    function: Function.UPPER,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "TMW",
     },
   },
@@ -191,13 +191,13 @@ service.expectFunction(
 service.expectFunction(
   "DIFFERENCE function",
   {
-    function: Functions.DIFFERENCE,
+    function: Function.DIFFERENCE,
     origin: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "irumyuui",
     },
     target: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "iruburu"
     }
   },
@@ -208,13 +208,13 @@ service.expectFunction(
 service.expectFunction(
   "FORMAT function",
   {
-    function: Functions.FORMAT,
+    function: Function.FORMAT,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "11/09/1714",
     },
     format: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "d"
     }
   },
@@ -225,17 +225,17 @@ service.expectFunction(
 service.expectFunction(
   "FORMAT function using en-US culture",
   {
-    function: Functions.FORMAT,
+    function: Function.FORMAT,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "11/09/1714",
     },
     format: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "d"
     },
     culture: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "en-US"
     }
   },
@@ -244,62 +244,62 @@ service.expectFunction(
 
 // LEFT SUBSTRING
 service.expectFunction("LEFT SUBSTRING", {
-  function: Functions.LEFT_SUBSTRING,
+  function: Function.LEFT_SUBSTRING,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 'I wanna live to see The golden city',
   },
   length: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 10,
   }
 }, "LEFT('I wanna live to see The golden city', 10)");
 
 // RIGHT SUBSTRING
 service.expectFunction("RIGHT SUBSTRING", {
-  function: Functions.RIGHT_SUBSTRING,
+  function: Function.RIGHT_SUBSTRING,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 'Be safe around portals',
   },
   length: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 5,
   }
 }, "RIGHT('Be safe around portals', 5)");
 
 // LENGTH
 service.expectFunction("RIGHT SUBSTRING", {
-  function: Functions.LENGTH,
+  function: Function.LENGTH,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: "Don't make lemonade",
   },
 }, "LEN('Don''t make lemonade')");
 
 // TRIM
 service.expectFunction("TRIM text", {
-  function: Functions.TRIM,
+  function: Function.TRIM,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: "  This is what happens  ",
   },
 }, "TRIM('  This is what happens  ')");
 
 // TRIM LEFT
 service.expectFunction("TRIM LEFT text", {
-  function: Functions.TRIM_LEFT,
+  function: Function.TRIM_LEFT,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: "  This is what happens",
   },
 }, "LTRIM('  This is what happens')");
 
 // TRIM RIGHT
 service.expectFunction("TRIM RIGHT text", {
-  function: Functions.TRIM_RIGHT,
+  function: Function.TRIM_RIGHT,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: "This is what happens  ",
   },
 }, "RTRIM('This is what happens  ')");
@@ -308,104 +308,104 @@ service.expectFunction("TRIM RIGHT text", {
 
 // ABS
 service.expectFunction("Math - ABS", {
-  function: Functions.ABS,
+  function: Function.ABS,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: -16,
   },
 }, "ABS(-16)");
 
 // CEIL
 service.expectFunction("Math - CEIL", {
-  function: Functions.CEIL,
+  function: Function.CEIL,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 12.15,
   },
 }, "CEILING(12.15)");
 
 // COS
 service.expectFunction("Math - ABS", {
-  function: Functions.COS,
+  function: Function.COS,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 5,
   },
 }, "COS(5)");
 
 // EXP
 service.expectFunction("Math - EXP", {
-  function: Functions.EXP,
+  function: Function.EXP,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 10,
   },
 }, "EXP(10)");
 
 // FLOOR
 service.expectFunction("Math - FLOOR", {
-  function: Functions.FLOOR,
+  function: Function.FLOOR,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 9.99,
   },
 }, "FLOOR(9.99)");
 
 // LOG
 service.expectFunction("Math - LOG", {
-  function: Functions.LOG,
+  function: Function.LOG,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 22,
   },
 }, "LOG(22)");
 
 // PI
 service.expectFunction("Math - PI", {
-  function: Functions.PI,
+  function: Function.PI,
 }, "PI()");
 
 // POWER
 service.expectFunction("Math - ABS", {
-  function: Functions.POWER,
+  function: Function.POWER,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 5,
   },
 }, "POWER(5)");
 
 // ROUND
 service.expectFunction("Math - ROUND", {
-  function: Functions.ROUND,
+  function: Function.ROUND,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: -16,
   },
 }, "ROUND(-16)");
 
 // SIN
 service.expectFunction("Math - SIN", {
-  function: Functions.SIN,
+  function: Function.SIN,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 8,
   },
 }, "SIN(8)");
 
 // SQUARE ROOT
 service.expectFunction("Math - SQUARE ROOT", {
-  function: Functions.SQRT,
+  function: Function.SQRT,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 16,
   },
 }, "SQRT(16)");
 
 // TANGENT
 service.expectFunction("Math - TANGENT", {
-  function: Functions.TAN,
+  function: Function.TAN,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: 55,
   },
 }, "TAN(55)");
@@ -413,54 +413,54 @@ service.expectFunction("Math - TANGENT", {
 // TIME
 
 service.expectFunction("Time - CURRENT_TIME", {
-  function: Functions.CURRENT_TIME,
+  function: Function.CURRENT_TIME,
 }, "CURRENT_TIMESTAMP");
 
 service.expectFunction("Time - DATE DIFFERENCE", {
-  function: Functions.DATE_DIFFERENCE,
+  function: Function.DATE_DIFFERENCE,
   origin: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: '2017/08/25',
   },
   target: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: '2011/08/25',
   },
   interval: TimeInterval.YEAR,
 }, "DATEDIFF(year, '2017/08/25', '2011/08/25')");
 
 service.expectFunction("Time - DATE DIFFERENCE with default", {
-  function: Functions.DATE_DIFFERENCE,
+  function: Function.DATE_DIFFERENCE,
   origin: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: '2017/08/25',
   },
   target: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: '2011/08/25',
   },
 }, "DATEDIFF(day, '2017/08/25', '2011/08/25')");
 
 service.expectFunction("Time - DAY", {
-  function: Functions.DAY,
+  function: Function.DAY,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: '2017/08/25',
   },
 }, "DAY('2017/08/25')");
 
 service.expectFunction("Math - MONTH", {
-  function: Functions.MONTH,
+  function: Function.MONTH,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: '2017/08/25',
   },
 }, "MONTH('2017/08/25')");
 
 service.expectFunction("Math - YEAR", {
-  function: Functions.YEAR,
+  function: Function.YEAR,
   value: {
-    valueType: ValueTypes.RAW_VALUE,
+    valueType: ValueType.RAW_VALUE,
     value: '2017/08/25',
   },
 }, "YEAR('2017/08/25')");

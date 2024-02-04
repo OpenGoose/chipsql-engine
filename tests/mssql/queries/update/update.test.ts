@@ -1,21 +1,21 @@
 import { ConditionType } from "../../../../src/chips-ql/types/conditions/condition-type.enum";
-import { ConditionOperands } from "../../../../src/chips-ql/types/conditions/operands/condition-operands.enum";
-import { JoinerOperands } from "../../../../src/chips-ql/types/conditions/operands/joiner-operands.enum";
-import { JoinIncludes } from "../../../../src/chips-ql/types/joins/join-includes.enum";
-import { JoinTypes } from "../../../../src/chips-ql/types/joins/join-types.enum";
+import { ConditionOperand } from "../../../../src/chips-ql/types/conditions/operands/condition-operands.enum";
+import { JoinerOperand } from "../../../../src/chips-ql/types/conditions/operands/joiner-operands.enum";
+import { JoinInclude } from "../../../../src/chips-ql/types/joins/join-includes.enum";
+import { JoinType } from "../../../../src/chips-ql/types/joins/join-types.enum";
 import { LimitMode } from "../../../../src/chips-ql/types/limit/limit-mode.enum";
-import { QueryTypes } from "../../../../src/chips-ql/types/queries/query.type";
-import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
+import { QueryType } from "../../../../src/chips-ql/types/queries/query.type";
+import { ValueType } from "../../../../src/chips-ql/types/values/value.type";
 import { ExecutionWillFailException } from "../../../../src/errors/warnings/execution-will-fail.exception";
-import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
+import { SqlLanguage } from "../../../../src/sql/sql-languages.enum";
 import { TestService } from "../../../test.service";
 
-const service = new TestService(SqlLanguages.MSSQL);
+const service = new TestService(SqlLanguage.MSSQL);
 
 service.expectQuery<{ zip_code: string }>(
   "Basic UPDATE statement",
   {
-    queryType: QueryTypes.UPDATE,
+    queryType: QueryType.UPDATE,
     from: {
       name: "customers",
       schema: "sales",
@@ -23,7 +23,7 @@ service.expectQuery<{ zip_code: string }>(
     values: [
       {
         value: {
-          valueType: ValueTypes.RAW_VALUE,
+          valueType: ValueType.RAW_VALUE,
           value: "1234",
         },
         field: "zip_code",
@@ -36,7 +36,7 @@ service.expectQuery<{ zip_code: string }>(
 service.expectQuery<{ zip_code: string }>(
   "Basic UPDATE statement in compact mode",
   {
-    queryType: QueryTypes.UPDATE,
+    queryType: QueryType.UPDATE,
     from: {
       name: "customers",
       schema: "sales",
@@ -44,7 +44,7 @@ service.expectQuery<{ zip_code: string }>(
     values: [
       {
         value: {
-          valueType: ValueTypes.RAW_VALUE,
+          valueType: ValueType.RAW_VALUE,
           value: "1234",
         },
         field: "zip_code",
@@ -60,7 +60,7 @@ service.expectQuery<{ zip_code: string }>(
 service.expectQuery<{ zip_code: string }>(
   "Basic UPDATE statement with WHERE and alias",
   {
-    queryType: QueryTypes.UPDATE,
+    queryType: QueryType.UPDATE,
     from: {
       name: "customers",
       schema: "sales",
@@ -68,31 +68,31 @@ service.expectQuery<{ zip_code: string }>(
     },
     where: {
       conditionType: ConditionType.JOINER,
-      joinerOperand: JoinerOperands.AND,
+      joinerOperand: JoinerOperand.AND,
       conditions: [
         {
           conditionType: ConditionType.CONDITION,
-          conditionOperand: ConditionOperands.EQUALS_OR_GREATER_THAN,
+          conditionOperand: ConditionOperand.EQUALS_OR_GREATER_THAN,
           sourceValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "age",
             tableAlias: "c",
           },
           targetValue: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: 18,
           },
         },
         {
           conditionType: ConditionType.CONDITION,
-          conditionOperand: ConditionOperands.LIKE,
+          conditionOperand: ConditionOperand.LIKE,
           sourceValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "name",
             tableAlias: "c",
           },
           targetValue: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Tanjiro",
           },
         },
@@ -101,7 +101,7 @@ service.expectQuery<{ zip_code: string }>(
     values: [
       {
         value: {
-          valueType: ValueTypes.RAW_VALUE,
+          valueType: ValueType.RAW_VALUE,
           value: "1234",
         },
         field: "zip_code",
@@ -114,7 +114,7 @@ service.expectQuery<{ zip_code: string }>(
 service.expectQuery<{ zip_code: string }>(
   "UPDATE statement with TOP 10",
   {
-    queryType: QueryTypes.UPDATE,
+    queryType: QueryType.UPDATE,
     from: {
       name: "customers",
       schema: "sales",
@@ -122,7 +122,7 @@ service.expectQuery<{ zip_code: string }>(
     values: [
       {
         value: {
-          valueType: ValueTypes.RAW_VALUE,
+          valueType: ValueType.RAW_VALUE,
           value: "1234",
         },
         field: "zip_code",
@@ -130,7 +130,7 @@ service.expectQuery<{ zip_code: string }>(
     ],
     limit: {
       value: {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: 10,
       },
     },
@@ -141,7 +141,7 @@ service.expectQuery<{ zip_code: string }>(
 service.expectQuery<{ zip_code: string }>(
   "UPDATE statement with TOP 10 PERCENT",
   {
-    queryType: QueryTypes.UPDATE,
+    queryType: QueryType.UPDATE,
     from: {
       name: "customers",
       schema: "sales",
@@ -149,7 +149,7 @@ service.expectQuery<{ zip_code: string }>(
     values: [
       {
         value: {
-          valueType: ValueTypes.RAW_VALUE,
+          valueType: ValueType.RAW_VALUE,
           value: "1234",
         },
         field: "zip_code",
@@ -157,7 +157,7 @@ service.expectQuery<{ zip_code: string }>(
     ],
     limit: {
       value: {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: 10,
       },
       limitMode: LimitMode.PERCENT,
@@ -169,7 +169,7 @@ service.expectQuery<{ zip_code: string }>(
 service.expectQuery<{ zip_code: string }>(
   "UPDATE statement with JOINS and WHERE",
   {
-    queryType: QueryTypes.UPDATE,
+    queryType: QueryType.UPDATE,
     from: {
       name: "customers",
       schema: "sales",
@@ -177,31 +177,31 @@ service.expectQuery<{ zip_code: string }>(
     },
     where: {
       conditionType: ConditionType.JOINER,
-      joinerOperand: JoinerOperands.AND,
+      joinerOperand: JoinerOperand.AND,
       conditions: [
         {
           conditionType: ConditionType.CONDITION,
-          conditionOperand: ConditionOperands.EQUALS_OR_GREATER_THAN,
+          conditionOperand: ConditionOperand.EQUALS_OR_GREATER_THAN,
           sourceValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "age",
             tableAlias: "c",
           },
           targetValue: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: 18,
           },
         },
         {
           conditionType: ConditionType.CONDITION,
-          conditionOperand: ConditionOperands.LIKE,
+          conditionOperand: ConditionOperand.LIKE,
           sourceValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "name",
             tableAlias: "c",
           },
           targetValue: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Tanjiro",
           },
         },
@@ -209,8 +209,8 @@ service.expectQuery<{ zip_code: string }>(
     },
     joins: [
       {
-        joinType: JoinTypes.TABLE,
-        include: JoinIncludes.INNER,
+        joinType: JoinType.TABLE,
+        include: JoinInclude.INNER,
         table: {
           name: "locations",
           schema: "sales",
@@ -218,14 +218,14 @@ service.expectQuery<{ zip_code: string }>(
         },
         on: {
           conditionType: ConditionType.CONDITION,
-          conditionOperand: ConditionOperands.EQUALS,
+          conditionOperand: ConditionOperand.EQUALS,
           sourceValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "name",
             tableAlias: "l",
           },
           targetValue: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "Baetulo",
           },
         },
@@ -234,7 +234,7 @@ service.expectQuery<{ zip_code: string }>(
     values: [
       {
         value: {
-          valueType: ValueTypes.RAW_VALUE,
+          valueType: ValueType.RAW_VALUE,
           value: "1234",
         },
         field: "zip_code",

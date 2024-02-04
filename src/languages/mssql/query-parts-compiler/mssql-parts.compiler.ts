@@ -26,8 +26,8 @@ import { OrderDirection } from "../../../chips-ql/types/order/order-direction.en
 import { GroupBy } from "../../../chips-ql/types/grouping/group-by.type";
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
 import { DataType } from "../../../chips-ql/types/datatypes/datatypes.enum";
-import { mssqlFunctions } from "../functions/mssql-functions";
-import { mssqlDataTypes } from "../datatypes/mssql-datatypes";
+import { mssqlFunction } from "../functions/mssql-functions";
+import { mssqlDataType } from "../datatypes/mssql-datatypes";
 import { Limit } from "../../../chips-ql/types/limit/limit.type";
 import { LimitMode } from "../../../chips-ql/types/limit/limit-mode.enum";
 import { LimitOptions } from "../../../chips-ql/types/limit/limit-options.type";
@@ -243,7 +243,7 @@ export class MssqlPartsCompiler<T extends Object>
     }) + `${this.avoidableSpace}=${this.avoidableSpace}` + this.value(value.value);
   }));
 
-  dataType = (value: DataType): string => mssqlDataTypes(value, this);
+  dataType = (value: DataType): string => mssqlDataType(value, this);
 
   // Utils
   escape = (value: AllowedValues) => {
@@ -270,8 +270,8 @@ export class MssqlPartsCompiler<T extends Object>
   };
   generateField = (field: string) => `[${field}]`;
 
-  // Functions
+  // Function
   func = (funcValue: FunctionValue<T>) => {
-    return mssqlFunctions(funcValue, this);
+    return mssqlFunction(funcValue, this);
   };
 }

@@ -1,27 +1,27 @@
 import { ConditionType } from "../../../../src/chips-ql/types/conditions/condition-type.enum";
-import { ConditionOperands } from "../../../../src/chips-ql/types/conditions/operands/condition-operands.enum";
-import { JoinerOperands } from "../../../../src/chips-ql/types/conditions/operands/joiner-operands.enum";
-import { DataTypes } from "../../../../src/chips-ql/types/datatypes/datatypes.enum";
-import { Functions } from "../../../../src/chips-ql/types/functions/functions.enum";
-import { JoinDirections } from "../../../../src/chips-ql/types/joins/join-directions.enum";
-import { JoinIncludes } from "../../../../src/chips-ql/types/joins/join-includes.enum";
-import { JoinTypes } from "../../../../src/chips-ql/types/joins/join-types.enum";
+import { ConditionOperand } from "../../../../src/chips-ql/types/conditions/operands/condition-operands.enum";
+import { JoinerOperand } from "../../../../src/chips-ql/types/conditions/operands/joiner-operands.enum";
+import { DataType } from "../../../../src/chips-ql/types/datatypes/datatypes.enum";
+import { Function } from "../../../../src/chips-ql/types/functions/functions.enum";
+import { JoinDirection } from "../../../../src/chips-ql/types/joins/join-directions.enum";
+import { JoinInclude } from "../../../../src/chips-ql/types/joins/join-includes.enum";
+import { JoinType } from "../../../../src/chips-ql/types/joins/join-types.enum";
 import { LimitMode } from "../../../../src/chips-ql/types/limit/limit-mode.enum";
 import { OrderDirection } from "../../../../src/chips-ql/types/order/order-direction.enum";
-import { QueryTypes } from "../../../../src/chips-ql/types/queries/query.type";
-import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
-import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
+import { QueryType } from "../../../../src/chips-ql/types/queries/query.type";
+import { ValueType } from "../../../../src/chips-ql/types/values/value.type";
+import { SqlLanguage } from "../../../../src/sql/sql-languages.enum";
 import { TestService } from "../../../test.service";
 
-const service = new TestService(SqlLanguages.MSSQL);
+const service = new TestService(SqlLanguage.MSSQL);
 
 service.expectQuery(
   "Generate SELECT ALL",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.ALL_COLUMNS,
+        valueType: ValueType.ALL_COLUMNS,
       },
     ],
     from: [
@@ -36,15 +36,15 @@ service.expectQuery(
 service.expectQuery(
   "SELECT multiple fields",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "first_name",
         alias: "name",
       },
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: "TheMineWay",
         alias: "admin",
       },
@@ -61,10 +61,10 @@ service.expectQuery(
 service.expectQuery(
   "SELECT using DISTINCT",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "first_name",
         alias: "name",
         distinct: true,
@@ -82,15 +82,15 @@ service.expectQuery(
 service.expectQuery(
   "SELECT multiple fields with aliases",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "customer_id",
         tableAlias: "c",
       },
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "order_id",
         tableAlias: "o",
       },
@@ -113,13 +113,13 @@ service.expectQuery(
 service.expectQuery(
   "SELECT using COUNT function",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.FUNCTION,
-        function: Functions.COUNT,
+        valueType: ValueType.FUNCTION,
+        function: Function.COUNT,
         value: {
-          valueType: ValueTypes.COLUMN,
+          valueType: ValueType.COLUMN,
           field: "store_id",
           tableAlias: "s",
         },
@@ -140,15 +140,15 @@ service.expectQuery(
 service.expectQuery(
   "SELECT using custom function",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.FUNCTION,
-        function: Functions.CUSTOM,
+        valueType: ValueType.FUNCTION,
+        function: Function.CUSTOM,
         name: "COUNT",
         parameters: [
           {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "store_id",
             tableAlias: "s",
           },
@@ -170,22 +170,22 @@ service.expectQuery(
 service.expectQuery(
   "SELECT using subselect",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "first_name",
         alias: "name",
         tableAlias: "c",
       },
       {
-        valueType: ValueTypes.SUBSELECT,
+        valueType: ValueType.SUBSELECT,
         fields: [
           {
-            valueType: ValueTypes.FUNCTION,
-            function: Functions.COUNT,
+            valueType: ValueType.FUNCTION,
+            function: Function.COUNT,
             value: {
-              valueType: ValueTypes.COLUMN,
+              valueType: ValueType.COLUMN,
               field: "order_id",
               tableAlias: "o",
             },
@@ -215,10 +215,10 @@ service.expectQuery(
 service.expectQuery(
   "SELECT with simple WHERE with escaping character",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.ALL_COLUMNS,
+        valueType: ValueType.ALL_COLUMNS,
         tableAlias: "c",
       },
     ],
@@ -231,48 +231,48 @@ service.expectQuery(
     ],
     where: {
       conditionType: ConditionType.JOINER,
-      joinerOperand: JoinerOperands.OR,
+      joinerOperand: JoinerOperand.OR,
       conditions: [
         {
           conditionType: ConditionType.CONDITION,
-          conditionOperand: ConditionOperands.LIKE,
+          conditionOperand: ConditionOperand.LIKE,
           sourceValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             tableAlias: "c",
             field: "email",
           },
           targetValue: {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "%test@themineway.cat%",
           },
         },
         {
           conditionType: ConditionType.JOINER,
-          joinerOperand: JoinerOperands.AND,
+          joinerOperand: JoinerOperand.AND,
           conditions: [
             {
               conditionType: ConditionType.CONDITION,
-              conditionOperand: ConditionOperands.EQUALS,
+              conditionOperand: ConditionOperand.EQUALS,
               sourceValue: {
-                valueType: ValueTypes.COLUMN,
+                valueType: ValueType.COLUMN,
                 field: "city",
                 tableAlias: "c",
               },
               targetValue: {
-                valueType: ValueTypes.RAW_VALUE,
+                valueType: ValueType.RAW_VALUE,
                 value: "ol' Baetulo",
               },
             },
             {
               conditionType: ConditionType.CONDITION,
-              conditionOperand: ConditionOperands.NOT_EQUALS,
+              conditionOperand: ConditionOperand.NOT_EQUALS,
               sourceValue: {
-                valueType: ValueTypes.COLUMN,
+                valueType: ValueType.COLUMN,
                 tableAlias: "c",
                 field: "phone",
               },
               targetValue: {
-                valueType: ValueTypes.RAW_VALUE,
+                valueType: ValueType.RAW_VALUE,
                 value: "555 xx xx xx",
               },
             },
@@ -287,10 +287,10 @@ service.expectQuery(
 service.expectQuery(
   "SELECT with INNER JOIN and IN statement",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.ALL_COLUMNS,
+        valueType: ValueType.ALL_COLUMNS,
       },
     ],
     from: [
@@ -302,8 +302,8 @@ service.expectQuery(
     ],
     joins: [
       {
-        joinType: JoinTypes.TABLE,
-        include: JoinIncludes.INNER,
+        joinType: JoinType.TABLE,
+        include: JoinInclude.INNER,
         table: {
           name: "orders",
           schema: "sales",
@@ -311,14 +311,14 @@ service.expectQuery(
         },
         on: {
           conditionType: ConditionType.CONDITION,
-          conditionOperand: ConditionOperands.EQUALS,
+          conditionOperand: ConditionOperand.EQUALS,
           sourceValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "customer_id",
             tableAlias: "o",
           },
           targetValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "customer_id",
             tableAlias: "c",
           },
@@ -327,21 +327,21 @@ service.expectQuery(
     ],
     where: {
       conditionType: ConditionType.CONDITION,
-      conditionOperand: ConditionOperands.IN,
+      conditionOperand: ConditionOperand.IN,
       sourceValue: {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "store_id",
         tableAlias: "o",
       },
       targetValue: {
-        valueType: ValueTypes.SET,
+        valueType: ValueType.SET,
         values: [
           {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: 17,
           },
           {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: 14,
           },
         ],
@@ -354,10 +354,10 @@ service.expectQuery(
 service.expectQuery(
   "SELECT using a WHERE statement and a SUBSELECT inside a SET using a TOP clause",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.ALL_COLUMNS,
+        valueType: ValueType.ALL_COLUMNS,
       },
     ],
     from: [
@@ -369,24 +369,24 @@ service.expectQuery(
     ],
     where: {
       conditionType: ConditionType.CONDITION,
-      conditionOperand: ConditionOperands.IN,
+      conditionOperand: ConditionOperand.IN,
       sourceValue: {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "zip_code",
         tableAlias: "c",
       },
       targetValue: {
-        valueType: ValueTypes.SET,
+        valueType: ValueType.SET,
         values: [
           {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "xxxxx",
           },
           {
-            valueType: ValueTypes.SUBSELECT,
+            valueType: ValueType.SUBSELECT,
             fields: [
               {
-                valueType: ValueTypes.COLUMN,
+                valueType: ValueType.COLUMN,
                 field: "zip_code",
                 tableAlias: "c2",
               },
@@ -400,20 +400,20 @@ service.expectQuery(
             ],
             where: {
               conditionType: ConditionType.CONDITION,
-              conditionOperand: ConditionOperands.EQUALS,
+              conditionOperand: ConditionOperand.EQUALS,
               sourceValue: {
-                valueType: ValueTypes.COLUMN,
+                valueType: ValueType.COLUMN,
                 field: "email",
                 tableAlias: "c2",
               },
               targetValue: {
-                valueType: ValueTypes.RAW_VALUE,
+                valueType: ValueType.RAW_VALUE,
                 value: "x@themineway.cat",
               },
             },
             limit: {
               value: {
-                valueType: ValueTypes.RAW_VALUE,
+                valueType: ValueType.RAW_VALUE,
                 value: 1,
               }
             },
@@ -428,10 +428,10 @@ service.expectQuery(
 service.expectQuery(
   "SELECT using a WHERE statement and a SUBSELECT inside a SET using a TOP clause in compact mode",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.ALL_COLUMNS,
+        valueType: ValueType.ALL_COLUMNS,
       },
     ],
     from: [
@@ -443,24 +443,24 @@ service.expectQuery(
     ],
     where: {
       conditionType: ConditionType.CONDITION,
-      conditionOperand: ConditionOperands.IN,
+      conditionOperand: ConditionOperand.IN,
       sourceValue: {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "zip_code",
         tableAlias: "c",
       },
       targetValue: {
-        valueType: ValueTypes.SET,
+        valueType: ValueType.SET,
         values: [
           {
-            valueType: ValueTypes.RAW_VALUE,
+            valueType: ValueType.RAW_VALUE,
             value: "xxxxx",
           },
           {
-            valueType: ValueTypes.SUBSELECT,
+            valueType: ValueType.SUBSELECT,
             fields: [
               {
-                valueType: ValueTypes.COLUMN,
+                valueType: ValueType.COLUMN,
                 field: "zip_code",
                 tableAlias: "c2",
               },
@@ -474,20 +474,20 @@ service.expectQuery(
             ],
             where: {
               conditionType: ConditionType.CONDITION,
-              conditionOperand: ConditionOperands.EQUALS,
+              conditionOperand: ConditionOperand.EQUALS,
               sourceValue: {
-                valueType: ValueTypes.COLUMN,
+                valueType: ValueType.COLUMN,
                 field: "email",
                 tableAlias: "c2",
               },
               targetValue: {
-                valueType: ValueTypes.RAW_VALUE,
+                valueType: ValueType.RAW_VALUE,
                 value: "x@themineway.cat",
               },
             },
             limit: {
               value: {
-                valueType: ValueTypes.RAW_VALUE,
+                valueType: ValueType.RAW_VALUE,
               value: 1,
               }
             },
@@ -505,10 +505,10 @@ service.expectQuery(
 service.expectQuery(
   "SELECT using ORDER BY, LIMIT and OFFSET",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.ALL_COLUMNS,
+        valueType: ValueType.ALL_COLUMNS,
       },
     ],
     from: [
@@ -521,19 +521,19 @@ service.expectQuery(
       {
         direction: OrderDirection.DESC,
         field: {
-          valueType: ValueTypes.COLUMN,
+          valueType: ValueType.COLUMN,
           field: "zip_code",
         },
       },
     ],
     limit: {
       value: {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: 25,
       }
     },
     offset: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: 10,
     },
   },
@@ -543,18 +543,18 @@ service.expectQuery(
 service.expectQuery(
   "SELECT with GROUP BY and COUNT",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "city",
         tableAlias: "c",
       },
       {
-        valueType: ValueTypes.FUNCTION,
-        function: Functions.COUNT,
+        valueType: ValueType.FUNCTION,
+        function: Function.COUNT,
         value: {
-          valueType: ValueTypes.COLUMN,
+          valueType: ValueType.COLUMN,
           field: "customer_id",
           tableAlias: "c",
         },
@@ -570,7 +570,7 @@ service.expectQuery(
     ],
     groupBy: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "city",
         tableAlias: "c",
       },
@@ -582,10 +582,10 @@ service.expectQuery(
 service.expectQuery(
   "SELECT with FULL OUTER JOIN",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.ALL_COLUMNS,
+        valueType: ValueType.ALL_COLUMNS,
       },
     ],
     from: [
@@ -597,24 +597,24 @@ service.expectQuery(
     ],
     joins: [
       {
-        joinType: JoinTypes.TABLE,
+        joinType: JoinType.TABLE,
         table: {
           name: "orders",
           schema: "sales",
           alias: "o",
         },
-        direction: JoinDirections.FULL,
-        include: JoinIncludes.OUTER,
+        direction: JoinDirection.FULL,
+        include: JoinInclude.OUTER,
         on: {
           conditionType: ConditionType.CONDITION,
-          conditionOperand: ConditionOperands.EQUALS,
+          conditionOperand: ConditionOperand.EQUALS,
           sourceValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "customer_id",
             tableAlias: "o",
           },
           targetValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "customer_id",
             tableAlias: "c",
           },
@@ -628,10 +628,10 @@ service.expectQuery(
 service.expectQuery(
   "Generate SELECT ALL with SUBSELECT LEFT JOIN",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.ALL_COLUMNS,
+        valueType: ValueType.ALL_COLUMNS,
       },
     ],
     from: [
@@ -643,12 +643,12 @@ service.expectQuery(
     ],
     joins: [
       {
-        joinType: JoinTypes.SELECT,
-        direction: JoinDirections.LEFT,
+        joinType: JoinType.SELECT,
+        direction: JoinDirection.LEFT,
         select: {
           fields: [
             {
-              valueType: ValueTypes.COLUMN,
+              valueType: ValueType.COLUMN,
               field: "customer_id",
               tableAlias: "o",
             },
@@ -663,14 +663,14 @@ service.expectQuery(
         },
         on: {
           conditionType: ConditionType.CONDITION,
-          conditionOperand: ConditionOperands.EQUALS,
+          conditionOperand: ConditionOperand.EQUALS,
           sourceValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "customer_id",
             tableAlias: "o",
           },
           targetValue: {
-            valueType: ValueTypes.COLUMN,
+            valueType: ValueType.COLUMN,
             field: "customer_id",
             tableAlias: "c",
           },
@@ -685,18 +685,18 @@ service.expectQuery(
 service.expectQuery(
   "SELECT with GROUP BY and HAVING",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "age",
         tableAlias: "c",
       },
       {
-        valueType: ValueTypes.FUNCTION,
-        function: Functions.COUNT,
+        valueType: ValueType.FUNCTION,
+        function: Function.COUNT,
         value: {
-          valueType: ValueTypes.COLUMN,
+          valueType: ValueType.COLUMN,
           field: "customer_id",
           tableAlias: "c",
         },
@@ -712,24 +712,24 @@ service.expectQuery(
     ],
     groupBy: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "age",
         tableAlias: "c",
       },
     ],
     having: {
       conditionType: ConditionType.CONDITION,
-      conditionOperand: ConditionOperands.EQUALS,
+      conditionOperand: ConditionOperand.EQUALS,
       sourceValue: {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "age",
         tableAlias: "c",
       },
       targetValue: {
-        valueType: ValueTypes.FUNCTION,
-        function: Functions.MAX,
+        valueType: ValueType.FUNCTION,
+        function: Function.MAX,
         value: {
-          valueType: ValueTypes.COLUMN,
+          valueType: ValueType.COLUMN,
           field: "age",
           tableAlias: "c",
         },
@@ -742,23 +742,23 @@ service.expectQuery(
 service.expectQuery(
   "SELECT with multiple GROUP BY",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "age",
         tableAlias: "c",
       },
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "state",
         tableAlias: "c",
       },
       {
-        valueType: ValueTypes.FUNCTION,
-        function: Functions.COUNT,
+        valueType: ValueType.FUNCTION,
+        function: Function.COUNT,
         value: {
-          valueType: ValueTypes.COLUMN,
+          valueType: ValueType.COLUMN,
           field: "customer_id",
           tableAlias: "c",
         },
@@ -774,12 +774,12 @@ service.expectQuery(
     ],
     groupBy: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "age",
         tableAlias: "c",
       },
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "state",
         tableAlias: "c",
       },
@@ -791,23 +791,23 @@ service.expectQuery(
 service.expectQuery(
   "SELECT with multiple GROUP BY in compact mode and without semicolon",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "age",
         tableAlias: "c",
       },
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "state",
         tableAlias: "c",
       },
       {
-        valueType: ValueTypes.FUNCTION,
-        function: Functions.COUNT,
+        valueType: ValueType.FUNCTION,
+        function: Function.COUNT,
         value: {
-          valueType: ValueTypes.COLUMN,
+          valueType: ValueType.COLUMN,
           field: "customer_id",
           tableAlias: "c",
         },
@@ -823,12 +823,12 @@ service.expectQuery(
     ],
     groupBy: [
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "age",
         tableAlias: "c",
       },
       {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "state",
         tableAlias: "c",
       },
@@ -842,10 +842,10 @@ service.expectQuery(
 );
 
 service.expectQuery('SELECT with PERCENT in TOP statement', {
-  queryType: QueryTypes.SELECT,
+  queryType: QueryType.SELECT,
   fields: [
     {
-      valueType: ValueTypes.ALL_COLUMNS,
+      valueType: ValueType.ALL_COLUMNS,
     }
   ],
   from: [
@@ -857,7 +857,7 @@ service.expectQuery('SELECT with PERCENT in TOP statement', {
   ],
   limit: {
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: 50
     },
     limitMode: LimitMode.PERCENT,
@@ -867,10 +867,10 @@ service.expectQuery('SELECT with PERCENT in TOP statement', {
 service.expectQuery(
   "Generate SELECT ALL into another table",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.ALL_COLUMNS,
+        valueType: ValueType.ALL_COLUMNS,
       },
     ],
     from: [
@@ -889,10 +889,10 @@ service.expectQuery(
 service.expectQuery(
   "Generate SELECT ALL with multiple escaping",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.ALL_COLUMNS,
+        valueType: ValueType.ALL_COLUMNS,
       },
     ],
     from: [
@@ -903,13 +903,13 @@ service.expectQuery(
     ],
     where: {
       conditionType: ConditionType.CONDITION,
-      conditionOperand: ConditionOperands.EQUALS,
+      conditionOperand: ConditionOperand.EQUALS,
       sourceValue: {
-        valueType: ValueTypes.COLUMN,
+        valueType: ValueType.COLUMN,
         field: "first_name",
       },
       targetValue: {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: "Ol' L'Àvia",
       },
     },
@@ -920,36 +920,36 @@ service.expectQuery(
 service.expectQuery(
   "Generate SELECT with ALL datatypes",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: "HI",
         alias: "name",
       },
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: true,
         alias: "'SQL' injection free?",
       },
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: false,
         alias: "Does ChipsQL require payment?",
       },
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: {
-          type: DataTypes.DATE,
+          type: DataType.DATE,
           includeTime: true,
           date: new Date("2023-09-03 22:06:00"),
         },
         alias: "Commit datetime",
       },
       {
-        valueType: ValueTypes.RAW_VALUE,
+        valueType: ValueType.RAW_VALUE,
         value: {
-          type: DataTypes.DATE,
+          type: DataType.DATE,
           date: new Date("2023-09-03"),
         },
         alias: "Commit date",
@@ -968,43 +968,43 @@ service.expectQuery(
 service.expectQuery(
   "Generate SELECT age as VARCHAR(127), age as VARCHAR(MAX), AND birthday as DATE",
   {
-    queryType: QueryTypes.SELECT,
+    queryType: QueryType.SELECT,
     fields: [
       {
-        valueType: ValueTypes.FUNCTION,
-        function: Functions.CAST,
+        valueType: ValueType.FUNCTION,
+        function: Function.CAST,
         value: {
-          valueType: ValueTypes.COLUMN,
+          valueType: ValueType.COLUMN,
           field: "age",
         },
         as: {
-          dataType: DataTypes.VARCHAR,
+          dataType: DataType.VARCHAR,
           length: 127,
         },
         alias: "age",
       },
       {
-        valueType: ValueTypes.FUNCTION,
-        function: Functions.CAST,
+        valueType: ValueType.FUNCTION,
+        function: Function.CAST,
         value: {
-          valueType: ValueTypes.COLUMN,
+          valueType: ValueType.COLUMN,
           field: "age",
         },
         as: {
-          dataType: DataTypes.VARCHAR,
+          dataType: DataType.VARCHAR,
           length: Infinity,
         },
         alias: "age",
       },
       {
-        valueType: ValueTypes.FUNCTION,
-        function: Functions.CAST,
+        valueType: ValueType.FUNCTION,
+        function: Function.CAST,
         value: {
-          valueType: ValueTypes.COLUMN,
+          valueType: ValueType.COLUMN,
           field: "birthday",
         },
         as: {
-          dataType: DataTypes.DATE,
+          dataType: DataType.DATE,
         },
         alias: "birthday",
       },

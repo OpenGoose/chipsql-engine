@@ -2,13 +2,13 @@ import { Function } from "../../../chips-ql/types/functions/functions.enum";
 import { FunctionValue } from "../../../chips-ql/types/values/value.type";
 import { MssqlPartsCompiler } from "../query-parts-compiler/mssql-parts.compiler";
 import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
-import { MssqlFunctionsCompiler } from "./mssql-functions.compiler";
+import { MssqlFunctionCompiler } from "./mssql-functions.compiler";
 
-export const mssqlFunctions = <T extends Object>(
+export const mssqlFunction = <T extends Object>(
   value: FunctionValue<T>,
   partsCompiler: MssqlPartsCompiler<T>
 ) => {
-  const funcCompiler: MssqlFunctionsCompiler<T> = new MssqlFunctionsCompiler<T>(
+  const funcCompiler: MssqlFunctionCompiler<T> = new MssqlFunctionCompiler<T>(
     partsCompiler
   );
   switch (value.function) {

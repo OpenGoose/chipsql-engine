@@ -1,22 +1,22 @@
-import { DataTypes } from "../../../../src/chips-ql/types/datatypes/datatypes.enum";
-import { Functions } from "../../../../src/chips-ql/types/functions/functions.enum";
-import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
-import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
+import { DataType } from "../../../../src/chips-ql/types/datatypes/datatypes.enum";
+import { Function } from "../../../../src/chips-ql/types/functions/functions.enum";
+import { ValueType } from "../../../../src/chips-ql/types/values/value.type";
+import { SqlLanguage } from "../../../../src/sql/sql-languages.enum";
 import { TestService } from "../../../test.service";
 
-const service = new TestService(SqlLanguages.MSSQL);
+const service = new TestService(SqlLanguage.MSSQL);
 
 // CAST
 service.expectFunction(
   "CAST to STRING",
   {
-    function: Functions.CAST,
+    function: Function.CAST,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "Hi",
     },
     as: {
-      dataType: DataTypes.VARCHAR,
+      dataType: DataType.VARCHAR,
     },
   },
   "CAST('Hi' AS VARCHAR)"
@@ -25,13 +25,13 @@ service.expectFunction(
 service.expectFunction(
   "CAST to STRING with length",
   {
-    function: Functions.CAST,
+    function: Function.CAST,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "Hi",
     },
     as: {
-      dataType: DataTypes.VARCHAR,
+      dataType: DataType.VARCHAR,
       length: 32,
     },
   },
@@ -41,13 +41,13 @@ service.expectFunction(
 service.expectFunction(
   "CAST to INT",
   {
-    function: Functions.CAST,
+    function: Function.CAST,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: 25.65,
     },
     as: {
-      dataType: DataTypes.INT,
+      dataType: DataType.INT,
     },
   },
   "CAST(25.65 AS INT)"
@@ -57,13 +57,13 @@ service.expectFunction(
 service.expectFunction(
   "CONVERT to INT",
   {
-    function: Functions.CONVERT,
+    function: Function.CONVERT,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: 25.65,
     },
     as: {
-      dataType: DataTypes.INT,
+      dataType: DataType.INT,
     },
   },
   "CONVERT(INT, 25.65)"
@@ -72,16 +72,16 @@ service.expectFunction(
 service.expectFunction(
   "CONVERT with style",
   {
-    function: Functions.CONVERT,
+    function: Function.CONVERT,
     value: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: "2017-08-25",
     },
     as: {
-      dataType: DataTypes.VARCHAR,
+      dataType: DataType.VARCHAR,
     },
     style: {
-      valueType: ValueTypes.RAW_VALUE,
+      valueType: ValueType.RAW_VALUE,
       value: 101,
     },
   },
