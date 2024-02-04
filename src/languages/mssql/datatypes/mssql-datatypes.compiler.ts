@@ -1,6 +1,8 @@
 import { BooleanDataType } from "../../../chips-ql/types/datatypes/datatypes/bit/boolean.datatype";
 import { CustomDataType } from "../../../chips-ql/types/datatypes/datatypes/custom/custom.datatype";
 import { DateDataType } from "../../../chips-ql/types/datatypes/datatypes/date/date.datatype";
+import { BigintDataType } from "../../../chips-ql/types/datatypes/datatypes/numeric/bigint.datatype";
+import { ByteDataType } from "../../../chips-ql/types/datatypes/datatypes/numeric/byte.datatype";
 import { DecimalDataType } from "../../../chips-ql/types/datatypes/datatypes/numeric/decimal.datatype";
 import { IntDataType } from "../../../chips-ql/types/datatypes/datatypes/numeric/int.datatype";
 import { VarcharDataType } from "../../../chips-ql/types/datatypes/datatypes/text/varchar.datatype";
@@ -21,8 +23,10 @@ export class MssqlDataTypeCompiler<
     ]);
 
   // Number
-  int = (datatype: IntDataType) => this.buildDataType("INT");
-  decimal = (datatype: DecimalDataType) => this.buildDataType("DECIMAL");
+  byte = (datatype: ByteDataType) => this.buildDataType("TINYINT", [datatype.length?.toString()]);
+  int = (datatype: IntDataType) => this.buildDataType("INT", [datatype.length?.toString()]);
+  decimal = (datatype: DecimalDataType) => this.buildDataType("DECIMAL", [datatype.length?.toString()]);
+  bigint = (datatype: BigintDataType) => this.buildDataType("BIGINT", [datatype.length?.toString()]);
 
   // Bit
   boolean = (datatype: BooleanDataType) => this.buildDataType("BIT");

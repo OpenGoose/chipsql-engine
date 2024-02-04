@@ -16,10 +16,14 @@ export const mssqlDataType = <T extends Object>(
       return compiler.varchar(value);
 
     // Number
+    case DataType.BYTE:
+      return compiler.byte(value);
     case DataType.INT:
       return compiler.int(value);
     case DataType.DECIMAL:
       return compiler.decimal(value);
+    case DataType.BIGINT:
+      return compiler.bigint(value);
 
     // Bit
     case DataType.BOOLEAN:

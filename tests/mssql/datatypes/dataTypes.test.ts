@@ -5,6 +5,8 @@ import { TestService } from "../../test.service";
 
 const service = new TestService(SqlLanguage.MSSQL);
 
+// Text
+
 service.expectDataType('VARCHAR', {
     dataType: DataType.VARCHAR
 }, 'VARCHAR');
@@ -58,3 +60,41 @@ service.expectDataType(
   },
   "STRING(127, 0)"
 );
+
+// Number
+
+service.expectDataType("BYTE datatype", {
+  dataType: DataType.BYTE,
+}, "TINYINT");
+
+service.expectDataType("BYTE datatype with length", {
+  dataType: DataType.BYTE,
+  length: 6,
+}, "TINYINT(6)");
+
+service.expectDataType("INT datatype", {
+  dataType: DataType.INT,
+}, "INT");
+
+service.expectDataType("INT datatype with length", {
+  dataType: DataType.INT,
+  length: 6,
+}, "INT(6)");
+
+service.expectDataType("DECIMAL datatype", {
+  dataType: DataType.DECIMAL,
+}, "DECIMAL");
+
+service.expectDataType("DECIMAL datatype with length", {
+  dataType: DataType.DECIMAL,
+  length: 6,
+}, "DECIMAL(6)");
+
+service.expectDataType("BIGINT datatype", {
+  dataType: DataType.BIGINT,
+}, "BIGINT");
+
+service.expectDataType("BIGINT datatype with length", {
+  dataType: DataType.BIGINT,
+  length: 6,
+}, "BIGINT(6)");
