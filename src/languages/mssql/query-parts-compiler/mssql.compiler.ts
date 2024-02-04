@@ -1,7 +1,6 @@
 import { Query, QueryType } from "../../../chips-ql/types/queries/query.type";
 import { Select } from "../../../chips-ql/types/queries/select.type";
 import { SqlLanguage } from "../../../sql/sql-languages.enum";
-import { UnavailableFeatureError } from "../../../errors/compiler/unavailable-feature.error";
 import { MssqlPartsCompiler } from "./mssql-parts.compiler";
 import { IQueryCompiler } from "../../../compiler/query/query-compiler.interface";
 import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
@@ -83,7 +82,7 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
       throw new ExecutionWillFailException();
 
     // Identify keys
-    let keys: string[] = [];
+    const keys: string[] = [];
     for (const row of insert.values) {
       for (const value of row) {
         if (!keys.includes(value.field)) keys.push(value.field);

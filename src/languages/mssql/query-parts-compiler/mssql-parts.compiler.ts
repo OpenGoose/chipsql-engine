@@ -27,7 +27,6 @@ import { GroupBy } from "../../../chips-ql/types/grouping/group-by.type";
 import { QueryCompilerOptions } from "../../../compiler/query/query-compiler-options.type";
 import { DataType } from "../../../chips-ql/types/datatypes/datatypes.enum";
 import { mssqlFunctions } from "../functions/mssql-functions";
-import { DataType } from "../../../chips-ql/types/datatypes/datatype.type";
 import { mssqlDataTypes } from "../datatypes/mssql-datatypes";
 import { Limit } from "../../../chips-ql/types/limit/limit.type";
 import { LimitMode } from "../../../chips-ql/types/limit/limit-mode.enum";
@@ -80,9 +79,10 @@ export class MssqlPartsCompiler<T extends Object>
           return this.func(value);
         case ValueType.VARIABLE:
           return `@${value.name}`;
-        case ValueType.SUBSELECT:
-          const { alias, distinct, ...query } = value;
+        case ValueType.SUBSELECT: {
+          const { alias: _, distinct: __, ...query } = value;
           return this.subselect(query);
+        }
         case ValueType.SET:
           return `(${joinParts(
             value.values.map(this.value),
