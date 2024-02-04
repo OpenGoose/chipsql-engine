@@ -1,7 +1,7 @@
 import { Value } from "../../../values/value.type";
-import { Functions } from "../../functions.enum";
+import { Function } from "../../functions.enum";
 
 export interface SqrtFunction<T extends Object> {
-    function: Functions.SQRT,
+    function: Function.SQRT,
     value: Value<T>;
 }

@@ -6,10 +6,10 @@ import { OrderBy } from "../order/order-by.type";
 import { From } from "../tables/from.type";
 import { Table } from "../tables/table.type";
 import { Value } from "../values/value.type";
-import { QueryTypes } from "./query.type";
+import { QueryType } from "./query.type";
 
 export interface Select<T extends Object> {
-  queryType: QueryTypes.SELECT;
+  queryType: QueryType.SELECT;
   where?: Where<T>;
   fields: Value<T>[];
   from: From<T>;

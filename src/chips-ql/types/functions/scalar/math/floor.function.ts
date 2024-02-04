@@ -1,7 +1,7 @@
 import { Value } from "../../../values/value.type";
-import { Functions } from "../../functions.enum";
+import { Function } from "../../functions.enum";
 
 export interface FloorFunction<T extends Object> {
-    function: Functions.FLOOR,
+    function: Function.FLOOR,
     value: Value<T>;
 }

@@ -1,17 +1,17 @@
 import { Query } from "../chips-ql/types/queries/query.type";
-import { SqlLanguages } from "../sql/sql-languages.enum";
-import { WarningLevels } from "./warning-levels.enum";
+import { SqlLanguage } from "../sql/sql-languages.enum";
+import { WarningLevel } from "./warning-levels.enum";
 import { WarningOptions } from "./warning-options.type";
 
 export interface Warning {
   message: string;
-  level: WarningLevels;
+  level: WarningLevel;
 }
 
 export class QueryWarningsService<T extends Object> {
   constructor(
     private readonly query: Query<T>,
-    private readonly language: SqlLanguages,
+    private readonly language: SqlLanguage,
     private readonly warningOptions?: WarningOptions
   ) {}
 
@@ -23,7 +23,7 @@ export class QueryWarningsService<T extends Object> {
 
   appendWarning = (
     message: string,
-    level: WarningLevels = WarningLevels.WARNING
+    level: WarningLevel = WarningLevel.WARNING
   ) => this.warnings.push({ message, level });
 
   warn = () => {
@@ -43,18 +43,18 @@ export class QueryWarningsService<T extends Object> {
     else if (this.warningOptions?.logger !== null) console.warn(message);
   };
 
-  private levelIcons = (level: WarningLevels) => {
+  private levelIcons = (level: WarningLevel) => {
     switch (level) {
-      case WarningLevels.EXECUTION_WILL_FAIL:
+      case WarningLevel.EXECUTION_WILL_FAIL:
         return `❌`;
       default:
         return `⚠️`;
     }
   };
 
-  private levelPrefix = (level: WarningLevels) => {
+  private levelPrefix = (level: WarningLevel) => {
     switch (level) {
-      case WarningLevels.EXECUTION_WILL_FAIL:
+      case WarningLevel.EXECUTION_WILL_FAIL:
         return " (Execution will fail)";
       default:
         return "";

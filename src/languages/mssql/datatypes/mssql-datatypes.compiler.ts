@@ -4,12 +4,12 @@ import { DateDataType } from "../../../chips-ql/types/datatypes/datatypes/date/d
 import { DecimalDataType } from "../../../chips-ql/types/datatypes/datatypes/numeric/decimal.datatype";
 import { IntDataType } from "../../../chips-ql/types/datatypes/datatypes/numeric/int.datatype";
 import { VarcharDataType } from "../../../chips-ql/types/datatypes/datatypes/text/varchar.datatype";
-import { DataTypesCompiler } from "../../../compiler/datatypes/datatypes-compiler.service";
+import { DataTypeCompiler } from "../../../compiler/datatypes/datatypes-compiler.service";
 import { MssqlPartsCompiler } from "../query-parts-compiler/mssql-parts.compiler";
 
-export class MssqlDataTypesCompiler<
+export class MssqlDataTypeCompiler<
   T extends Object
-> extends DataTypesCompiler<T> {
+> extends DataTypeCompiler<T> {
   constructor(partsCompiler: MssqlPartsCompiler<T>) {
     super(partsCompiler);
   }

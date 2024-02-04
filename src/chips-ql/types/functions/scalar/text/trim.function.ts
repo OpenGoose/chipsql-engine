@@ -1,7 +1,7 @@
 import { Value } from "../../../values/value.type";
-import { Functions } from "../../functions.enum";
+import { Function } from "../../functions.enum";
 
 export interface TrimFunction<T extends Object> {
-    function: Functions.TRIM;
+    function: Function.TRIM;
     value: Value<T>;
 }

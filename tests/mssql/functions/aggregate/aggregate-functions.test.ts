@@ -1,17 +1,17 @@
-import { Functions } from "../../../../src/chips-ql/types/functions/functions.enum";
-import { ValueTypes } from "../../../../src/chips-ql/types/values/value.type";
-import { SqlLanguages } from "../../../../src/sql/sql-languages.enum";
+import { Function } from "../../../../src/chips-ql/types/functions/functions.enum";
+import { ValueType } from "../../../../src/chips-ql/types/values/value.type";
+import { SqlLanguage } from "../../../../src/sql/sql-languages.enum";
 import { TestService } from "../../../test.service";
 
-const service = new TestService(SqlLanguages.MSSQL);
+const service = new TestService(SqlLanguage.MSSQL);
 
 // MAX
 service.expectFunction(
   "MAX function",
   {
-    function: Functions.MAX,
+    function: Function.MAX,
     value: {
-      valueType: ValueTypes.COLUMN,
+      valueType: ValueType.COLUMN,
       field: "id",
     },
   },
@@ -22,9 +22,9 @@ service.expectFunction(
 service.expectFunction(
   "MIN function",
   {
-    function: Functions.MIN,
+    function: Function.MIN,
     value: {
-      valueType: ValueTypes.COLUMN,
+      valueType: ValueType.COLUMN,
       field: "id",
     },
   },
@@ -35,9 +35,9 @@ service.expectFunction(
 service.expectFunction(
   "COUNT function",
   {
-    function: Functions.COUNT,
+    function: Function.COUNT,
     value: {
-      valueType: ValueTypes.COLUMN,
+      valueType: ValueType.COLUMN,
       field: "id",
     },
   },

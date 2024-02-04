@@ -1,6 +1,6 @@
-import { Query, QueryTypes } from "../../../chips-ql/types/queries/query.type";
+import { Query, QueryType } from "../../../chips-ql/types/queries/query.type";
 import { Select } from "../../../chips-ql/types/queries/select.type";
-import { SqlLanguages } from "../../../sql/sql-languages.enum";
+import { SqlLanguage } from "../../../sql/sql-languages.enum";
 import { MssqlPartsCompiler } from "./mssql-parts.compiler";
 import { IQueryCompiler } from "../../../compiler/query/query-compiler.interface";
 import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
@@ -14,7 +14,7 @@ import { Delete } from "../../../chips-ql/types/queries/delete.type";
 import { Update } from "../../../chips-ql/types/queries/update.type";
 
 export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
-  protected readonly language: SqlLanguages;
+  protected readonly language: SqlLanguage;
   readonly query: Query<T>;
   readonly partsCompiler: IQueryPartsCompiler<T>;
 
@@ -22,20 +22,20 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
     query: Query<T>,
     private readonly options?: QueryCompilerOptions
   ) {
-    this.language = SqlLanguages.MSSQL;
+    this.language = SqlLanguage.MSSQL;
     this.query = query;
     this.partsCompiler = new MssqlPartsCompiler<T>(options);
   }
 
   public compile = () => {
     switch (this.query.queryType) {
-      case QueryTypes.SELECT:
+      case QueryType.SELECT:
         return this.compileSelect(this.query);
-      case QueryTypes.INSERT:
+      case QueryType.INSERT:
         return this.compileInsert(this.query);
-      case QueryTypes.DELETE:
+      case QueryType.DELETE:
         return this.compileDelete(this.query);
-      case QueryTypes.UPDATE:
+      case QueryType.UPDATE:
         return this.compileUpdate(this.query);
     }
   };

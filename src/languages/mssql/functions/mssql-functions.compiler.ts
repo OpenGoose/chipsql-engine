@@ -3,7 +3,7 @@ import { MaxFunction } from "../../../chips-ql/types/functions/aggregate/max.fun
 import { MinFunction } from "../../../chips-ql/types/functions/aggregate/min.function.type";
 import { CustomFunction } from "../../../chips-ql/types/functions/custom/custom.function";
 import { IQueryPartsCompiler } from "../../../compiler/query/query-parts-compiler.interface";
-import { FunctionsCompiler } from "../../../compiler/functions/functions-compiler.service";
+import { FunctionCompiler } from "../../../compiler/functions/functions-compiler.service";
 import { CastFunction } from "../../../chips-ql/types/functions/scalar/casting/cast.function";
 import { IfNullFunction } from "../../../chips-ql/types/functions/scalar/conditionals/if-null.function";
 import { IfFunction } from "../../../chips-ql/types/functions/scalar/conditionals/if.function";
@@ -15,7 +15,7 @@ import { CharFunction } from "../../../chips-ql/types/functions/scalar/text/char
 import { FindIndexFunction } from "../../../chips-ql/types/functions/scalar/text/find-index.function";
 import { JoinFunction } from "../../../chips-ql/types/functions/scalar/text/join.function";
 import { BytesLengthFunction } from "../../../chips-ql/types/functions/scalar/bytes/bytes-length.function";
-import { Functions } from "../../../chips-ql/types/functions/functions.enum";
+import { Function } from "../../../chips-ql/types/functions/functions.enum";
 import { CoalesceFunction } from "../../../chips-ql/types/functions/scalar/conditionals/coalesce.function";
 import { ConvertFunction } from "../../../chips-ql/types/functions/scalar/casting/convert.function";
 import { DifferenceFunction } from "../../../chips-ql/types/functions/scalar/text/difference.function";
@@ -42,9 +42,9 @@ import { DayFunction } from "../../../chips-ql/types/functions/scalar/time/day.f
 import { MonthFunction } from "../../../chips-ql/types/functions/scalar/time/month.function";
 import { YearFunction } from "../../../chips-ql/types/functions/scalar/time/year.function";
 
-export class MssqlFunctionsCompiler<
+export class MssqlFunctionCompiler<
   T extends Object
-> extends FunctionsCompiler<T> {
+> extends FunctionCompiler<T> {
   constructor(partsCompiler: IQueryPartsCompiler<T>) {
     super(partsCompiler);
   }
@@ -77,7 +77,7 @@ export class MssqlFunctionsCompiler<
           values.separator ? this.value(values.separator) : "",
           ...values.values.map(this.value),
         ])
-      : this.concat({ ...values, function: Functions.CONCAT });
+      : this.concat({ ...values, function: Function.CONCAT });
   lower = (values: LowerFunction<T>) =>
     this.buildFunction("LOWER", [this.value(values.value)]);
   upper = (values: UpperFunction<T>) =>

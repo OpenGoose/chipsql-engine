@@ -1,5 +1,5 @@
-import { Functions } from "../../functions.enum";
+import { Function } from "../../functions.enum";
 
 export interface CurrentTimeFunction<T extends Object> {
-    function: Functions.CURRENT_TIME,
+    function: Function.CURRENT_TIME,
 }

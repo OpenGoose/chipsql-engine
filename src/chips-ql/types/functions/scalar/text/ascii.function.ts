@@ -1,7 +1,7 @@
 import { Value } from "../../../values/value.type";
-import { Functions } from "../../functions.enum";
+import { Function } from "../../functions.enum";
 
 export interface AsciiFunction<T extends Object> {
-    function: Functions.ASCII,
+    function: Function.ASCII,
     value: Value<Object>,
 }

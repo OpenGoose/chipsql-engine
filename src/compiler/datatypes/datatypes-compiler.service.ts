@@ -7,7 +7,7 @@ import { VarcharDataType } from "../../chips-ql/types/datatypes/datatypes/text/v
 import { IQueryPartsCompiler } from "../query/query-parts-compiler.interface";
 import { joinParts } from "../utils/query-generation/join-parts.util";
 
-export abstract class DataTypesCompiler<T extends Object> {
+export abstract class DataTypeCompiler<T extends Object> {
   constructor(
     protected readonly partsCompiler: IQueryPartsCompiler<T>,
     protected readonly buildDataType: (

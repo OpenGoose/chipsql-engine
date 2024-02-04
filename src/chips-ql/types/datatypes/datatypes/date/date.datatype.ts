@@ -1,8 +1,8 @@
-import { DataTypes } from "../../datatypes.enum";
+import { DataType } from "../../datatypes.enum";
 import { IDateDataType } from "./date.datatype.interface";
 
 export interface DateDataType extends IDateDataType {
-    dataType: DataTypes.DATE;
+    dataType: DataType.DATE;
 
     includeTime?: boolean;
 }

@@ -1,9 +1,9 @@
 import { DataType } from "../../../datatypes/datatype.type";
 import { Value } from "../../../values/value.type";
-import { Functions } from "../../functions.enum";
+import { Function } from "../../functions.enum";
 
 export interface ConvertFunction<T extends Object> {
-  function: Functions.CONVERT;
+  function: Function.CONVERT;
   value: Value<T>;
   as: DataType;
   style?: Value<T>;

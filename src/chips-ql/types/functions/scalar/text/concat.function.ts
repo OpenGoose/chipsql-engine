@@ -1,7 +1,7 @@
 import { Value } from "../../../values/value.type";
-import { Functions } from "../../functions.enum";
+import { Function } from "../../functions.enum";
 
 export interface ConcatFunction<T extends Object> {
-  function: Functions.CONCAT;
+  function: Function.CONCAT;
   values: Value<T>[];
 }

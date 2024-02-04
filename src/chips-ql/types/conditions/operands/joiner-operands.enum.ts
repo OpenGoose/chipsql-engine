@@ -1,4 +1,4 @@
-export enum JoinerOperands {
+export enum JoinerOperand {
     AND = 'and',
     OR = 'or'
 }

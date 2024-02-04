@@ -2,7 +2,7 @@ import { Query } from "../src/chips-ql/types/queries/query.type";
 import { UnavailableFeatureError } from "../src/errors/compiler/unavailable-feature.error";
 import { QueryCompilerOptions } from "../src/compiler/query/query-compiler-options.type";
 import { QueryCompiler } from "../src/compiler/query/query.compiler";
-import { SqlLanguages } from "../src/sql/sql-languages.enum";
+import { SqlLanguage } from "../src/sql/sql-languages.enum";
 import {
   QueryWarningsService,
   Warning,
@@ -11,11 +11,11 @@ import { MssqlCompiler } from "../src/languages/mssql/query-parts-compiler/mssql
 import { MssqlPartsCompiler } from "../src/languages/mssql/query-parts-compiler/mssql-parts.compiler";
 import { IQueryPartsCompiler } from "../src/compiler/query/query-parts-compiler.interface";
 import { Function } from "../src/chips-ql/types/functions/function.type";
-import { ValueTypes } from "../src/chips-ql/types/values/value.type";
+import { ValueType } from "../src/chips-ql/types/values/value.type";
 import { DataType } from "../src/chips-ql/types/datatypes/datatype.type";
 
 export class TestService {
-  constructor(private readonly language: SqlLanguages) {}
+  constructor(private readonly language: SqlLanguage) {}
 
   expectQuery = <T extends Object = Object>(
     name: string,
@@ -44,7 +44,7 @@ export class TestService {
     ) => QueryWarningsService<T>;
 
     switch (this.language) {
-      case SqlLanguages.MSSQL:
+      case SqlLanguage.MSSQL:
         warner = MssqlCompiler.processQueryWarnings;
     }
 
@@ -83,7 +83,7 @@ export class TestService {
     test(name, () => {
       expect(
         this.getPartsCompiler(compilerOptions).func({
-          valueType: ValueTypes.FUNCTION,
+          valueType: ValueType.FUNCTION,
           ...func,
         })
       ).toBe(result);
@@ -109,7 +109,7 @@ export class TestService {
     compilerOptions?: QueryCompilerOptions
   ): IQueryPartsCompiler<T> => {
     switch (this.language) {
-      case SqlLanguages.MSSQL:
+      case SqlLanguage.MSSQL:
         return new MssqlPartsCompiler(compilerOptions);
       default:
         throw new UnavailableFeatureError(this.language);

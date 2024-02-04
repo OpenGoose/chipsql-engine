@@ -1,7 +1,7 @@
 import { Value } from "../../../values/value.type";
-import { Functions } from "../../functions.enum";
+import { Function } from "../../functions.enum";
 
 export interface BytesLengthFunction<T extends Object> {
-    function: Functions.BYTES_LENGTH,
+    function: Function.BYTES_LENGTH,
     value: Value<Object>;
 }
