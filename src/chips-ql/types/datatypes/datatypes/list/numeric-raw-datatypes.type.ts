@@ -1,3 +1,3 @@
-import { NUMERIC_DATATYPES } from "../../../../constants/datatypes/numeric-datatypes.constant";
+import { NUMERIC_RAW_DATATYPES } from "../../../../constants/datatypes/numeric-raw-datatypes.constant";
 
-export type NumericDataTypes = typeof NUMERIC_DATATYPES[number];
+export type NumericRawDataTypes = typeof NUMERIC_RAW_DATATYPES[number];

@@ -2,8 +2,9 @@ import { MssqlDataTypes } from "../../../../languages/mssql/datatypes/mssql-data
 import { DataType } from "../datatypes.enum";
 
 // T = all supported DB engines datatypes
+type Types = MssqlDataTypes;
 
-export type RawDatatypeOptions<T extends MssqlDataTypes, K extends DataType, F extends object> = {
+export type DataTypeOptions<T extends Types, K extends DataType, F extends object> = {
     dataType: K;
     rawDataType: T;
 } | (F & { dataType: K });

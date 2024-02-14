@@ -1,8 +1,8 @@
 import { DataType } from "../../../datatypes.enum";
-import { NumericDataTypes } from "../../list/numeric-raw-datatypes.type";
-import { RawDatatypeOptions } from "../../raw-datatype.datatype";
+import { NumericRawDataTypes } from "../../list/numeric-raw-datatypes.type";
+import { DataTypeOptions } from "../../datatype-options.datatype";
 
 
-export type NumberDataTypeOptions = RawDatatypeOptions<NumericDataTypes, DataType.NUMBER, {
+export type NumberDataTypeOptions = DataTypeOptions<NumericRawDataTypes, DataType.NUMBER, {
     length?: number;
 }>;

@@ -3,5 +3,6 @@ export enum MssqlDataTypes {
     DECIMAL = 'decimal',
     
     VARCHAR = 'varchar',
-    BIT = 'bit'
+    BIT = 'bit',
+    DATETIME2 = 'datetime2',
 }
