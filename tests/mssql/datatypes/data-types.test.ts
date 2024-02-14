@@ -98,3 +98,15 @@ service.expectDataType("BIGINT datatype with length", {
   dataType: DataType.BIGINT,
   length: 6,
 }, "BIGINT(6)");
+
+// Boolean
+
+service.expectDataType("BOOLEAN datatype", {
+  dataType: DataType.BOOLEAN,
+}, "BIT");
+
+// Date
+
+service.expectDataType("DATE datatype", {
+  dataType: DataType.DATE,
+}, "DATE");
