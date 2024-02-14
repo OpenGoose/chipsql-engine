@@ -1,24 +1,18 @@
-import { BooleanDataType } from "./datatypes/bit/boolean.datatype";
-import { CustomDataType } from "./datatypes/custom/custom.datatype";
-import { DateDataType } from "./datatypes/date/date.datatype";
-import { BigintDataType } from "./datatypes/numeric/bigint.datatype";
-import { ByteDataType } from "./datatypes/numeric/byte.datatype";
-import { DecimalDataType } from "./datatypes/numeric/decimal.datatype";
-import { IntDataType } from "./datatypes/numeric/int.datatype";
-import { VarcharDataType } from "./datatypes/text/varchar.datatype";
+import { BooleanDataTypeOptions } from "./datatypes/options/bit/boolean.datatype";
+import { CustomDataTypeOptions } from "./datatypes/options/custom/custom.datatype";
+import { DateDataTypeOptions } from "./datatypes/options/date/date.datatype";
+import { NumberDataTypeOptions } from "./datatypes/options/numeric/number.datatype";
+import { StringDataTypeOptions } from "./datatypes/options/text/string.datatype";
 
 export type DataType<T extends Object = Object> = 
 // Text
-| VarcharDataType
+| StringDataTypeOptions
 // Numbers
-| ByteDataType
-| IntDataType
-| DecimalDataType
-| BigintDataType
+| NumberDataTypeOptions
 // Bit
-| BooleanDataType
+| BooleanDataTypeOptions
 // Date
-| DateDataType
+| DateDataTypeOptions
 
 // Custom
-| CustomDataType<T>;
+| CustomDataTypeOptions<T>;

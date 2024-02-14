@@ -8,13 +8,13 @@ const service = new TestService(SqlLanguage.MSSQL);
 // Text
 
 service.expectDataType('VARCHAR', {
-    dataType: DataType.VARCHAR
+    dataType: DataType.STRING
 }, 'VARCHAR');
 
 service.expectDataType(
   "VARCHAR (length = 12)",
   {
-    dataType: DataType.VARCHAR,
+    dataType: DataType.STRING,
     length: 12
   },
   "VARCHAR(12)"
@@ -23,7 +23,7 @@ service.expectDataType(
 service.expectDataType(
   "VARCHAR (length = MAX)",
   {
-    dataType: DataType.VARCHAR,
+    dataType: DataType.STRING,
     length: Infinity,
   },
   "VARCHAR(MAX)"
@@ -64,38 +64,38 @@ service.expectDataType(
 // Number
 
 service.expectDataType("BYTE datatype", {
-  dataType: DataType.BYTE,
+  dataType: DataType.NUMBER,
 }, "TINYINT");
 
 service.expectDataType("BYTE datatype with length", {
-  dataType: DataType.BYTE,
+  dataType: DataType.NUMBER,
   length: 6,
 }, "TINYINT(6)");
 
 service.expectDataType("INT datatype", {
-  dataType: DataType.INT,
+  dataType: DataType.NUMBER,
 }, "INT");
 
 service.expectDataType("INT datatype with length", {
-  dataType: DataType.INT,
+  dataType: DataType.NUMBER,
   length: 6,
 }, "INT(6)");
 
 service.expectDataType("DECIMAL datatype", {
-  dataType: DataType.DECIMAL,
+  dataType: DataType.NUMBER,
 }, "DECIMAL");
 
 service.expectDataType("DECIMAL datatype with length", {
-  dataType: DataType.DECIMAL,
+  dataType: DataType.NUMBER,
   length: 6,
 }, "DECIMAL(6)");
 
 service.expectDataType("BIGINT datatype", {
-  dataType: DataType.BIGINT,
+  dataType: DataType.NUMBER,
 }, "BIGINT");
 
 service.expectDataType("BIGINT datatype with length", {
-  dataType: DataType.BIGINT,
+  dataType: DataType.NUMBER,
   length: 6,
 }, "BIGINT(6)");
 

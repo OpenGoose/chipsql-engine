@@ -1,44 +1,33 @@
-import { BooleanDataType } from "../../../chips-ql/types/datatypes/datatypes/bit/boolean.datatype";
-import { CustomDataType } from "../../../chips-ql/types/datatypes/datatypes/custom/custom.datatype";
-import { DateDataType } from "../../../chips-ql/types/datatypes/datatypes/date/date.datatype";
-import { BigintDataType } from "../../../chips-ql/types/datatypes/datatypes/numeric/bigint.datatype";
-import { ByteDataType } from "../../../chips-ql/types/datatypes/datatypes/numeric/byte.datatype";
-import { DecimalDataType } from "../../../chips-ql/types/datatypes/datatypes/numeric/decimal.datatype";
-import { IntDataType } from "../../../chips-ql/types/datatypes/datatypes/numeric/int.datatype";
-import { VarcharDataType } from "../../../chips-ql/types/datatypes/datatypes/text/varchar.datatype";
+import { BooleanDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/bit/boolean.datatype";
+import { CustomDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/custom/custom.datatype";
+import { DateDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/date/date.datatype";
+import { NumberDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/numeric/number.datatype";
+import { StringDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/text/string.datatype";
 import { DataTypeCompiler } from "../../../compiler/datatypes/datatypes-compiler.service";
-import { MssqlPartsCompiler } from "../query-parts-compiler/mssql-parts.compiler";
 
 export class MssqlDataTypeCompiler<
   T extends Object
 > extends DataTypeCompiler<T> {
-  constructor(partsCompiler: MssqlPartsCompiler<T>) {
-    super(partsCompiler);
-  }
-
   // Text
-  varchar = (datatype: VarcharDataType) =>
+  string = (datatype: StringDataTypeOptions) =>
     this.buildDataType("VARCHAR", [
       datatype.length === Infinity ? "MAX" : datatype.length?.toString(),
     ]);
 
   // Number
-  byte = (datatype: ByteDataType) => this.buildDataType("TINYINT", [datatype.length?.toString()]);
-  int = (datatype: IntDataType) => this.buildDataType("INT", [datatype.length?.toString()]);
-  decimal = (datatype: DecimalDataType) => this.buildDataType("DECIMAL", [datatype.length?.toString()]);
-  bigint = (datatype: BigintDataType) => this.buildDataType("BIGINT", [datatype.length?.toString()]);
+  number = (datatype: NumberDataTypeOptions) => this.buildDataType('INT');
 
   // Bit
-  boolean = (datatype: BooleanDataType) => this.buildDataType("BIT");
+  boolean = (datatype: BooleanDataTypeOptions) => this.buildDataType("BIT");
 
   // Date
-  date = (datatype: DateDataType) => {
+  date = (datatype: DateDataTypeOptions) => {
     const name = datatype.includeTime ? "DATETIME2" : "DATE";
     return this.buildDataType(name);
   };
 
   // Custom
-  custom = (dataType: CustomDataType<T>) =>
+  custom = (dataType: CustomDataTypeOptions<T>) =>
     this.buildDataType(
       dataType.name,
       dataType.parameters.map(this.partsCompiler.value)

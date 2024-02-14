@@ -1,11 +1,8 @@
-import { BooleanDataType } from "../../chips-ql/types/datatypes/datatypes/bit/boolean.datatype";
-import { CustomDataType } from "../../chips-ql/types/datatypes/datatypes/custom/custom.datatype";
-import { DateDataType } from "../../chips-ql/types/datatypes/datatypes/date/date.datatype";
-import { BigintDataType } from "../../chips-ql/types/datatypes/datatypes/numeric/bigint.datatype";
-import { ByteDataType } from "../../chips-ql/types/datatypes/datatypes/numeric/byte.datatype";
-import { DecimalDataType } from "../../chips-ql/types/datatypes/datatypes/numeric/decimal.datatype";
-import { IntDataType } from "../../chips-ql/types/datatypes/datatypes/numeric/int.datatype";
-import { VarcharDataType } from "../../chips-ql/types/datatypes/datatypes/text/varchar.datatype";
+import { BooleanDataTypeOptions } from "../../chips-ql/types/datatypes/datatypes/options/bit/boolean.datatype";
+import { CustomDataTypeOptions } from "../../chips-ql/types/datatypes/datatypes/options/custom/custom.datatype";
+import { DateDataTypeOptions } from "../../chips-ql/types/datatypes/datatypes/options/date/date.datatype";
+import { NumberDataTypeOptions } from "../../chips-ql/types/datatypes/datatypes/options/numeric/number.datatype";
+import { StringDataTypeOptions } from "../../chips-ql/types/datatypes/datatypes/options/text/string.datatype";
 import { IQueryPartsCompiler } from "../query/query-parts-compiler.interface";
 import { joinParts } from "../utils/query-generation/join-parts.util";
 
@@ -31,20 +28,17 @@ export abstract class DataTypeCompiler<T extends Object> {
   ) {}
 
   // Text
-  abstract varchar: (datatype: VarcharDataType) => string;
+  abstract string: (datatype: StringDataTypeOptions) => string;
 
   // Number
-  abstract byte: (datatype: ByteDataType) => string;
-  abstract int: (datatype: IntDataType) => string;
-  abstract decimal: (datatype: DecimalDataType) => string;
-  abstract bigint: (datatype: BigintDataType) => string;
+  abstract number: (datatype: NumberDataTypeOptions) => string;
 
   // Bool
-  abstract boolean: (datatype: BooleanDataType) => string;
+  abstract boolean: (datatype: BooleanDataTypeOptions) => string;
 
   // Time
-  abstract date: (datatype: DateDataType) => string;
+  abstract date: (datatype: DateDataTypeOptions) => string;
 
   // Custom
-  abstract custom: (dataType: CustomDataType<T>) => string;
+  abstract custom: (dataType: CustomDataTypeOptions<T>) => string;
 }

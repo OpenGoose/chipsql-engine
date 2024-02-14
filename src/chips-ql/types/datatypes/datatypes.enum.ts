@@ -1,12 +1,9 @@
 export enum DataType {
     // Text
-    VARCHAR = 'varchar',
+    STRING = 'string',
 
     // Numeric
-    BYTE = 'byte',
-    INT = 'int',
-    BIGINT = 'bigint',
-    DECIMAL = 'decimal',
+    NUMBER = 'number',
 
     // Bool
     BOOLEAN = 'bool',
