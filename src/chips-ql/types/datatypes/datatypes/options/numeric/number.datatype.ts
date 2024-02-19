@@ -13,9 +13,14 @@ export enum NumberPrecision {
     APPROXIMATE = 'aprox'
 }
 
+export enum NumberVariant {
+    MONEY = 'money',
+    DECIMAL = 'decimal',
+}
+
 export type NumberDataTypeOptions = DataTypeOptions<NumericRawDataTypes, DataType.NUMBER, {
     length?: number;
-    decimal?: boolean;
+    variant?: NumberVariant;
     size?: NumberSize;
     precision?: NumberPrecision;
 }>;

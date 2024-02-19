@@ -1,7 +1,7 @@
 import { BooleanDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/bit/boolean.datatype";
 import { CustomDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/custom/custom.datatype";
 import { DateDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/date/date.datatype";
-import { NumberDataTypeOptions, NumberPrecision, NumberSize } from "../../../chips-ql/types/datatypes/datatypes/options/numeric/number.datatype";
+import { NumberDataTypeOptions, NumberPrecision, NumberSize, NumberVariant } from "../../../chips-ql/types/datatypes/datatypes/options/numeric/number.datatype";
 import { StringDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/text/string.datatype";
 import { Value } from "../../../chips-ql/types/values/value.type";
 import { DataTypeCompiler } from "../../../compiler/datatypes/datatypes-compiler.service";
@@ -30,9 +30,20 @@ export class MssqlDataTypeCompiler<
     if (datatype.rawDataType) return this.buildRawDataType(datatype);
 
     let type = MssqlDataTypes.INT;
-    if (datatype.decimal) {
+    if (datatype.variant === NumberVariant.DECIMAL) {
       if ((datatype.precision ?? DEFAULT_NUMBER_PRECISION) === NumberPrecision.APPROXIMATE) type = MssqlDataTypes.DECIMAL;
       else type = MssqlDataTypes.FLOAT;
+    }
+    else if (datatype.variant === NumberVariant.MONEY) {
+      switch (datatype.size) {
+        case NumberSize.SMALL:
+        case NumberSize.TINY:
+          type = MssqlDataTypes.SMALLMONEY;
+          break;
+        default:
+          type = MssqlDataTypes.MONEY;
+          break;
+      }
     } else {
       switch (datatype.size) {
         case NumberSize.BIG: type = MssqlDataTypes.BIGINT; break;
