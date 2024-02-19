@@ -2,7 +2,6 @@
 
 [![Node.js CI](https://github.com/OpenGoose/chipsql-engine/actions/workflows/tests.yml/badge.svg)](https://github.com/OpenGoose/chipsql-engine/actions/workflows/tests.yml)
 [![CodeQL](https://github.com/OpenGoose/chipsql-engine/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/OpenGoose/chipsql-engine/actions/workflows/github-code-scanning/codeql)
-[![njsscan sarif](https://github.com/OpenGoose/chipsql-engine/actions/workflows/njsscan.yml/badge.svg)](https://github.com/OpenGoose/chipsql-engine/actions/workflows/njsscan.yml)
 
 ## Supported languages
 
