@@ -1,19 +1,19 @@
-import { MssqlDataTypes } from "../../languages/mssql/datatypes/mssql-datatypes-list.enum";
+import { MssqlDataType } from "../../languages/mssql/datatypes/mssql-datatypes-list.enum";
 
 export const MSSQL_DATATYPES_MAP = {
-    [MssqlDataTypes.BIT]: 'BIT',
-    [MssqlDataTypes.DATETIME2]: 'DATETIME2',
-    [MssqlDataTypes.DATE]: 'DATE',
+    [MssqlDataType.BIT]: 'BIT',
+    [MssqlDataType.DATETIME2]: 'DATETIME2',
+    [MssqlDataType.DATE]: 'DATE',
 
-    [MssqlDataTypes.INT]: 'INT',
-    [MssqlDataTypes.DECIMAL]: 'DECIMAL',
-    [MssqlDataTypes.BIGINT]: 'BIGINT',
-    [MssqlDataTypes.TINYINT]: 'TINYINT',
-    [MssqlDataTypes.SMALLINT]: 'SMALLINT',
-    [MssqlDataTypes.MONEY]: 'MONEY',
-    [MssqlDataTypes.SMALLMONEY]: 'SMALLMONEY',
-    [MssqlDataTypes.FLOAT]: 'FLOAT',
-    [MssqlDataTypes.REAL]: 'REAL',
+    [MssqlDataType.INT]: 'INT',
+    [MssqlDataType.DECIMAL]: 'DECIMAL',
+    [MssqlDataType.BIGINT]: 'BIGINT',
+    [MssqlDataType.TINYINT]: 'TINYINT',
+    [MssqlDataType.SMALLINT]: 'SMALLINT',
+    [MssqlDataType.MONEY]: 'MONEY',
+    [MssqlDataType.SMALLMONEY]: 'SMALLMONEY',
+    [MssqlDataType.FLOAT]: 'FLOAT',
+    [MssqlDataType.REAL]: 'REAL',
 
-    [MssqlDataTypes.VARCHAR]: 'VARCHAR'
+    [MssqlDataType.VARCHAR]: 'VARCHAR'
 }

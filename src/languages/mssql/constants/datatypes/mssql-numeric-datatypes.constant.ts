@@ -1,3 +1,3 @@
-import { MssqlDataTypes } from "../../datatypes/mssql-datatypes-list.enum";
+import { MssqlDataType } from "../../datatypes/mssql-datatypes-list.enum";
 
-export const MSSQL_NUMERIC_DATATYPES = [MssqlDataTypes.INT, MssqlDataTypes.DECIMAL, MssqlDataTypes.BIGINT, MssqlDataTypes.TINYINT,MssqlDataTypes.SMALLINT, MssqlDataTypes.MONEY, MssqlDataTypes.SMALLMONEY, MssqlDataTypes.FLOAT, MssqlDataTypes.REAL] as const;
+export const MSSQL_NUMERIC_DATATYPES = [MssqlDataType.INT, MssqlDataType.DECIMAL, MssqlDataType.BIGINT, MssqlDataType.TINYINT,MssqlDataType.SMALLINT, MssqlDataType.MONEY, MssqlDataType.SMALLMONEY, MssqlDataType.FLOAT, MssqlDataType.REAL] as const;

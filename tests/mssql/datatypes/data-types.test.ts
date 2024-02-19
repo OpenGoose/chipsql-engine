@@ -1,7 +1,7 @@
 import { DataType } from "../../../src/chips-ql/types/datatypes/datatypes.enum";
 import { NumberPrecision, NumberSize, NumberVariant } from "../../../src/chips-ql/types/datatypes/datatypes/options/numeric/number.datatype";
 import { ValueType } from "../../../src/chips-ql/types/values/value.type";
-import { MssqlDataTypes } from "../../../src/languages/mssql/datatypes/mssql-datatypes-list.enum";
+import { MssqlDataType } from "../../../src/languages/mssql/datatypes/mssql-datatypes-list.enum";
 import { SqlLanguage } from "../../../src/sql/sql-languages.enum";
 import { TestService } from "../../test.service";
 
@@ -128,7 +128,7 @@ service.expectDataType("BIGINT datatype with length", {
 
 service.expectDataType("Raw BIGINT datatype with length", {
   dataType: DataType.NUMBER,
-  rawDataType: MssqlDataTypes.BIGINT,
+  rawDataType: MssqlDataType.BIGINT,
   params: [{
     valueType: ValueType.RAW_VALUE,
     value: 6,

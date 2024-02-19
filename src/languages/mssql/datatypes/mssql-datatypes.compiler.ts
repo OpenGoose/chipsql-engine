@@ -5,8 +5,9 @@ import { NumberDataTypeOptions, NumberPrecision, NumberSize, NumberVariant } fro
 import { StringDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/text/string.datatype";
 import { Value } from "../../../chips-ql/types/values/value.type";
 import { DataTypeCompiler } from "../../../compiler/datatypes/datatypes-compiler.service";
+import { CompilerException } from "../../../errors/compiler/compiler-exception.error";
 import { MSSQL_DATATYPES_MAP } from "../../../map/datatypes/mssql-datatypes.map";
-import { MssqlDataTypes } from "./mssql-datatypes-list.enum";
+import { MssqlDataType } from "./mssql-datatypes-list.enum";
 
 const DEFAULT_NUMBER_PRECISION = NumberPrecision.EXACT;
 
@@ -14,13 +15,13 @@ export class MssqlDataTypeCompiler<
   T extends Object
 > extends DataTypeCompiler<T> {
 
-  private buildRawDataType = ({ rawDataType, params }: { rawDataType: MssqlDataTypes, params?: Value<object>[] }) => this.buildDataType(MSSQL_DATATYPES_MAP[rawDataType], params?.map(this.partsCompiler.value));
+  private buildRawDataType = ({ rawDataType, params }: { rawDataType: MssqlDataType, params?: Value<object>[] }) => this.buildDataType(MSSQL_DATATYPES_MAP[rawDataType], params?.map(this.partsCompiler.value));
 
   // Text
   string = (datatype: StringDataTypeOptions) => {
     if (datatype.rawDataType) return this.buildRawDataType(datatype);
     
-    return this.buildDataType(MSSQL_DATATYPES_MAP[MssqlDataTypes.VARCHAR], [
+    return this.buildDataType(MSSQL_DATATYPES_MAP[MssqlDataType.VARCHAR], [
       datatype.length === Infinity ? "MAX" : datatype.length?.toString(),
     ]);
   }
@@ -28,29 +29,34 @@ export class MssqlDataTypeCompiler<
   // Number
   number = (datatype: NumberDataTypeOptions) => {
     if (datatype.rawDataType) return this.buildRawDataType(datatype);
+    const precision = datatype.precision ?? DEFAULT_NUMBER_PRECISION;
 
-    let type = MssqlDataTypes.INT;
+    let type: MssqlDataType;
+    if (precision === NumberPrecision.APPROXIMATE) type = MssqlDataType.REAL;
+    else type = MssqlDataType.INT;
+
     if (datatype.variant === NumberVariant.DECIMAL) {
-      if ((datatype.precision ?? DEFAULT_NUMBER_PRECISION) === NumberPrecision.APPROXIMATE) type = MssqlDataTypes.DECIMAL;
-      else type = MssqlDataTypes.FLOAT;
+      if (precision === NumberPrecision.APPROXIMATE) type = MssqlDataType.DECIMAL;
+      else type = MssqlDataType.FLOAT;
     }
     else if (datatype.variant === NumberVariant.MONEY) {
       switch (datatype.size) {
         case NumberSize.SMALL:
         case NumberSize.TINY:
-          type = MssqlDataTypes.SMALLMONEY;
+          type = MssqlDataType.SMALLMONEY;
           break;
         default:
-          type = MssqlDataTypes.MONEY;
+          type = MssqlDataType.MONEY;
           break;
       }
     } else {
       switch (datatype.size) {
-        case NumberSize.BIG: type = MssqlDataTypes.BIGINT; break;
-        case NumberSize.SMALL: type = MssqlDataTypes.SMALLINT; break;
-        case NumberSize.TINY: type = MssqlDataTypes.TINYINT; break;
+        case NumberSize.BIG: type = MssqlDataType.BIGINT; break;
+        case NumberSize.SMALL: type = MssqlDataType.SMALLINT; break;
+        case NumberSize.TINY: type = MssqlDataType.TINYINT; break;
       }
     }
+
 
     return this.buildDataType(MSSQL_DATATYPES_MAP[type], datatype.length === undefined ? undefined : [datatype.length.toString()]);
   }
@@ -59,14 +65,14 @@ export class MssqlDataTypeCompiler<
   boolean = (datatype: BooleanDataTypeOptions) => {
     if (datatype.rawDataType) return this.buildRawDataType(datatype);
 
-    return this.buildDataType(MSSQL_DATATYPES_MAP[MssqlDataTypes.BIT]);
+    return this.buildDataType(MSSQL_DATATYPES_MAP[MssqlDataType.BIT]);
   }
 
   // Date
   date = (datatype: DateDataTypeOptions) => {
     if (datatype.rawDataType) return this.buildRawDataType(datatype);
 
-    const name = datatype.includeTime ? MSSQL_DATATYPES_MAP[MssqlDataTypes.DATETIME2] : MSSQL_DATATYPES_MAP[MssqlDataTypes.DATE];
+    const name = datatype.includeTime ? MSSQL_DATATYPES_MAP[MssqlDataType.DATETIME2] : MSSQL_DATATYPES_MAP[MssqlDataType.DATE];
     return this.buildDataType(name);
   };
 

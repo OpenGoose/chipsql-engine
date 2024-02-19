@@ -1,3 +1,3 @@
-import { MssqlDataTypes } from "../../datatypes/mssql-datatypes-list.enum";
+import { MssqlDataType } from "../../datatypes/mssql-datatypes-list.enum";
 
-export const MSSQL_STRING_DATATYPES = [MssqlDataTypes.VARCHAR] as const;
+export const MSSQL_STRING_DATATYPES = [MssqlDataType.VARCHAR] as const;

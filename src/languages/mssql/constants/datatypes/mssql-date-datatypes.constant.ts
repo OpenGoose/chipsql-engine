@@ -1,3 +1,3 @@
-import { MssqlDataTypes } from "../../datatypes/mssql-datatypes-list.enum";
+import { MssqlDataType } from "../../datatypes/mssql-datatypes-list.enum";
 
-export const MSSQL_DATE_DATATYPES = [MssqlDataTypes.DATETIME2, MssqlDataTypes.DATE] as const;
+export const MSSQL_DATE_DATATYPES = [MssqlDataType.DATETIME2, MssqlDataType.DATE] as const;

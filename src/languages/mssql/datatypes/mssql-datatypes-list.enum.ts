@@ -1,4 +1,4 @@
-export enum MssqlDataTypes {
+export enum MssqlDataType {
     INT = 'int',
     DECIMAL = 'decimal',
     BIGINT = 'bigint',
