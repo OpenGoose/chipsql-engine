@@ -3,6 +3,7 @@ import { DateDataTypeOptions } from "../datatypes/datatypes/options/date/date.da
 
 export type DateType = {
   type: DataType.DATE;
+  includeTime?: boolean;
   date: Date;
 } & Omit<DateDataTypeOptions, 'dataType'>;
 

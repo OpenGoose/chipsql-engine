@@ -1,5 +1,6 @@
 import { DataType } from "../../../src/chips-ql/types/datatypes/datatypes.enum";
 import { ValueType } from "../../../src/chips-ql/types/values/value.type";
+import { MssqlDataTypes } from "../../../src/languages/mssql/datatypes/mssql-datatypes-list.enum";
 import { SqlLanguage } from "../../../src/sql/sql-languages.enum";
 import { TestService } from "../../test.service";
 
@@ -65,10 +66,12 @@ service.expectDataType(
 
 service.expectDataType("BYTE datatype", {
   dataType: DataType.NUMBER,
+  tiny: true,
 }, "TINYINT");
 
 service.expectDataType("BYTE datatype with length", {
   dataType: DataType.NUMBER,
+  tiny: true,
   length: 6,
 }, "TINYINT(6)");
 
@@ -83,20 +86,33 @@ service.expectDataType("INT datatype with length", {
 
 service.expectDataType("DECIMAL datatype", {
   dataType: DataType.NUMBER,
+  decimal: true,
 }, "DECIMAL");
 
 service.expectDataType("DECIMAL datatype with length", {
   dataType: DataType.NUMBER,
+  decimal: true,
   length: 6,
 }, "DECIMAL(6)");
 
 service.expectDataType("BIGINT datatype", {
   dataType: DataType.NUMBER,
+  big: true,
 }, "BIGINT");
 
 service.expectDataType("BIGINT datatype with length", {
   dataType: DataType.NUMBER,
   length: 6,
+  big: true,
+}, "BIGINT(6)");
+
+service.expectDataType("Raw BIGINT datatype with length", {
+  dataType: DataType.NUMBER,
+  rawDataType: MssqlDataTypes.BIGINT,
+  params: [{
+    valueType: ValueType.RAW_VALUE,
+    value: 6,
+  }],
 }, "BIGINT(6)");
 
 // Boolean

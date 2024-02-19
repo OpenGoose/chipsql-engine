@@ -5,4 +5,7 @@ import { DataTypeOptions } from "../../datatype-options.datatype";
 
 export type NumberDataTypeOptions = DataTypeOptions<NumericRawDataTypes, DataType.NUMBER, {
     length?: number;
+    decimal?: boolean;
+    tiny?: boolean;
+    big?: boolean;
 }>;

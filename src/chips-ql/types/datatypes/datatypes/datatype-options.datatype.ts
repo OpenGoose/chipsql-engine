@@ -1,4 +1,5 @@
 import { MssqlDataTypes } from "../../../../languages/mssql/datatypes/mssql-datatypes-list.enum";
+import { Value } from "../../values/value.type";
 import { DataType } from "../datatypes.enum";
 
 // T = all supported DB engines datatypes
@@ -7,4 +8,5 @@ type Types = MssqlDataTypes;
 export type DataTypeOptions<T extends Types, K extends DataType, F extends object> = {
     dataType: K;
     rawDataType: T;
-} | (F & { dataType: K });
+    params?: Value<object>[];
+} | (F & { dataType: K, rawDataType?: null });

@@ -16,7 +16,7 @@ service.expectFunction(
       value: "Hi",
     },
     as: {
-      dataType: DataType.VARCHAR,
+      dataType: DataType.STRING,
     },
   },
   "CAST('Hi' AS VARCHAR)"
@@ -31,7 +31,7 @@ service.expectFunction(
       value: "Hi",
     },
     as: {
-      dataType: DataType.VARCHAR,
+      dataType: DataType.STRING,
       length: 32,
     },
   },
@@ -47,7 +47,7 @@ service.expectFunction(
       value: 25.65,
     },
     as: {
-      dataType: DataType.INT,
+      dataType: DataType.NUMBER,
     },
   },
   "CAST(25.65 AS INT)"
@@ -63,7 +63,7 @@ service.expectFunction(
       value: 25.65,
     },
     as: {
-      dataType: DataType.INT,
+      dataType: DataType.NUMBER,
     },
   },
   "CONVERT(INT, 25.65)"
@@ -78,7 +78,7 @@ service.expectFunction(
       value: "2017-08-25",
     },
     as: {
-      dataType: DataType.VARCHAR,
+      dataType: DataType.STRING,
     },
     style: {
       valueType: ValueType.RAW_VALUE,
