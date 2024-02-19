@@ -1,4 +1,5 @@
 import { DataType } from "../../../src/chips-ql/types/datatypes/datatypes.enum";
+import { NumberPrecision, NumberSize } from "../../../src/chips-ql/types/datatypes/datatypes/options/numeric/number.datatype";
 import { ValueType } from "../../../src/chips-ql/types/values/value.type";
 import { MssqlDataTypes } from "../../../src/languages/mssql/datatypes/mssql-datatypes-list.enum";
 import { SqlLanguage } from "../../../src/sql/sql-languages.enum";
@@ -66,12 +67,12 @@ service.expectDataType(
 
 service.expectDataType("BYTE datatype", {
   dataType: DataType.NUMBER,
-  tiny: true,
+  size: NumberSize.TINY,
 }, "TINYINT");
 
 service.expectDataType("BYTE datatype with length", {
   dataType: DataType.NUMBER,
-  tiny: true,
+  size: NumberSize.TINY,
   length: 6,
 }, "TINYINT(6)");
 
@@ -87,23 +88,31 @@ service.expectDataType("INT datatype with length", {
 service.expectDataType("DECIMAL datatype", {
   dataType: DataType.NUMBER,
   decimal: true,
+  precision: NumberPrecision.APPROXIMATE,
 }, "DECIMAL");
 
 service.expectDataType("DECIMAL datatype with length", {
   dataType: DataType.NUMBER,
   decimal: true,
+  precision: NumberPrecision.APPROXIMATE,
   length: 6,
 }, "DECIMAL(6)");
 
+service.expectDataType("FLOAT datatype with length", {
+  dataType: DataType.NUMBER,
+  decimal: true,
+  length: 6,
+}, "FLOAT(6)");
+
 service.expectDataType("BIGINT datatype", {
   dataType: DataType.NUMBER,
-  big: true,
+  size: NumberSize.BIG,
 }, "BIGINT");
 
 service.expectDataType("BIGINT datatype with length", {
   dataType: DataType.NUMBER,
   length: 6,
-  big: true,
+  size: NumberSize.BIG,
 }, "BIGINT(6)");
 
 service.expectDataType("Raw BIGINT datatype with length", {

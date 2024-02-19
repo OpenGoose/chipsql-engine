@@ -5,10 +5,15 @@ export const MSSQL_DATATYPES_MAP = {
     [MssqlDataTypes.DATETIME2]: 'DATETIME2',
     [MssqlDataTypes.DATE]: 'DATE',
 
-    [MssqlDataTypes.DECIMAL]: 'DECIMAL',
     [MssqlDataTypes.INT]: 'INT',
+    [MssqlDataTypes.DECIMAL]: 'DECIMAL',
     [MssqlDataTypes.BIGINT]: 'BIGINT',
     [MssqlDataTypes.TINYINT]: 'TINYINT',
+    [MssqlDataTypes.SMALLINT]: 'SMALLINT',
+    [MssqlDataTypes.MONEY]: 'MONEY',
+    [MssqlDataTypes.SMALLMONEY]: 'SMALLMONEY',
+    [MssqlDataTypes.FLOAT]: 'FLOAT',
+    [MssqlDataTypes.REAL]: 'REAL',
 
     [MssqlDataTypes.VARCHAR]: 'VARCHAR'
 }

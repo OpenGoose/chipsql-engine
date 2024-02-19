@@ -1,12 +1,14 @@
 import { BooleanDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/bit/boolean.datatype";
 import { CustomDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/custom/custom.datatype";
 import { DateDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/date/date.datatype";
-import { NumberDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/numeric/number.datatype";
+import { NumberDataTypeOptions, NumberPrecision, NumberSize } from "../../../chips-ql/types/datatypes/datatypes/options/numeric/number.datatype";
 import { StringDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/text/string.datatype";
 import { Value } from "../../../chips-ql/types/values/value.type";
 import { DataTypeCompiler } from "../../../compiler/datatypes/datatypes-compiler.service";
 import { MSSQL_DATATYPES_MAP } from "../../../map/datatypes/mssql-datatypes.map";
 import { MssqlDataTypes } from "./mssql-datatypes-list.enum";
+
+const DEFAULT_NUMBER_PRECISION = NumberPrecision.EXACT;
 
 export class MssqlDataTypeCompiler<
   T extends Object
@@ -27,12 +29,19 @@ export class MssqlDataTypeCompiler<
   number = (datatype: NumberDataTypeOptions) => {
     if (datatype.rawDataType) return this.buildRawDataType(datatype);
 
-    let type = MSSQL_DATATYPES_MAP[MssqlDataTypes.INT];
-    if (datatype.big) type = MSSQL_DATATYPES_MAP[MssqlDataTypes.BIGINT];
-    else if (datatype.decimal) type = MSSQL_DATATYPES_MAP[MssqlDataTypes.DECIMAL];
-    else if (datatype.tiny) type = MSSQL_DATATYPES_MAP[MssqlDataTypes.TINYINT];
+    let type = MssqlDataTypes.INT;
+    if (datatype.decimal) {
+      if ((datatype.precision ?? DEFAULT_NUMBER_PRECISION) === NumberPrecision.APPROXIMATE) type = MssqlDataTypes.DECIMAL;
+      else type = MssqlDataTypes.FLOAT;
+    } else {
+      switch (datatype.size) {
+        case NumberSize.BIG: type = MssqlDataTypes.BIGINT; break;
+        case NumberSize.SMALL: type = MssqlDataTypes.SMALLINT; break;
+        case NumberSize.TINY: type = MssqlDataTypes.TINYINT; break;
+      }
+    }
 
-    return this.buildDataType(type, datatype.length === undefined ? undefined : [datatype.length.toString()]);
+    return this.buildDataType(MSSQL_DATATYPES_MAP[type], datatype.length === undefined ? undefined : [datatype.length.toString()]);
   }
 
   // Bit

@@ -3,6 +3,11 @@ export enum MssqlDataTypes {
     DECIMAL = 'decimal',
     BIGINT = 'bigint',
     TINYINT = 'tinyint',
+    SMALLINT = 'smallint',
+    MONEY = 'money',
+    SMALLMONEY = 'small-money',
+    FLOAT = 'float',
+    REAL = 'real',
     
     VARCHAR = 'varchar',
     BIT = 'bit',
