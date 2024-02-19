@@ -9,4 +9,4 @@ export type DataTypeOptions<T extends Types, K extends DataType, F extends objec
     dataType: K;
     rawDataType: T;
     params?: Value<object>[];
-} | (F & { dataType: K, rawDataType?: null });
+} | (Omit<F, 'dataType' | 'rawDataType'> & { dataType: K, rawDataType?: null });

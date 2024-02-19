@@ -18,7 +18,9 @@ export class MssqlDataTypeCompiler<
 
   // Text
   string = (datatype: StringDataTypeOptions) => {
-    if (datatype.rawDataType) return this.buildRawDataType(datatype);
+    if (datatype.rawDataType) {
+      return this.buildRawDataType(datatype);
+    }
     
     return this.buildDataType(MSSQL_DATATYPES_MAP[MssqlDataType.VARCHAR], [
       datatype.length === Infinity ? "MAX" : datatype.length?.toString(),
