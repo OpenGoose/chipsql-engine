@@ -5,7 +5,6 @@ import { NumberDataTypeOptions, NumberPrecision, NumberSize, NumberVariant } fro
 import { StringDataTypeOptions } from "../../../chips-ql/types/datatypes/datatypes/options/text/string.datatype";
 import { Value } from "../../../chips-ql/types/values/value.type";
 import { DataTypeCompiler } from "../../../compiler/datatypes/datatypes-compiler.service";
-import { CompilerException } from "../../../errors/compiler/compiler-exception.error";
 import { MSSQL_DATATYPES_MAP } from "../../../map/datatypes/mssql-datatypes.map";
 import { MssqlDataType } from "./mssql-datatypes-list.enum";
 
