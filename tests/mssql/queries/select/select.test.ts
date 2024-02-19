@@ -978,7 +978,7 @@ service.expectQuery(
           field: "age",
         },
         as: {
-          dataType: DataType.VARCHAR,
+          dataType: DataType.STRING,
           length: 127,
         },
         alias: "age",
@@ -991,7 +991,7 @@ service.expectQuery(
           field: "age",
         },
         as: {
-          dataType: DataType.VARCHAR,
+          dataType: DataType.STRING,
           length: Infinity,
         },
         alias: "age",

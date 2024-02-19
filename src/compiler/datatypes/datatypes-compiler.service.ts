@@ -1,9 +1,8 @@
-import { BooleanDataType } from "../../chips-ql/types/datatypes/datatypes/bit/boolean.datatype";
-import { CustomDataType } from "../../chips-ql/types/datatypes/datatypes/custom/custom.datatype";
-import { DateDataType } from "../../chips-ql/types/datatypes/datatypes/date/date.datatype";
-import { DecimalDataType } from "../../chips-ql/types/datatypes/datatypes/numeric/decimal.datatype";
-import { IntDataType } from "../../chips-ql/types/datatypes/datatypes/numeric/int.datatype";
-import { VarcharDataType } from "../../chips-ql/types/datatypes/datatypes/text/varchar.datatype";
+import { BooleanDataTypeOptions } from "../../chips-ql/types/datatypes/datatypes/options/bit/boolean.datatype";
+import { CustomDataTypeOptions } from "../../chips-ql/types/datatypes/datatypes/options/custom/custom.datatype";
+import { DateDataTypeOptions } from "../../chips-ql/types/datatypes/datatypes/options/date/date.datatype";
+import { NumberDataTypeOptions } from "../../chips-ql/types/datatypes/datatypes/options/numeric/number.datatype";
+import { StringDataTypeOptions } from "../../chips-ql/types/datatypes/datatypes/options/text/string.datatype";
 import { IQueryPartsCompiler } from "../query/query-parts-compiler.interface";
 import { joinParts } from "../utils/query-generation/join-parts.util";
 
@@ -28,11 +27,18 @@ export abstract class DataTypeCompiler<T extends Object> {
       }
   ) {}
 
-  abstract varchar: (datatype: VarcharDataType) => string;
-  abstract int: (datatype: IntDataType) => string;
-  abstract decimal: (datatype: DecimalDataType) => string;
-  abstract boolean: (datatype: BooleanDataType) => string;
-  abstract date: (datatype: DateDataType) => string;
+  // Text
+  abstract string: (datatype: StringDataTypeOptions) => string;
 
-  abstract custom: (dataType: CustomDataType<T>) => string;
+  // Number
+  abstract number: (datatype: NumberDataTypeOptions) => string;
+
+  // Bool
+  abstract boolean: (datatype: BooleanDataTypeOptions) => string;
+
+  // Time
+  abstract date: (datatype: DateDataTypeOptions) => string;
+
+  // Custom
+  abstract custom: (dataType: CustomDataTypeOptions<T>) => string;
 }

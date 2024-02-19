@@ -12,14 +12,11 @@ export const mssqlDataType = <T extends Object>(
 
   switch (value.dataType) {
     // Text
-    case DataType.VARCHAR:
-      return compiler.varchar(value);
-
+    case DataType.STRING:
+      return compiler.string(value);
     // Number
-    case DataType.INT:
-      return compiler.int(value);
-    case DataType.DECIMAL:
-      return compiler.decimal(value);
+    case DataType.NUMBER:
+      return compiler.number(value);
 
     // Bit
     case DataType.BOOLEAN:

@@ -1,9 +1,16 @@
 export enum DataType {
-    VARCHAR = 'varchar',
-    INT = 'int',
-    DECIMAL = 'decimal',
+    // Text
+    STRING = 'string',
+
+    // Numeric
+    NUMBER = 'number',
+
+    // Bool
     BOOLEAN = 'bool',
+
+    // Time
     DATE = 'date',
 
+    // Custom
     CUSTOM = 'CUSTOM',
 }

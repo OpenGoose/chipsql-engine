@@ -1,10 +1,11 @@
 import { DataType } from "../datatypes/datatypes.enum";
-import { DateDataType } from "../datatypes/datatypes/date/date.datatype";
+import { DateDataTypeOptions } from "../datatypes/datatypes/options/date/date.datatype";
 
 export type DateType = {
   type: DataType.DATE;
+  includeTime?: boolean;
   date: Date;
-} & Omit<DateDataType, 'dataType'>;
+} & Omit<DateDataTypeOptions, 'dataType'>;
 
 export type AllowedValues =
   | string
