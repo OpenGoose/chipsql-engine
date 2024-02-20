@@ -3,7 +3,7 @@
     "module": "commonjs",
     "lib": ["es2017", "es2022", "es7", "es6", "dom"],
     "declaration": true,
-    "rootDir": ".",
+    "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
     "declarationMap": true,
