@@ -7,6 +7,6 @@ type Types = MssqlDataType;
 
 export type DataTypeOptions<T extends Types, K extends DataType, F extends object> = {
     dataType: K;
-    rawDataType: T;
+    rawDataType?: T;
     params?: Value<object>[];
-} | (F & { dataType: K, rawDataType?: null });
+} & Omit<F, 'dataType' | 'rawDataType'>;
