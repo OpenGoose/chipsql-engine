@@ -18,7 +18,7 @@ export class MssqlDataTypeCompiler<
 
   // Text
   string = (datatype: StringDataTypeOptions) => {
-    if (datatype.rawDataType) return this.buildRawDataType(datatype);
+    if (datatype.rawDataType) return this.buildRawDataType({ rawDataType: datatype.rawDataType, params: datatype.params });
     
     return this.buildDataType(MSSQL_DATATYPES_MAP[MssqlDataType.VARCHAR], [
       datatype.length === Infinity ? "MAX" : datatype.length?.toString(),
@@ -27,7 +27,7 @@ export class MssqlDataTypeCompiler<
 
   // Number
   number = (datatype: NumberDataTypeOptions) => {
-    if (datatype.rawDataType) return this.buildRawDataType(datatype);
+    if (datatype.rawDataType) return this.buildRawDataType({ rawDataType: datatype.rawDataType, params: datatype.params });
     const precision = datatype.precision ?? DEFAULT_NUMBER_PRECISION;
 
     let type: MssqlDataType;
@@ -62,14 +62,14 @@ export class MssqlDataTypeCompiler<
 
   // Bit
   boolean = (datatype: BooleanDataTypeOptions) => {
-    if (datatype.rawDataType) return this.buildRawDataType(datatype);
+    if (datatype.rawDataType) return this.buildRawDataType({ rawDataType: datatype.rawDataType, params: datatype.params });
 
     return this.buildDataType(MSSQL_DATATYPES_MAP[MssqlDataType.BIT]);
   }
 
   // Date
   date = (datatype: DateDataTypeOptions) => {
-    if (datatype.rawDataType) return this.buildRawDataType(datatype);
+    if (datatype.rawDataType) return this.buildRawDataType({ rawDataType: datatype.rawDataType, params: datatype.params });
 
     const name = datatype.includeTime ? MSSQL_DATATYPES_MAP[MssqlDataType.DATETIME2] : MSSQL_DATATYPES_MAP[MssqlDataType.DATE];
     return this.buildDataType(name);

@@ -67,7 +67,7 @@ export class MssqlCompiler<T extends Object> implements IQueryCompiler<T> {
           : null,
         having
           ? joinParts(["HAVING", this.partsCompiler.having(having)])
-          : having,
+          : null,
         orderBy ? `ORDER BY ${this.partsCompiler.orders(orderBy)}` : null,
         offset ? `OFFSET ${this.partsCompiler.offset(offset)} ROWS` : null,
         limit && offset
